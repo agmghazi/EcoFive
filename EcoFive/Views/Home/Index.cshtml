@@ -1,1 +1,78 @@
-﻿<h1>Hi </h1>
+﻿@using FileViewModel = EcoFive.Models.Models.FileViewModel
+
+
+<div class="row">
+    <div class="col-md-5">
+        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
+            <div class="form-group">
+                <div class="col-md-10">
+                    <p>Upload file</p>
+                    <input class="form-control" name="files" multiple="multiple" type="file" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input class="btn btn-success" type="submit" value="Upload" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>File Name</th>
+            <th>Create Date</th>
+            <th>last Modified</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+
+    @foreach (FileViewModel file in Model)
+    {
+        <tr>
+            <td>@file.FileName</td>
+            <td>@file.FileCreateDate</td>
+            <td>@file.lastModified</td>
+            <td>
+                <form method="post" asp-controller="Home" asp-action="DeleteFile" asp-route-fileName="@file.FileName" asp-route-confirmValue="true" style="width: auto">
+
+                    <a href="@Url.Action("DownloadFile", "Home", new {fileName = file.FileName})"
+                       class="btn btn-primary" style="width: auto">Download</a> |
+
+                    <button type="button" onclick="confirmDelete()" class="btn btn-danger">
+                        Delete
+                    </button>
+
+                    <button type="submit" id="deleteFile" class="btn btn-danger" style="display: none">
+                        Delete
+                    </button>
+
+                </form>
+
+
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            $.confirm({
+                title: '!حذف',
+                content: '!هل تريد الحذف',
+                autoClose: 'الغاء|8000',
+                buttons: {
+                    موافق: function () {
+                        document.getElementById("deleteFile").click();
+                    },
+                    الغاء: function () {
+
+                    }
+                }
+            });
+        }
+    </script>
+}

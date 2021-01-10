@@ -1,0 +1,71 @@
+﻿@model LoginViewModel
+
+@{
+    ViewBag.Title = "User Login";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>تسجيل الدخول</h1>
+        <hr />
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <dnt-captcha asp-captcha-generator-max="999999"
+                         asp-captcha-generator-min="111111"
+                         asp-captcha-generator-language="English"
+                         asp-captcha-generator-display-mode="ShowDigits"
+                         asp-use-relative-urls="true"
+                         asp-placeholder="ادخل كلمه التحقق"
+                         asp-validation-error-message="الرجاء إدخال كلمة التحقق الصحيحة"
+                         asp-font-name="Tahoma"
+                         asp-font-size="20"
+                         asp-fore-color="#333333"
+                         asp-back-color="#ccc"
+                         asp-text-box-class="text-box form-control w-50"
+                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
+                         asp-validation-message-class="text-danger"
+                         asp-use-noise="false"
+                         asp-dir="ltr"/>
+            <br />
+            <button type="submit" class="btn btn-primary w-auto">تسجيل الدخول</button>
+            <div>
+                <a asp-action="ForgotPassword">نسيت كلمه المرور؟</a>
+            </div>
+        </form>
+    </div>
+    @*<div class="col-md-6">
+        <h1>تسجيل الدحول بوسائل التواصل الإجتماعى</h1>
+        <hr />
+           
+                <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                    <div>
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button type="submit" class="btn btn-primary" style="width: auto"
+                                    name="provider" value="@provider.Name"
+                                    title="Log in using your @provider.DisplayName account">
+                                @provider.DisplayName
+                            </button>
+                        }
+                    </div>
+                </form>
+    </div>*@
+</div>
