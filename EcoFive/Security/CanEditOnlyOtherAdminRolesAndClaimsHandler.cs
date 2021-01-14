@@ -23,7 +23,7 @@ namespace EcoFive.UI.Security
 
             string adminIdBeingEdited = authFilterContext.HttpContext.Request.Query["userId"];
 
-            if (context.User.IsInRole("Admin") &&
+            if (context.User.IsInRole("SuperAdmin") &&
                 context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") &&
                 adminIdBeingEdited.ToLower() != loggedInAdminId.ToLower())
             {

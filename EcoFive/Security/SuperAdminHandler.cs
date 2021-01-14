@@ -10,7 +10,7 @@ namespace EcoFive.UI.Security
             AuthorizationHandlerContext context,
             ManageAdminRolesAndClaimsRequirement requirement)
         {
-            if (context.User.IsInRole("Super Admin"))
+            if (context.User.IsInRole("SuperAdmin"))
             {
                 context.Succeed(requirement);
             }

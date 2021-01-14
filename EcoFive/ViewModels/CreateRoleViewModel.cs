@@ -4,7 +4,8 @@ namespace EcoFive.UI.ViewModels
 {
     public class CreateRoleViewModel
     {
-        [Required]
+        [Display(Name = "اسم الدور")]
+        [Required(ErrorMessage = "يرجى ادخال اسم الدور")]
         public string RoleName { get; set; }
     }
 }

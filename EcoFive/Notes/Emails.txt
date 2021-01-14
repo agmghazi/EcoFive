@@ -1,0 +1,85 @@
+﻿
+-----send confirm mail
+
+
+<p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
+<table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
+    <tbody>
+        <tr>
+            <td style="width: 100%; border: 2px solid rgb(0, 0, 0);">
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">مرحبا احمد جمال&nbsp;</span></div>
+                <p style="text-align: right;"><span style="font-size: 24px;">&nbsp;.نشكرك على انضمامك معنا &nbsp;agmghazi@gmail.com &nbsp;يرجى تفعيل الاميل&nbsp;</span></p>
+                <div style="text-align: center;"><br></div>
+                <div style="text-align: center;"><br></div>
+                <div data-empty="true" style="text-align: center;"><span style="color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">&nbsp;</span><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><span style='color: rgb(97, 189, 109); font-family: "Arial Black", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتفعيل اضغط هنا</span><span style="font-family: 'Arial Black', Gadget, sans-serif;"><span style="color: rgb(97, 189, 109);">&nbsp;<br></span></span></a></div>
+                <p style="text-align: center;"><span style="font-size: 22px;">اذا واجهك اى مشكله بالتفعيل من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>
+                <p style="text-align: center;"><a href="//www.google.com">www.google.com</a></p>
+                <p style="text-align: center;"><br></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp; تحياتنا&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
+                <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تقم بعمليه التسجيل يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
+                <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
+
+
+----- forget email
+
+<p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
+<table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
+    <tbody>
+        <tr>
+            <td style="width: 100%; border: 2px solid rgb(0, 0, 0);">
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">مرحبا احمد جمال&nbsp;</span></div>
+                <p style="text-align: right;"><span style="font-size: 24px;">&nbsp;. agmghazi@gmail.com &nbsp;وصلنا طلب لتغير كلمه المرور الخاصة بالاميل&nbsp;</span></p>
+                <div style="text-align: center;"><br></div>
+                <div style="text-align: center;"><br></div>
+                <div data-empty="true" style="text-align: center;"><span style="color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">&nbsp;</span><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><span style='color: rgb(97, 189, 109); font-family: "Arial Black", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتغير اضغط هنا</span><span style="font-family: 'Arial Black', Gadget, sans-serif;"><span style="color: rgb(97, 189, 109);">&nbsp;<br></span></span></a></div>
+                <p style="text-align: center;"><span style="font-size: 22px;">اذا واجهك اى مشكله بتغير كلمه المرور من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>
+                <p style="text-align: center;"><a href="//www.google.com">www.google.com</a></p>
+                <p style="text-align: center;"><br></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp; تحياتنا&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
+                <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تقم بعمليه تغير كلمه المرور&nbsp; يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
+                <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
+
+
+----- after confirm email
+
+
+<p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
+<table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
+    <tbody>
+        <tr>
+            <td style="width: 100%; border: 2px solid rgb(0, 0, 0);">
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">مرحبا احمد جمال&nbsp;</span></div>
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;">&nbsp; &nbsp;</div>
+                <div style="text-align: right;"><span style="font-size: 24px;">&nbsp; &nbsp; نهنئك تم تفعيل حسابك بنجاح ونرجوا الاحتفاظ بهذه المعلومات بسريه تامه&nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 20px;">&nbsp;</span></div>
+                <p style="text-align: right;"><span style="font-size: 20px;">agmghazi :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">ahmed gamal &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">0534740221 : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">&nbsp;gis.csharp@gmail.com &nbsp; : &nbsp;<strong>البريد الالكترونى&nbsp; &nbsp;&nbsp;</strong></span></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;تحياتنا&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
+                <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تقم بعمليه تغير كلمه المرور &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
+                <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
+<p><br></p>

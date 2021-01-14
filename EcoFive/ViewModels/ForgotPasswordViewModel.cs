@@ -4,8 +4,8 @@ namespace EcoFive.UI.ViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required(ErrorMessage = "يرجى ادخال الاميل الخاص بكم")]
-        [EmailAddress(ErrorMessage = "يجب ان يكون المدخل اميل")]
+        [Required(ErrorMessage = "يرجى ادخال البريد الالكترونى ")]
+        [EmailAddress(ErrorMessage = "يجب ان يكون بريد الالكترونى")]
         [Display(Name = "البريد الالكترونى")]
         public string Email { get; set; }
     }

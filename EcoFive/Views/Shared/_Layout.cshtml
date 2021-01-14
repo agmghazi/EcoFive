@@ -3,20 +3,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
-    <script src="~/lib/jquery/jquery.js"></script>
+    <meta name="viewport" content="width=device-width" asp-append-version="true" />
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" asp-append-version="true" rel="stylesheet" />
     @*to active client side validation*@
-    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <link href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.css" rel="stylesheet" />
-    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.js"></script>
+    <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+
+    <link href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.js" asp-append-version="true"></script>
     @*confirm library*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-
     @*add trumbowyg WYSIWYG Editor*@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -24,7 +24,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container text-right">
         <div class="navbar navbar-expand-sm bg-danger navbar-dark">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                 <img src="~/images/person.png" width="30" height="30" />
@@ -41,7 +41,7 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Create</a>
                     </li>
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Super Admin"))
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -55,14 +55,17 @@
                                 <a asp-controller="Administraion" asp-action="ListRoles" class="dropdown-item">
                                     Roles
                                 </a>
-                                <a class="dropdown-item" asp-controller="Account"
-                                   asp-action="ChangePassword">
-                                    Password
-                                </a>
-
                             </div>
                         </li>
                     }
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
+                        </li>
+                    }
+
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (signInManager.IsSignedIn(User))
@@ -93,7 +96,7 @@
 
     @if (IsSectionDefined("Scripts"))
     {
-        @RenderSection("Scripts", required: false)
+        @await RenderSectionAsync("Scripts", required: false)
     }
 </body>
 </html>

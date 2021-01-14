@@ -5,12 +5,12 @@
     ViewBag.Title = "Roles List";
 }
 
-<h1>All Roles</h1>
+<h1>جميع الادوار للمستخدمين</h1>
 
 @if (Model.Any())
 {
     <a class="btn btn-primary mb-3" style="width: auto"
-       asp-controller="Administraion" asp-action="CreateRole">Add new role</a>
+       asp-controller="Administraion" asp-action="CreateRole">إنشاء دور جديد</a>
 
     foreach (var role in Model)
     {
@@ -27,25 +27,19 @@
             <div class="card-footer">
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
 
-                    @if ((await authorizationService.AuthorizeAsync(User, "EditPolePolicy")).Succeeded)
-                    {
-                        <a class="btn btn-primary"
-                           asp-controller="Administraion" asp-action="EditRole"
-                           asp-route-id="@role.Id">Edit</a>
-                    }
+                    @* @if ((await authorizationService.AuthorizeAsync(User, "EditPolePolicy")).Succeeded)*@
 
+                    <button type="submit" id="@role.Id" class="btn btn-danger" style="display: none">
+                        حذف
+                    </button>
+                    <button type="button" onclick="confirmDelete('@role.Id')" class="btn btn-danger">
+                        حذف
+                    </button>
 
-                    <span id="confirmDeleteSpan_@role.Id" style="display:none">
-                        <span>Are you sure you want to delete?</span>
-                        <button type="submit" class="btn btn-danger">Yes</button>
-                        <a href="#" class="btn btn-primary"
-                           onclick="confirmDelete('@role.Id', false)">No</a>
-                    </span>
+                    <a class="btn btn-primary"
+                       asp-controller="Administraion" asp-action="EditRole"
+                       asp-route-id="@role.Id">تعديل</a>
 
-                    <span id="deleteSpan_@role.Id">
-                        <a href="#" class="btn btn-danger"
-                           onclick="confirmDelete('@role.Id', true)">Delete</a>
-                    </span>
                 </form>
 
             </div>
@@ -56,15 +50,15 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No roles created yet
+            لا يوجد اى ادوار للمستخدمين
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a role
+                استخدم الزر بالاسفل لانشاء دور جديد
             </h5>
             <a class="btn btn-primary" style="width: auto"
                asp-controller="Administraion" asp-action="CreateRole">
-                Create Role
+                إنشاء دور للمستخدم
             </a>
         </div>
     </div>

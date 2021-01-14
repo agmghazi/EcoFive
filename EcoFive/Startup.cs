@@ -1,4 +1,5 @@
-﻿using EcoFive.Models.Models;
+﻿using DNTCaptcha.Core;
+using EcoFive.Models.Models;
 using EcoFive.UI.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -10,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using DNTCaptcha.Core;
 
 namespace EcoFive.UI
 {
@@ -26,17 +26,17 @@ namespace EcoFive.UI
         public void ConfigureServices(IServiceCollection services)
         {
             //add facebook and google auth
-            services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    options.ClientId = "XXXXX";
-                    options.ClientSecret = "YYYYY";
-                })
-                .AddFacebook(options =>
-                {
-                    options.AppId = "XXXXX";
-                    options.AppSecret = "YYYYY";
-                });
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        options.ClientId = "XXXXX";
+            //        options.ClientSecret = "YYYYY";
+            //    })
+            //    .AddFacebook(options =>
+            //    {
+            //        options.AppId = "XXXXX";
+            //        options.AppSecret = "YYYYY";
+            //    });
 
 
             // add security code
@@ -72,7 +72,7 @@ namespace EcoFive.UI
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     //overwrite register model
-                    options.Password.RequiredLength = 10;
+                    options.Password.RequiredLength = 8;
                     options.Password.RequiredUniqueChars = 3;
                     options.SignIn.RequireConfirmedEmail = true;
                     options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
@@ -121,7 +121,7 @@ namespace EcoFive.UI
             app.UseAuthentication();
             app.UseMvc(routes =>
             {
-                routes.MapRoute("areaRoute", "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+                routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute("Home", "{controller=Home}/{action=Index}/{id?}");
             });
 

@@ -8,7 +8,7 @@ namespace EcoFive.UI.ViewModels
         [EmailAddress(ErrorMessage = "يجب ان يكون المدخل بريد الالكترونى")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "يرجى ادخال المرور الجديدة ")]
+        [Required(ErrorMessage = "يرجى ادخال كلمه المرور الجديدة ")]
         [Display(Name = "كلمه المرور الجديدة")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

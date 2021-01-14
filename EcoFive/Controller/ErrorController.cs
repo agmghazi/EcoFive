@@ -21,7 +21,7 @@ namespace EcoFive.UI.Controllers
             switch (statuseCode)
             {
                 case 404:
-                    ViewBag.ErrorMessage = "sorry, the resource you request not found";
+                    ViewBag.ErrorMessage = "نأسف الصفحة غير موجوده";
                     _logger.LogWarning($"404 Error Occurred. path = {statuseResult.OriginalPath}" +
                                        $"and QueryString = {statuseResult.OriginalQueryString}");
                     break;

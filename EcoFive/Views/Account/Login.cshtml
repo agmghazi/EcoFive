@@ -1,7 +1,7 @@
 ﻿@model LoginViewModel
 
 @{
-    ViewBag.Title = "User Login";
+    ViewBag.Title = "تسجيل الدخول";
 }
 
 <div class="row">
@@ -9,7 +9,8 @@
         <h1>تسجيل الدخول</h1>
         <hr />
         <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
@@ -39,33 +40,34 @@
                          asp-font-size="20"
                          asp-fore-color="#333333"
                          asp-back-color="#ccc"
-                         asp-text-box-class="text-box form-control w-50"
+                         asp-text-box-class="text-box form-control w-50 float-right text-right"
                          asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
                          asp-validation-message-class="text-danger"
                          asp-use-noise="false"
-                         asp-dir="ltr"/>
+                         asp-dir="ltr" />
             <br />
-            <button type="submit" class="btn btn-primary w-auto">تسجيل الدخول</button>
+            <br />
+            <button type="submit" class="btn btn-primary w-auto ">تسجيل الدخول</button>
             <div>
                 <a asp-action="ForgotPassword">نسيت كلمه المرور؟</a>
             </div>
         </form>
     </div>
     @*<div class="col-md-6">
-        <h1>تسجيل الدحول بوسائل التواصل الإجتماعى</h1>
-        <hr />
-           
-                <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
-                    <div>
-                        @foreach (var provider in Model.ExternalLogins)
-                        {
-                            <button type="submit" class="btn btn-primary" style="width: auto"
-                                    name="provider" value="@provider.Name"
-                                    title="Log in using your @provider.DisplayName account">
-                                @provider.DisplayName
-                            </button>
-                        }
-                    </div>
-                </form>
-    </div>*@
+            <h1>تسجيل الدحول بوسائل التواصل الإجتماعى</h1>
+            <hr />
+
+                    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                        <div>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-primary" style="width: auto"
+                                        name="provider" value="@provider.Name"
+                                        title="Log in using your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                </button>
+                            }
+                        </div>
+                    </form>
+        </div>*@
 </div>

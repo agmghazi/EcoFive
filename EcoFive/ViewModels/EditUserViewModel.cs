@@ -12,12 +12,18 @@ namespace EcoFive.UI.ViewModels
         }
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "يرجى ادخال اسم المستخدم")]
+        [Display(Name = "اسم المستخدم")]
         public string UserName { get; set; }
 
-        [Required]
-        [EmailAddress]
+
+        [Required(ErrorMessage = "يرجى ادخال الاميل الخاص بكم")]
+        [EmailAddress(ErrorMessage = "يجب ان يكون المدخل اميل")]
+        [Display(Name = "البريد الالكترونى")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "يرجى ادخال المدينة")]
+        [Display(Name = "المدينة")]
         public string City { get; set; }
         public List<string> Claims { get; set; }
         public IList<string> Roles { get; set; }

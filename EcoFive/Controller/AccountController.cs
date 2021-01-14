@@ -1,18 +1,17 @@
-﻿using EcoFive.Models.Models;
+﻿using DNTCaptcha.Core;
+using DNTCaptcha.Core.Providers;
+using EcoFive.Models.Models;
 using EcoFive.UI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DNTCaptcha.Core;
-using DNTCaptcha.Core.Providers;
 
 namespace EcoFive.UI.Controllers
 {
@@ -45,7 +44,7 @@ namespace EcoFive.UI.Controllers
             }
             else
             {
-                return Json($"Email {email} is already in use.");
+                return Json("الاميل مستخدم من قبل");
             }
         }
 
@@ -58,7 +57,7 @@ namespace EcoFive.UI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel model , ConfigMailViewModel mailViewModel)
+        public async Task<IActionResult> Register(RegisterViewModel model, ConfigMailViewModel mailViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -83,14 +82,14 @@ namespace EcoFive.UI.Controllers
                     var confirmationLink = Url.Action("ConfirmEmail", "Account",
                         new { userId = user.Id, token = token }, Request.Scheme);
 
-                  
+
                     //config and send mail to client
                     using (MailMessage message = new MailMessage("gis.csharp@gmail.com", model.Email))
                     {
                         message.Subject = "EcoFive تفعيل حسابك بمنصة ";
                         message.IsBodyHtml = true;
                         message.Body = $"<h2 style=\"text-align: center;\">يمكنك تفعيل حسابك بالضغط على الرابط التالى</h2>\r\n<h2 style=\"text-align: center;\"><a href=\"{confirmationLink}\" rel=\"noopener noreferrer\" target=\"_blank\">اضغط هنا </a></h2>";
-                      
+
                         using (SmtpClient smtp = new SmtpClient())
                         {
                             smtp.Host = "smtp.gmail.com";
@@ -167,13 +166,13 @@ namespace EcoFive.UI.Controllers
                     (await _userManager.CheckPasswordAsync(user, model.Password)))
                 {
                     ModelState.AddModelError("", "لم يتم تفعيل الاميل الخاص بكم");
-                   
+
                     return View(model);
                 }
                 var result =
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password,
                         model.RememberMe, true);
-              
+
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) //to close redirect attacks
@@ -191,7 +190,7 @@ namespace EcoFive.UI.Controllers
                 {
                     return View("AccountLocked");
                 }
-              
+
                 ModelState.AddModelError(string.Empty, "خطئ فى كلمه المرور او الاميل الخاص بكم");
 
             }
@@ -234,7 +233,6 @@ namespace EcoFive.UI.Controllers
                 return View("Login", loginViewModel);
             }
 
-            // Get the login information about the user from the external login provider
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -256,8 +254,6 @@ namespace EcoFive.UI.Controllers
                     return View("Login", loginViewModel);
                 }
             }
-            // If the user already has a login (i.e if there is a record in AspNetUserLogins
-            // table) then sign-in the user with this external login provider
             var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider,
                 info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
 
@@ -265,8 +261,6 @@ namespace EcoFive.UI.Controllers
             {
                 return LocalRedirect(returnUrl);
             }
-            // If there is no record in AspNetUserLogins table, the user may not have
-            // a local account
             else
             {
 
@@ -319,8 +313,8 @@ namespace EcoFive.UI.Controllers
                 }
 
                 // If we cannot find the user email we cannot continue
-                ViewBag.ErrorTitle = $"Email claim not received from: {info.LoginProvider}";
-                ViewBag.ErrorMessage = "Please contact support on agmghazi@hotmail.com";
+                ViewBag.ErrorTitle = $"الاميل المرسل ليس عبر: {info.LoginProvider}";
+                ViewBag.ErrorMessage = " agmghazi@hotmail.com يرجى الاتصال بالدعم الفنى";
 
                 return View("Error");
             }
@@ -352,7 +346,9 @@ namespace EcoFive.UI.Controllers
 
             }
 
-            ViewBag.ErrorTitle = "Email cannot be confirmed";
+            ViewBag.ErrorTitle = "لا يمكن تفعيل حسابك";
+            ViewBag.ErrorMessage = " agmghazi@hotmail.com يرجى الاتصال بالدعم الفنى";
+
             return View("Error");
         }
 
@@ -378,18 +374,15 @@ namespace EcoFive.UI.Controllers
                     }
                 }
 
-                // Find the user by email
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                // If the user is found AND Email is confirmed
                 if (user != null && await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    // Generate the reset password token
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
                     // Build the password reset link
                     var passwordResetLink = Url.Action("ResetPassword", "Account",
                         new { email = model.Email, token = token }, Request.Scheme);
-                    //config and send mail to client
+
                     using (MailMessage message = new MailMessage("gis.csharp@gmail.com", model.Email))
                     {
                         message.Subject = "EcoFive تغير كلمه مرور حسابك بمنصة ";
@@ -426,7 +419,7 @@ namespace EcoFive.UI.Controllers
         {
             if (token == null || email == null)
             {
-                ModelState.AddModelError("", "تصريح اللدخول غير صحيح");
+                ModelState.AddModelError("", "تصريح الدخول غير صحيح");
             }
             return View();
         }
@@ -437,18 +430,13 @@ namespace EcoFive.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Find the user by email
                 var user = await _userManager.FindByEmailAsync(model.Email);
 
                 if (user != null)
                 {
-                    // reset the user password
                     var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
                     if (result.Succeeded)
                     {
-                        // Upon successful password reset and if the account is lockedout, set
-                        // the account lockout end date to current UTC date time, so the user
-                        // can login with the new password
                         if (await _userManager.IsLockedOutAsync(user))
                         {
                             await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
@@ -456,8 +444,6 @@ namespace EcoFive.UI.Controllers
 
                         return View("ResetPasswordConfirmation");
                     }
-                    // Display validation errors. For example, password reset token already
-                    // used to change the password or password complexity rules not met
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
@@ -465,25 +451,14 @@ namespace EcoFive.UI.Controllers
                     return View(model);
                 }
 
-                // To avoid account enumeration and brute force attacks, don't
-                // reveal that the user does not exist
                 return View("ResetPasswordConfirmation");
             }
-            // Display validation errors if model state is not valid
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword()
+        public IActionResult ChangePassword()
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            var userHasPassword = await _userManager.HasPasswordAsync(user);
-
-            if (userHasPassword)
-            {
-                return RedirectToAction("ChangePassword");
-            }
 
             return View();
         }
@@ -503,19 +478,15 @@ namespace EcoFive.UI.Controllers
                 var result = await _userManager.ChangePasswordAsync(user,
                     model.CurrentPassword, model.NewPassword);
 
-                // The new password did not meet the complexity rules or
-                // the current password is incorrect. Add these errors to
-                // the ModelState and rerender ChangePassword view
                 if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError(string.Empty, "كلمه المرور السابقه غير صحيحه");
                     }
                     return View();
                 }
 
-                // Upon successfully changing the password refresh sign-in cookie
                 await _signInManager.RefreshSignInAsync(user);
                 return View("ChangePasswordConfirmation");
             }

@@ -1,34 +1,35 @@
 ﻿@model RegisterViewModel
 
 @{
-    ViewBag.Title = "Register page";
+    ViewBag.Title = "تسجيل مستخدم جديد";
 }
 
-<h1>User Registration</h1>
+<h1>تسجيل مستخدم جديد</h1>
 
 
 <div class="row">
     <div class="col-md-12">
         <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control text-right" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control text-right" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
+                <input asp-for="ConfirmPassword" class="form-control text-right" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City"></label>
-                <input asp-for="City" class="form-control" />
+                <input asp-for="City" class="form-control text-right " />
             </div>
             <dnt-captcha asp-captcha-generator-max="999999"
                          asp-captcha-generator-min="111111"
@@ -41,10 +42,11 @@
                          asp-font-size="20"
                          asp-fore-color="#333333"
                          asp-back-color="#ccc"
-                         asp-text-box-class="text-box form-control w-25"
+                         asp-text-box-class="text-box form-control w-25 text-right float-right"
                          asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
-                         asp-validation-message-class="text-danger"
+                         asp-validation-message-class="text-danger m-3"
                          asp-use-noise="false" />
+            <br />
             <br />
             <button type="submit" class="btn btn-primary w-auto">التسجيل</button>
         </form>

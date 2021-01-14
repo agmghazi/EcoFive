@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EcoFive.Models.Models;
+using EcoFive.UI.ViewModels;
+using EmployeeManagments.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,13 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using EcoFive.Models.Models;
-using EcoFive.UI.ViewModels;
-using EmployeeManagments.Models;
 
 namespace EcoFive.UI.Controllers
 {
-    [Authorize(Roles = "Super Admin, Admin")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class AdministraionController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -72,7 +72,7 @@ namespace EcoFive.UI.Controllers
             var role = await _roleManager.FindByIdAsync(id);
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id = {id} cannot be found";
+                ViewBag.ErrorMessage = $"{id} لا يوجد دور بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
@@ -99,7 +99,7 @@ namespace EcoFive.UI.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id = {model.Id} cannot be found";
+                ViewBag.ErrorMessage = $"{model.Id} لا يوجد دور بالرقم المرجعى  ";
                 return View("NotFound");
             }
             else
@@ -127,7 +127,7 @@ namespace EcoFive.UI.Controllers
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id = {roleId} cannot be found";
+                ViewBag.ErrorMessage = $"{roleId} لا يوجد دور بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
@@ -158,7 +158,7 @@ namespace EcoFive.UI.Controllers
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id = {roleId} cannot be found";
+                ViewBag.ErrorMessage = $"{roleId} لا يوجد دور بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
@@ -211,7 +211,7 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with id = {id} cannot be found";
+                ViewBag.ErrorMessage = $"{id} لا يوجد مستخدم بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
@@ -237,7 +237,7 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
+                ViewBag.ErrorMessage = $"{model.Id} لا يوجد مستخدم بالرقم المرجعى  ";
                 return View("NotFound");
             }
             else
@@ -269,7 +269,7 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                ViewBag.ErrorMessage = $"{id} لا يوجد مستخدم بالرقم المرجعى  ";
                 return View("NotFound");
             }
             else
@@ -292,14 +292,14 @@ namespace EcoFive.UI.Controllers
         }
 
         [HttpPost]
-        [Authorize(policy: "DeletePolePolicy")]
+        //[Authorize(policy: "DeletePolePolicy")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                ViewBag.ErrorMessage = $"{id} لا يوجد دور بالرقم المرجعى  ";
                 return View("NotFound");
             }
             else
@@ -323,15 +323,15 @@ namespace EcoFive.UI.Controllers
                 catch (DbUpdateException ex)
                 {
                     _logger.LogError($"Exception Occured : {ex}");
-                    ViewBag.ErrorTitle = $"{role.Name} role is in use";
-                    ViewBag.ErrorMessage = $"{role.Name} role cannot be deleted as there are users in this role. If you want to delete this role, please remove the users from the role and then try to delete";
+                    ViewBag.ErrorTitle = $"{role.Name} الدور المختار لديه مستخدمين";
+                    ViewBag.ErrorMessage = $" اذا كنت بحاجه لمسح الدور يرجى حذف المستخدمين اولا";
                     return View("Error");
                 }
             }
         }
 
         [HttpGet]
-        [Authorize(policy: "EditPolePolicy")]
+        //[Authorize(policy: "EditPolePolicy")]
         public async Task<IActionResult> ManageUserRoles(string userId)
         {
             ViewBag.userId = userId;
@@ -340,7 +340,7 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                ViewBag.ErrorMessage = $"{userId} لا يوجد مستخدم بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
@@ -377,7 +377,8 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                ViewBag.ErrorMessage = $"{userId} لا يوجد مستخدم بالرقم المرجعى  ";
+
                 return View("NotFound");
             }
 
@@ -386,7 +387,7 @@ namespace EcoFive.UI.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Cannot remove user existing roles");
+                ModelState.AddModelError("", "لا يمكن إزالة الأدوار الحالية للمستخدم");
                 return View(model);
             }
 
@@ -395,7 +396,7 @@ namespace EcoFive.UI.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Cannot add selected roles to user");
+                ModelState.AddModelError("", "لا يمكن إضافة الأدوار المحددة للمستخدم");
                 return View(model);
             }
 
@@ -409,11 +410,10 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                ViewBag.ErrorMessage = $"{userId} لا يوجد مستخدم بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
-            // UserManager service GetClaimsAsync method gets all the current claims of the user
             var existingUserClaims = await _userManager.GetClaimsAsync(user);
 
             var model = new UserClaimsViewModel
@@ -421,7 +421,6 @@ namespace EcoFive.UI.Controllers
                 UserId = userId
             };
 
-            // Loop through each claim we have in our application
             foreach (Claim claim in ClaimsStore.AllClaims)
             {
                 UserClaim userClaim = new UserClaim
@@ -429,8 +428,6 @@ namespace EcoFive.UI.Controllers
                     ClaimType = claim.Type
                 };
 
-                // If the user has the claim, set IsSelected property to true, so the checkbox
-                // next to the claim is checked on the UI
                 if (existingUserClaims.Any(c => c.Type == claim.Type && c.Value == "true"))
                 {
                     userClaim.IsSelected = true;
@@ -450,27 +447,25 @@ namespace EcoFive.UI.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {model.UserId} cannot be found";
+                ViewBag.ErrorMessage = $"{model.UserId} لا يوجد مستخدم بالرقم المرجعى  ";
                 return View("NotFound");
             }
 
-            // Get all the user existing claims and delete them
             var claims = await _userManager.GetClaimsAsync(user);
             var result = await _userManager.RemoveClaimsAsync(user, claims);
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Cannot remove user existing claims");
+                ModelState.AddModelError("", "لايمكن ازاله الادوار الفرعية للمستخدم");
                 return View(model);
             }
 
-            // Add all the claims that are selected on the UI
             result = await _userManager.AddClaimsAsync(user,
                 model.Cliams.Select(c => new Claim(c.ClaimType, c.IsSelected ? "true" : "false")));
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Cannot add selected claims to user");
+                ModelState.AddModelError("", "لايمكن اضافه الدور الفرعى للمستخدم");
                 return View(model);
             }
 

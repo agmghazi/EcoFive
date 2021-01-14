@@ -37,7 +37,7 @@ namespace EcoFive.UI.Controller
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<RedirectToActionResult> Index(List<IFormFile> files)
+        public async Task<IActionResult> Index(List<IFormFile> files)
         {
             var size = files.Sum(f => f.Length);
 
@@ -57,7 +57,7 @@ namespace EcoFive.UI.Controller
                 }
             }
 
-            return RedirectToAction("Index", files.Count);
+            return RedirectToAction("Index");
         }
 
         public FileResult DownloadFile(string fileName)

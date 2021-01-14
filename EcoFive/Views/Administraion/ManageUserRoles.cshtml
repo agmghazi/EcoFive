@@ -7,7 +7,7 @@
 <form method="post">
     <div class="card">
         <div class="card-header">
-            <h2>Manage User Roles</h2>
+            <h2>تعديل الادوار</h2>
         </div>
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)
@@ -24,10 +24,11 @@
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
-            <input type="submit" value="Update" class="btn btn-primary"
-                   style="width:auto" />
             <a asp-action="EditUser" asp-route-id="@userId"
-               class="btn btn-primary" style="width:auto">Cancel</a>
+               class="btn btn-danger" style="width:auto">الغاء</a>
+            <input type="submit" value="تعديل" class="btn btn-primary"
+                   style="width:auto" />
+
         </div>
     </div>
 </form>
