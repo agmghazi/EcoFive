@@ -65,9 +65,9 @@
                                     <div asp-validation-summary="All" class="alert alert-danger text-right"></div>
 
                                     <div class="form-group text-right">
-                                        <label asp-for="Email">البريد الإلكتروني</label>
-                                        <input asp-for="Email" class="form-control text-right pr-5" tabindex="1" required autofocus placeholder="ادخل البريد الالكترونى">
-                                        <span asp-validation-for="Email"></span>
+                                        <label asp-for="UserName">اسم المستخدم</label>
+                                        <input asp-for="UserName" class="form-control text-right" tabindex="1" required autofocus placeholder="ادخل اسم المستخدم">
+                                        <span asp-validation-for="UserName"></span>
 
                                     </div>
                                     <div class="form-group text-right">
@@ -77,7 +77,7 @@
                                         <div class="d-block">
                                             <label asp-for="Password" class="control-label ">كلمة المرور</label>
                                         </div>
-                                        <input asp-for="Password" class="form-control text-right pr-5" name="password" tabindex="2" required placeholder="ادخل كلمة المرور">
+                                        <input asp-for="Password" class="form-control text-right" name="password" tabindex="2" required placeholder="ادخل كلمة المرور">
                                         <span asp-validation-for="Password"></span>
 
                                     </div>
@@ -101,7 +101,7 @@
                                                      asp-font-size="14"
                                                      asp-fore-color="#333333"
                                                      asp-back-color="#ccc"
-                                                     asp-text-box-class=" form-control text-right pr-5 "
+                                                     asp-text-box-class=" form-control text-right "
                                                      asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span ></span>{0}"
                                                      asp-validation-message-class="text-danger"
                                                      asp-use-noise="false" />

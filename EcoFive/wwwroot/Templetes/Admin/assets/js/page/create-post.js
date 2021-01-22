@@ -1,6 +1,5 @@
 "use strict";
 
-$("select").selectric();
 $.uploadPreview({
   input_field: "#image-upload",   // Default: .image-upload
   preview_box: "#image-preview",  // Default: .image-preview

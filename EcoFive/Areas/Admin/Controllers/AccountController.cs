@@ -1,17 +1,23 @@
 ﻿using DNTCaptcha.Core;
 using DNTCaptcha.Core.Providers;
 using EcoFive.Models.Models;
+using EcoFive.Models.Repository;
+using EcoFive.UI.Areas.Admin.ViewModels;
 using EcoFive.UI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace EcoFive.UI.Areas.Admin.Controllers
 {
@@ -22,16 +28,22 @@ namespace EcoFive.UI.Areas.Admin.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AccountController> _logger;
         private readonly IDNTCaptchaValidatorService _validatorService;
+        private readonly IAccountRepository _accountRepository;
+        private IHostingEnvironment _environment;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<AccountController> logger,
-            IDNTCaptchaValidatorService validatorService)
+            IDNTCaptchaValidatorService validatorService,
+            IAccountRepository accountRepository,
+            IHostingEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _validatorService = validatorService;
+            _accountRepository = accountRepository;
+            _environment = hostingEnvironment;
         }
 
         [AllowAnonymous]
@@ -64,11 +76,54 @@ namespace EcoFive.UI.Areas.Admin.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> IsUserCangeCurrentInUse(string userName)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentuserName = currentUser.UserName;
+            if (currentuserName == userName)
+            {
+                return Json(true);
+
+            }
+            else
+            {
+                var user = await _userManager.FindByNameAsync(userName);
+                if (user == null && currentuserName == userName)
+                {
+                    return Json(true);
+                }
+                else
+                {
+                    return Json("اسم المستخدم مستخدم .. يرجى التغير");
+                }
+            }
+
+        }
+
+        [AllowAnonymous]
+        [AcceptVerbs("Get")]
+        public IActionResult FindGovernorates(int id)
+        {
+            var governorates = _accountRepository.GetGovernorate(id);
+            return new JsonResult(governorates);
+        }
+
+        [AllowAnonymous]
+        [AcceptVerbs("Get")]
+        public IActionResult Findcities(int id)
+        {
+            var cities = _accountRepository.GetCity(id);
+            return new JsonResult(cities);
+        }
 
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
         {
+            var countries = _accountRepository.GetAllCountries();
+            ViewBag.Countries = countries;
             return View();
         }
 
@@ -88,14 +143,20 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                 {
                     UserName = model.UserName,
                     Email = model.Email,
-                    City = model.City,
+                    CountryId = model.CountryId,
+                    GovernorateId = model.GovernorateId,
+                    CityId = model.CityId,
                     FullName = model.FirstName + " " + model.LastName,
-                    PhoneNumber = model.PhoneNumber
+                    PhoneNumber = model.PhoneNumber,
+                    Supplier = model.Supplier
 
                 };
-
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+
+                // add user role when create new account
+                var addRole = await _userManager.AddToRoleAsync(user, "User");
+
+                if (result.Succeeded && addRole.Succeeded)
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -104,23 +165,10 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
 
                     //config and send mail to client
-                    using (MailMessage message = new MailMessage("gis.csharp@gmail.com", model.Email))
-                    {
-                        message.Subject = " تفعيل حسابك بمنصة EcoFive";
-                        message.IsBodyHtml = true;
-                        message.Body =
-                            $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">{user.FullName} اهلا بك&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp;.نشكرك على انضمامك معنا &nbsp;{user.Email} &nbsp;يرجى تفعيل الاميل&nbsp;</span></p>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div data-empty=\"true\" style=\"text-align: center;\"><span style=\"color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\">&nbsp;</span><a href=\"{confirmationLink}\" rel=\"noopener noreferrer\" target=\"_blank\"><span style='color: rgb(97, 189, 109); font-family: \"Arial Black\", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتفعيل اضغط هنا</span><span style=\"font-family: 'Arial Black', Gadget, sans-serif;\"><span style=\"color: rgb(97, 189, 109);\">&nbsp;<br></span></span></a></div>\r\n                <p style=\"text-align: center;\"><span style=\"font-size: 22px;\">اذا واجهك اى مشكله بالتفعيل من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>\r\n                <p style=\"text-align: center;\"><a href=\"//{confirmationLink}\">{confirmationLink}</a></p>\r\n                <p style=\"text-align: center;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp; تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه التسجيل يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>";
-                        using (SmtpClient smtp = new SmtpClient())
-                        {
-                            smtp.Host = "smtp.gmail.com";
-                            smtp.EnableSsl = true;
-                            NetworkCredential credential = new NetworkCredential("gis.csharp@gmail.com", "Dev**27med20100");
-                            smtp.UseDefaultCredentials = true;
-                            smtp.Credentials = credential;
-                            smtp.Port = 587;
-                            smtp.Send(message);
-                        }
-                    }
+                    var messageBody =
+                                  $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">{user.FullName} اهلا بك&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp;.نشكرك على انضمامك معنا &nbsp;{user.Email} &nbsp;يرجى تفعيل الاميل&nbsp;</span></p>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div data-empty=\"true\" style=\"text-align: center;\"><span style=\"color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\">&nbsp;</span><a href=\"{confirmationLink}\" rel=\"noopener noreferrer\" target=\"_blank\"><span style='color: rgb(97, 189, 109); font-family: \"Arial Black\", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتفعيل اضغط هنا</span><span style=\"font-family: 'Arial Black', Gadget, sans-serif;\"><span style=\"color: rgb(97, 189, 109);\">&nbsp;<br></span></span></a></div>\r\n                <p style=\"text-align: center;\"><span style=\"font-size: 22px;\">اذا واجهك اى مشكله بالتفعيل من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>\r\n                <p style=\"text-align: center;\"><a href=\"//{confirmationLink}\">{confirmationLink}</a></p>\r\n                <p style=\"text-align: center;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp; تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه التسجيل يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>";
+
+                    SendMail("gis.csharp@gmail.com", model.Email, " تفعيل حسابك بمنصة EcoFive", messageBody);
 
                     //_logger.Log(LogLevel.Warning, confirmationLink);
 
@@ -140,6 +188,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            ViewBag.Countries = _accountRepository.GetAllCountries();
             return View(model);
         }
 
@@ -182,7 +231,8 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                     }
                 }
 
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByNameAsync(model.UserName);
+
                 if (user != null && !user.EmailConfirmed &&
                     (await _userManager.CheckPasswordAsync(user, model.Password)))
                 {
@@ -192,26 +242,33 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                 }
 
                 var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password,
+                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password,
                         model.RememberMe, true);
 
                 if (result.Succeeded)
                 {
-                    if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
-                    {
-                        ModelState.AddModelError("", "عفوا غير مصرح لك بالدخول");
-
-                        return View(model);
-                    }
 
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) //to close redirect attacks
                     {
                         return Redirect(returnUrl);
-                    }
 
-                    else
+                    }
+                    else if (user.CloseAccount == true)
+                    {
+                        ModelState.AddModelError("", "حسابك موقوف. يرجى الاتصال بالدعم ");
+
+                        return View(model);
+
+                    }
+                    else if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
                     {
                         return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "عفوا غير مصرح لك بالدخول");
+
+                        return View(model);
                     }
                 }
 
@@ -221,7 +278,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "خطئ فى كلمه المرور او البريد الالكترونى ");
+                    ModelState.AddModelError(string.Empty, "خطئ فى كلمه المرور أو البريد الالكترونى ");
                 }
             }
 
@@ -364,36 +421,38 @@ namespace EcoFive.UI.Areas.Admin.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-
                 //send mail
                 var fullName = user.FullName;
                 var userName = user.UserName;
                 var email = user.Email;
                 var phoneNumber = user.PhoneNumber;
+                var city = _accountRepository.GetCurrentCity(user.CityId);
+                var governorate = _accountRepository.GetCurrentGovernorate(user.GovernorateId);
+                var Country = _accountRepository.GetCurrentCountry(user.CountryId);
 
-                //config and send mail to client
-                using (MailMessage message = new MailMessage("gis.csharp@gmail.com", email))
+
+                if (user.Supplier == true)
                 {
-                    message.Subject = " معلومات حسابك بمنصة EcoFive";
-                    message.IsBodyHtml = true;
-                    message.Body = $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\"> {fullName} مرحبا&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\">&nbsp; &nbsp;</div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp; &nbsp; نهنئك تم تفعيل حسابك بنجاح ونرجوا الاحتفاظ بهذه المعلومات بسريه تامه&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{userName} :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{fullName} &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{phoneNumber} : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;{email} &nbsp; : &nbsp;<strong>البريد الالكترونى&nbsp; &nbsp;&nbsp;</strong></span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp;&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp;تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه تاكيد البريد الالكترونى &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>\r\n<p><br></p>";
+                    //config and send mail to client
+                    var messageSupplierBody = $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\"> {fullName} مرحبا&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\">&nbsp; &nbsp;</div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp; &nbsp;<span style=\"color: rgb(34, 34, 34); font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; font-size: 24px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">نهنئك تم تفعيل حسابك بنجاح ونرجوا الاحتفاظ بهذه المعلومات بسريه تامه</span> &nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 12px;\">&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp; &nbsp;<span style=\"color: rgb(34, 34, 34); font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; font-size: 24px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">&nbsp; &nbsp;وتم ارسال طلب لتفعيل حسابك كمورد. &nbsp;وسيتم الرد فى القريب العاجل نشكرك لانضامك معنا&nbsp;</span> &nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{userName} :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{fullName} &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{phoneNumber} : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;{email} &nbsp; : &nbsp;<strong>البريد الالكترونى &nbsp; &nbsp;</strong></span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style='color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>{Country} &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>الدولة &nbsp; &nbsp;</strong>&nbsp;</p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style='color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>{governorate} &nbsp; : &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المحافظة &nbsp; &nbsp;</strong>&nbsp;</p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style='color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>{city} &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المدينة &nbsp; &nbsp;</strong>&nbsp;</p>\r\n                <p style=\"text-align: right; line-height: 1;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp;تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تكن الشخص الموجة له البريد الالكترونى &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>\r\n<p><br></p>";
 
-                    using (SmtpClient smtp = new SmtpClient())
-                    {
-                        smtp.Host = "smtp.gmail.com";
-                        smtp.EnableSsl = true;
-                        NetworkCredential credential = new NetworkCredential("gis.csharp@gmail.com", "Dev**27med20100");
-                        smtp.UseDefaultCredentials = true;
-                        smtp.Credentials = credential;
-                        smtp.Port = 587;
-                        smtp.Send(message);
-                    }
-                    return View();
+                    SendMail("gis.csharp@gmail.com", email, " معلومات حسابك بمنصة EcoFive", messageSupplierBody);
+
+                    //config and send mail to client
+                    var messageSuperAdminBody = $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">مرحبا مدير المنصة&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\">&nbsp; &nbsp;</div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp; &nbsp; مورد جديد بحاجه للمراجعة.&nbsp; يرجى الانتقال للوحه تحكم المنصة ومراجعة البيانات&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 12px;\">&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp; &nbsp;وفيما يلى بيانات المورد الجديد&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{userName} :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{fullName} &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{phoneNumber} : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;{email} &nbsp; : &nbsp;<strong>البريد الالكترونى &nbsp; &nbsp;</strong></span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style='color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>{Country} &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>الدولة &nbsp; &nbsp;</strong>&nbsp;</p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style='color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>{governorate} &nbsp; : &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المحافظة &nbsp; &nbsp;</strong>&nbsp;</p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style='color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>{city} &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: \"Times New Roman\"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المدينة &nbsp; &nbsp;</strong>&nbsp;</p>\r\n                <p style=\"text-align: right; line-height: 1;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp;تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تكن الشخص الموجة له البريد الالكترونى&nbsp; يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>\r\n<p><br></p>";
+
+                    SendMail("gis.csharp@gmail.com", "agmghazi@hotmail.com", " طلب انضمام مورد جديد EcoFive", messageSuperAdminBody);
+                }
+                else
+                {
+                    //config and send mail to client
+                    var clientMessageBody = $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\"> {fullName} مرحبا&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\">&nbsp; &nbsp;</div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp; &nbsp; نهنئك تم تفعيل حسابك بنجاح ونرجوا الاحتفاظ بهذه المعلومات بسريه تامه&nbsp;</span></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{userName} :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{fullName} &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">{phoneNumber} : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 20px;\">&nbsp;{email} &nbsp; : &nbsp;<strong>البريد الالكترونى&nbsp; &nbsp;&nbsp;</strong></span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp;&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp;تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه تاكيد البريد الالكترونى &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>\r\n<p><br></p>";
+
+                    SendMail("gis.csharp@gmail.com", email, " معلومات حسابك بمنصة EcoFive", clientMessageBody);
 
                 }
 
-                //await _signInManager.SignInAsync(user, isPersistent: false);
-                //return RedirectToAction("Index", "Home");
+                return View();
             }
 
             ViewBag.ErrorTitle = "لا يمكن تفعيل حسابك";
@@ -434,23 +493,9 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                     var passwordResetLink = Url.Action("ResetPassword", "Account",
                         new { email = model.Email, token = token }, Request.Scheme);
 
-                    using (MailMessage message = new MailMessage("gis.csharp@gmail.com", model.Email))
-                    {
-                        message.Subject = " تغير كلمه مرور حسابك بمنصة EcoFive";
-                        message.IsBodyHtml = true;
-                        message.Body = $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\"> {fullName} مرحبا&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp;. {model.Email} &nbsp;وصلنا طلب لتغير كلمه المرور الخاصة بالاميل&nbsp;</span></p>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div data-empty=\"true\" style=\"text-align: center;\"><span style=\"color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\">&nbsp;</span><a href=\"{passwordResetLink}\" rel=\"noopener noreferrer\" target=\"_blank\"><span style='color: rgb(97, 189, 109); font-family: \"Arial Black\", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتغير اضغط هنا</span><span style=\"font-family: 'Arial Black', Gadget, sans-serif;\"><span style=\"color: rgb(97, 189, 109);\">&nbsp;<br></span></span></a></div>\r\n                <p style=\"text-align: center;\"><span style=\"font-size: 22px;\">اذا واجهك اى مشكله بتغير كلمه المرور من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>\r\n                <p style=\"text-align: center;\"><a href=\"//{passwordResetLink}\">{passwordResetLink}</a></p>\r\n                <p style=\"text-align: center;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp; تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه تغير كلمه المرور&nbsp; يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>";
+                    var messageBody = $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\"> {fullName} مرحبا&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp;. {model.Email} &nbsp;وصلنا طلب لتغير كلمه المرور الخاصة بالاميل&nbsp;</span></p>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div data-empty=\"true\" style=\"text-align: center;\"><span style=\"color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\">&nbsp;</span><a href=\"{passwordResetLink}\" rel=\"noopener noreferrer\" target=\"_blank\"><span style='color: rgb(97, 189, 109); font-family: \"Arial Black\", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتغير اضغط هنا</span><span style=\"font-family: 'Arial Black', Gadget, sans-serif;\"><span style=\"color: rgb(97, 189, 109);\">&nbsp;<br></span></span></a></div>\r\n                <p style=\"text-align: center;\"><span style=\"font-size: 22px;\">اذا واجهك اى مشكله بتغير كلمه المرور من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>\r\n                <p style=\"text-align: center;\"><a href=\"//{passwordResetLink}\">{passwordResetLink}</a></p>\r\n                <p style=\"text-align: center;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp; تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه تغير كلمه المرور&nbsp; يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>";
 
-                        using (SmtpClient smtp = new SmtpClient())
-                        {
-                            smtp.Host = "smtp.gmail.com";
-                            smtp.EnableSsl = true;
-                            NetworkCredential credential = new NetworkCredential("gis.csharp@gmail.com", "Dev**27med20100");
-                            smtp.UseDefaultCredentials = true;
-                            smtp.Credentials = credential;
-                            smtp.Port = 587;
-                            smtp.Send(message);
-                        }
-                    }
+                    SendMail("gis.csharp@gmail.com", model.Email, " تغير كلمه مرور حسابك بمنصة EcoFive", messageBody);
 
                     // Log the password reset link
                     //_logger.Log(LogLevel.Warning, passwordResetLink);
@@ -522,9 +567,135 @@ namespace EcoFive.UI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangeCurrentProfile()
         {
 
+            var countries = _accountRepository.GetAllCountries();
+            ViewBag.Countries = countries;
+
+            ViewBag.City = _accountRepository.GetAllCites();
+            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var model = new ChangeCurrentProfileViewModel
+            {
+                CityId = user.CityId,
+                CountryId = user.CountryId,
+                GovernorateId = user.GovernorateId,
+                Email = user.Email,
+                FullName = user.FullName,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeCurrentProfile(ChangeCurrentProfileViewModel model)
+        {
+            ViewBag.Countries = _accountRepository.GetAllCountries();
+
+            ViewBag.City = _accountRepository.GetAllCites();
+            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+
+
+            if (ModelState.IsValid)
+            {
+                ViewBag.Countries = _accountRepository.GetAllCountries();
+
+                ViewBag.City = _accountRepository.GetAllCites();
+                ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return RedirectToAction("Login");
+                }
+
+
+                user.CityId = model.CityId;
+                user.CountryId = model.CountryId;
+                user.GovernorateId = model.GovernorateId;
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+                user.UserName = model.UserName;
+                user.PhoneNumber = model.PhoneNumber;
+
+                if (model.PhotoPath != null)
+                {
+                    var content = model.PhotoPath.ContentType;
+                    if (content == "image/JPG" || content == "image/jpeg" || content == "image/png")
+                    {
+                        if (user.PhotoPath == null || user.PhotoPath == "")
+                        {
+                        }
+                        else
+                        {
+                            string filePath = Path.Combine(_environment.WebRootPath, "Files/Users/ProfileImages", user.PhotoPath);
+
+                            System.IO.File.Delete(filePath);
+                        }
+                        user.PhotoPath = ProcessUploadedFile(model);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "jpg , jpeg , png يرجى اختيار الصوره بصيغ");
+                        return View(model);
+
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(model.NewPassword) && string.IsNullOrWhiteSpace(model.ConfirmPassword))
+                {
+                    var checkCurrentPassword = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+
+                    if (!checkCurrentPassword)
+                    {
+                        ModelState.AddModelError(string.Empty, "كلمه المرور الحالية غير صحيحه");
+                        return View(model);
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(model.NewPassword) && !string.IsNullOrWhiteSpace(model.ConfirmPassword))
+                        {
+                            var passwordResult = await _userManager.ChangePasswordAsync(user,
+                                model.CurrentPassword, model.NewPassword);
+                            if (!passwordResult.Succeeded)
+                            {
+                                ModelState.AddModelError(string.Empty, "حدث خطئ");
+                            }
+                        }
+
+                        var userResult = await _userManager.UpdateAsync(user);
+
+                        if (userResult.Succeeded)
+                        {
+                            ViewBag.Message = "تم التحديث بنجاح";
+                        }
+                        else
+                        {
+                            foreach (var error in userResult.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                        }
+                        await _signInManager.RefreshSignInAsync(user);
+                    }
+                }
+            };
+            return View(model);
+
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword(string id)
+        {
             return View();
         }
 
@@ -533,30 +704,70 @@ namespace EcoFive.UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.GetUserAsync(User);
+                var user = await _userManager.FindByIdAsync(model.Id);
+
                 if (user == null)
                 {
                     return RedirectToAction("Login");
                 }
 
-                // ChangePasswordAsync changes the user password
-                var result = await _userManager.ChangePasswordAsync(user,
-                    model.CurrentPassword, model.NewPassword);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, "كلمه المرور السابقه غير صحيحه");
-                    }
-                    return View();
-                }
+                await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
 
-                await _signInManager.RefreshSignInAsync(user);
                 return View("ChangePasswordConfirmation");
             }
 
             return View(model);
         }
+
+
+        public static void SendMail(string currentMail, string toMail, string subject, string body)
+        {
+            //config and send mail to client
+            using (MailMessage message = new MailMessage(currentMail, toMail))
+            {
+                message.Subject = subject;
+                message.IsBodyHtml = true;
+                message.Body = body;
+
+                using (SmtpClient smtp = new SmtpClient())
+                {
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential credential = new NetworkCredential(currentMail, "Dev**27med20100");
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = credential;
+                    smtp.Port = 587;
+                    smtp.Send(message);
+                }
+            }
+
+        }
+
+        private string ProcessUploadedFile(ChangeCurrentProfileViewModel model)
+        {
+            string uniqueFileName = null;
+            if (model.PhotoPath != null)
+            {
+                string uploadFolder = Path.Combine(_environment.WebRootPath, "Files/Users/ProfileImages");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.PhotoPath.FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                using var image = Image.Load(model.PhotoPath.OpenReadStream());
+                image.Mutate(x => x.Resize(200, 200));
+                image.Metadata.HorizontalResolution = 96;
+                image.Metadata.VerticalResolution = 96;
+                image.Save(filePath);
+
+                //using (var fileSream = new FileStream(filePath, FileMode.Create))
+                //{
+                //    model.PhotoPath.CopyTo(fileSream);
+                //}
+            }
+
+            return uniqueFileName;
+        }
+
     }
 }

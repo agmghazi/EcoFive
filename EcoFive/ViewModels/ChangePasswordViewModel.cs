@@ -4,11 +4,8 @@ namespace EcoFive.UI.ViewModels
 {
     public class ChangePasswordViewModel
     {
-        [Required(ErrorMessage = "يرجى ادخال المرور السابقه ")]
-        [Display(Name = "كلمه المرور السابقه")]
-        [DataType(DataType.Password)]
-        public string CurrentPassword { get; set; }
 
+        public string Id { set; get; }
         [Required(ErrorMessage = "يرجى ادخال المرور الجديدة ")]
         [Display(Name = "كلمه المرور الجديدة")]
         [DataType(DataType.Password)]

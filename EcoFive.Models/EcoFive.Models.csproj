@@ -5,18 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210111064503_seedSadminAndRole.cs" />
-    <Compile Remove="Migrations\20210111064503_seedSadminAndRole.Designer.cs" />
-    <Compile Remove="Migrations\20210111072343_seedSadminAndRole.cs" />
-    <Compile Remove="Migrations\20210111072343_seedSadminAndRole.Designer.cs" />
-    <Compile Remove="Migrations\20210111075504_seedSadminAndRole.cs" />
-    <Compile Remove="Migrations\20210111075504_seedSadminAndRole.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Admin\Models\" />
     <Folder Include="Admin\Repository\" />
-    <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>

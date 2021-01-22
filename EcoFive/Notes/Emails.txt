@@ -56,7 +56,6 @@
 
 ----- after confirm email
 
-
 <p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
 <table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
     <tbody>
@@ -76,6 +75,75 @@
                 <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;تحياتنا&nbsp;</span></p>
                 <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
                 <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تقم بعمليه تغير كلمه المرور &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
+                <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
+<p><br></p>
+
+
+--send to  supplier
+<p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
+<table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
+    <tbody>
+        <tr>
+            <td style="width: 100%; border: 2px solid rgb(0, 0, 0);">
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">مرحبا احمد جمال&nbsp;</span></div>
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;">&nbsp; &nbsp;</div>
+                <div style="text-align: right;"><span style="font-size: 24px;">&nbsp; &nbsp;<span style="color: rgb(34, 34, 34); font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; font-size: 24px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">نهنئك تم تفعيل حسابك بنجاح ونرجوا الاحتفاظ بهذه المعلومات بسريه تامه</span> &nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 12px;">&nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">&nbsp; &nbsp;<span style="color: rgb(34, 34, 34); font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; font-size: 24px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">&nbsp; &nbsp;وتم ارسال طلب لتفعيل حسابك كمورد. &nbsp;وسيتم الرد فى القريب العاجل نشكرك لانضامك معنا&nbsp;</span> &nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 20px;">&nbsp;</span></div>
+                <p style="text-align: right;"><span style="font-size: 20px;">agmghazi :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">ahmed gamal &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">0534740221 : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">&nbsp;gis.csharp@gmail.com &nbsp; : &nbsp;<strong>البريد الالكترونى &nbsp; &nbsp;</strong></span></p>
+                <p style="text-align: right; line-height: 1;"><span style='color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>saudi arabia &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>الدولة &nbsp; &nbsp;</strong>&nbsp;</p>
+                <p style="text-align: right; line-height: 1;"><span style='color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>riyadh &nbsp; : &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المحافظة &nbsp; &nbsp;</strong>&nbsp;</p>
+                <p style="text-align: right; line-height: 1;"><span style='color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>malikfahd &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المدينة &nbsp; &nbsp;</strong>&nbsp;</p>
+                <p style="text-align: right; line-height: 1;"><br></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;تحياتنا&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
+                <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تكن الشخص الموجة له البريد الالكترونى &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
+                <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
+<p><br></p>
+
+
+---confirm supplier
+
+<p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
+<table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
+    <tbody>
+        <tr>
+            <td style="width: 100%; border: 2px solid rgb(0, 0, 0);">
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">مرحبا احمد جمال&nbsp;</span></div>
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;">&nbsp; &nbsp;</div>
+                <div style="text-align: right;"><span style="font-size: 24px;">&nbsp; &nbsp; مورد جديد بحاجه للمراجعة.&nbsp; يرجى الانتقال للوحه تحكم المنصة ومراجعة البيانات&nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 12px;">&nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">&nbsp; &nbsp;وفيما يلى بيانات المورد الجديد&nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 20px;">&nbsp;</span></div>
+                <p style="text-align: right;"><span style="font-size: 20px;">agmghazi :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">ahmed gamal &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">0534740221 : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">&nbsp;gis.csharp@gmail.com &nbsp; : &nbsp;<strong>البريد الالكترونى &nbsp; &nbsp;</strong></span></p>
+                <p style="text-align: right; line-height: 1;"><span style='color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>saudi arabia &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>الدولة &nbsp; &nbsp;</strong>&nbsp;</p>
+                <p style="text-align: right; line-height: 1;"><span style='color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>riyadh &nbsp; : &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المحافظة &nbsp; &nbsp;</strong>&nbsp;</p>
+                <p style="text-align: right; line-height: 1;"><span style='color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>malikfahd &nbsp; &nbsp;: &nbsp;</span><strong style='font-weight: 700; color: rgb(0, 0, 0); font-family: "Times New Roman"; font-size: 20px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: right; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>المدينة &nbsp; &nbsp;</strong>&nbsp;</p>
+                <p style="text-align: right; line-height: 1;"><br></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;تحياتنا&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
+                <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تكن الشخص الموجة له البريد الالكترونى&nbsp; يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
                 <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
             </td>
         </tr>

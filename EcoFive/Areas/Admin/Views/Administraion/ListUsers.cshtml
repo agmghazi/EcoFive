@@ -1,0 +1,196 @@
+﻿@model IEnumerable<ApplicationUser>
+@inject UserManager<ApplicationUser> _userManager
+@inject IAccountRepository _accountRepository
+
+
+@{
+    ViewBag.Title = "جميع المستخدمين";
+
+}
+
+@if (Model.Any())
+{
+
+    <div class="card">
+        <div class="text-right mt-4 ">
+
+            <div class="card-header">
+                <h2 class="mb-4">جميع المستخدمين</h2>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary" style="width: auto">
+                    إضافة مستخدم جديد
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-right" id="tableExport" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>العمليات</th>
+                            <th>طلب انضمام</th>
+                            <th>الدور</th>
+                            <th>تفعيل الحساب</th>
+                            <th> تسجيل دخول خطئ</th>
+                            <th>تفعيل الاميل</th>
+                            <th>المدينة</th>
+                            <th>المحافظة</th>
+                            <th>الدوله</th>
+                            <th>رقم الهاتف</th>
+                            <th>الاسم كامل</th>
+                            <th>البريد الالكترونى</th>
+                            <th>اسم المستخدم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var user in Model)
+                        {
+                            var roles = await _userManager.GetRolesAsync(user);
+                            if (roles.Count > 0)
+                            {
+                                foreach (var role in roles)
+                                {
+                                    <form asp-controller="Administraion" asp-action="DeleteUser" asp-route-id="@user.Id">
+
+                                        @if (role == "SuperAdmin" || role == "Admin")
+                                        {
+                                            <tr class="bg-info text-black font-weight-bold">
+                                                <td>
+
+                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
+                                                </td>
+                                                <td>@user.Supplier</td>
+                                                <td>@role</td>
+                                                <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+                                                <td>@user.AccessFailedCount</td>
+                                                <td>@user.EmailConfirmed</td>
+                                                <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
+                                                <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
+                                                <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
+                                                <td>@user.PhoneNumber</td>
+                                                <td>@user.FullName</td>
+                                                <td>@user.Email</td>
+                                                <td>@user.UserName</td>
+                                            </tr>
+
+                                        }
+                                        else if (role == "User")
+                                        {
+                                            if (user.Supplier == true)
+                                            {
+                                                <tr class="bg-brown text-black font-weight-bold">
+                                                    <td>
+
+                                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
+                                                    </td>
+
+                                                    <td>@user.Supplier</td>
+                                                    <td>@role</td>
+                                                    <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+
+                                                    <td>@user.AccessFailedCount</td>
+                                                    <td>@user.EmailConfirmed</td>
+                                                    <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
+                                                    <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
+                                                    <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
+                                                    <td>@user.PhoneNumber</td>
+                                                    <td>@user.FullName</td>
+                                                    <td>@user.Email</td>
+                                                    <td>@user.UserName</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+
+                                                <tr>
+                                                    <td>
+
+                                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
+                                                    </td>
+                                                    <td>@user.Supplier</td>
+                                                    <td>@role</td>
+                                                    <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+
+                                                    <td>@user.AccessFailedCount</td>
+                                                    <td>@user.EmailConfirmed</td>
+                                                    <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
+                                                    <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
+                                                    <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
+                                                    <td>@user.PhoneNumber</td>
+                                                    <td>@user.FullName</td>
+                                                    <td>@user.Email</td>
+                                                    <td>@user.UserName</td>
+                                                </tr>
+                                            }
+                                        }
+
+
+                                    </form>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <form asp-controller="Administraion" asp-action="DeleteUser" asp-route-id="@user.Id">
+
+                                            <button type="submit" id="@user.Id" class="btn btn-danger" style="display: none">
+                                            </button>
+                                        </form>
+
+                                        <button type="button" onclick="confirmDelete('@user.Id')" class="btn btn-danger mb-1">
+                                            حذف
+                                        </button>
+
+                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-3">تعديل</a>
+                                    </td>
+
+                                    <td>@user.Supplier</td>
+                                    <td class="text-danger font-weight-bold">لا يوجد دور</td>
+                                    <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+
+                                    <td>@user.AccessFailedCount</td>
+                                    <td>@user.EmailConfirmed</td>
+                                    <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
+                                    <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
+                                    <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
+                                    <td>@user.PhoneNumber</td>
+                                    <td>@user.FullName</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.UserName</td>
+                                </tr>
+
+                            }
+
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            لا يوجد مستخدمين
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                لإضافة مستحدم اضغط على اضافة
+            </h5>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary">
+                إضافه مستحدم جديد
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/confirmDelete.js"></script>
+    <script src="~/js/changeStatus.js"></script>
+}
+

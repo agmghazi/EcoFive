@@ -11,7 +11,10 @@ namespace EcoFive.Models.Models
         {
 
         }
-
+        
+        public DbSet<City>Cities { set; get; }
+        public DbSet<Country>Countries { set; get; }
+        public DbSet<Governorate>Governorates { set; get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

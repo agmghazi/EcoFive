@@ -6,10 +6,9 @@ namespace EcoFive.UI.ViewModels
 {
     public class LoginViewModel
     {
-        [Display(Name = "البريد الالكترونى")]
-        [Required(ErrorMessage = "يرجى ادخال البريد الالكترونى")]
-        [EmailAddress(ErrorMessage = "يرجى ادخال البريد الالكترونى")]
-        public string Email { get; set; }
+        [Display(Name = "اسم المستخدم")]
+        [Required(ErrorMessage = "يرجى ادخال اسم المستخدم")]
+        public string UserName { get; set; }
 
         [Display(Name = "كلمه المرور")]
         [Required(ErrorMessage = "يرجى ادخال كلمه المرور")]

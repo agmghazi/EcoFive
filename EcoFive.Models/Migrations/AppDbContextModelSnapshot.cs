@@ -26,10 +26,14 @@ namespace EcoFive.Models.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("City");
+                    b.Property<int>("CityId");
+
+                    b.Property<bool>("CloseAccount");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -37,6 +41,8 @@ namespace EcoFive.Models.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FullName");
+
+                    b.Property<int>("GovernorateId");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -54,7 +60,11 @@ namespace EcoFive.Models.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("PhotoPath");
+
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("Supplier");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -62,6 +72,12 @@ namespace EcoFive.Models.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("GovernorateId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -78,18 +94,1249 @@ namespace EcoFive.Models.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "27029d7c-3ead-4868-9f98-15bd8ef90be9",
-                            Email = "Sadmin@Sadmin.com",
+                            CityId = 1,
+                            CloseAccount = false,
+                            ConcurrencyStamp = "b0c32a46-a138-465f-8b78-05ba6684412c",
+                            CountryId = 1,
+                            Email = "agmghazi@hotmail.com",
                             EmailConfirmed = true,
+                            GovernorateId = 1,
                             LockoutEnabled = false,
-                            NormalizedEmail = "SADMIN@SADMIN.COM",
-                            NormalizedUserName = "SADMIN@SADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJRreecwrGtgUjS3RN1uXaBIkv6CKadCGSDS/XJzXj4MPiUki3NkmqApLtvco9PFxg==",
-                            PhoneNumber = "",
-                            PhoneNumberConfirmed = false,
+                            NormalizedEmail = "AGMGHAZI@HOTMAIL.COM",
+                            NormalizedUserName = "AGMGHAZI",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHNhf9hbBM0o8CE2FnYSB+papvvFraAuw7xy0T0UdVPecaAHjBc4jBAEAqVzXIkWLQ==",
+                            PhoneNumber = "0534740221",
+                            PhoneNumberConfirmed = true,
                             SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
+                            Supplier = false,
                             TwoFactorEnabled = false,
-                            UserName = "Sadmin@Sadmin.com"
+                            UserName = "agmghazi"
+                        },
+                        new
+                        {
+                            Id = "02974cw0–9412–4nfe - afbf - 59f701d72cf6",
+                            AccessFailedCount = 0,
+                            CityId = 1,
+                            CloseAccount = false,
+                            ConcurrencyStamp = "5f24f8b3-f70a-43ec-850b-269472853d79",
+                            CountryId = 1,
+                            Email = "user1@hotmail.com",
+                            EmailConfirmed = true,
+                            GovernorateId = 1,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER1@HOTMAIL.COM",
+                            NormalizedUserName = "USER1",
+                            PasswordHash = "AQAAAAEAACcQAAAAENLoX7wEqO/BMyIDD9HowoQ2HW6wIUeYucqDNwP+0gpgDCjlTiDPY8LLGgfGOhItrQ==",
+                            PhoneNumber = "051265136845",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
+                            Supplier = false,
+                            TwoFactorEnabled = false,
+                            UserName = "user1"
+                        });
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId");
+
+                    b.Property<int>("GovernorateId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("GovernorateId");
+
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "رأس تنورة"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "الدمام"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "النعيرية"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "الخفجى"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "حفر الباطن"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "قرية العليا"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "الخبر"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "القطيف"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "الاحساء"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "الجبيل"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "بقيق"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CountryId = 1,
+                            GovernorateId = 1,
+                            Name = "العديد"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "غامد الزناد"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "المندق"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "المخواة"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "العقيق"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "قلوة"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "القرى"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "بني حسن"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "الحجرة"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CountryId = 1,
+                            GovernorateId = 12,
+                            Name = "بلجرشي"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CountryId = 1,
+                            GovernorateId = 11,
+                            Name = "سكاكا"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CountryId = 1,
+                            GovernorateId = 11,
+                            Name = "القريات"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CountryId = 1,
+                            GovernorateId = 11,
+                            Name = "دومة الجندل"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CountryId = 1,
+                            GovernorateId = 11,
+                            Name = "طبرجل"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CountryId = 1,
+                            GovernorateId = 10,
+                            Name = "عرعر"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CountryId = 1,
+                            GovernorateId = 10,
+                            Name = "طريف"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CountryId = 1,
+                            GovernorateId = 10,
+                            Name = "رفحاء"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CountryId = 1,
+                            GovernorateId = 10,
+                            Name = "العويقيلة"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CountryId = 1,
+                            GovernorateId = 10,
+                            Name = "جديدة عرعر"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CountryId = 1,
+                            GovernorateId = 10,
+                            Name = "شعبة نصاب"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الدرعية"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الخرج"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الدوادمى"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "المجمعة"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "القويعية"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "وادي الدواسر"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الأفلاج"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الزلفى"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "شقراء"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "حوطة بنى تميم"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "عفيف"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "السليل"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "ضرما"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "المزاحمية"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "رماح"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "ثادق"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "حريملاء"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الحريق"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الغاط"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "مرات"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الدلم"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            CountryId = 1,
+                            GovernorateId = 7,
+                            Name = "الرين"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "بريدة"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "عنيزة"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "الرس"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "المذنب"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "البكيرية"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "البدائع"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "الأسياح"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "النبهانية"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "عيون الجواء"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "الشماسية"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "عقلة الصقور"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            CountryId = 1,
+                            GovernorateId = 8,
+                            Name = "ضرية"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "ينبع"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "بدر"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "العلا"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "الحناكية"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "مهد الذهب"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "خيبر"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "العيص"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CountryId = 1,
+                            GovernorateId = 9,
+                            Name = "وادي الفرع"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CountryId = 1,
+                            GovernorateId = 13,
+                            Name = "تيماء"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CountryId = 1,
+                            GovernorateId = 13,
+                            Name = "ضباء"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CountryId = 1,
+                            GovernorateId = 13,
+                            Name = "الوجه"
+                        },
+                        new
+                        {
+                            Id = 78,
+                            CountryId = 1,
+                            GovernorateId = 13,
+                            Name = "حقل"
+                        },
+                        new
+                        {
+                            Id = 79,
+                            CountryId = 1,
+                            GovernorateId = 13,
+                            Name = "املج"
+                        },
+                        new
+                        {
+                            Id = 80,
+                            CountryId = 1,
+                            GovernorateId = 13,
+                            Name = "البدع"
+                        },
+                        new
+                        {
+                            Id = 81,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "صبيا"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "صامطة"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "أبو عريش"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "جازان"
+                        },
+                        new
+                        {
+                            Id = 85,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "أحد المسارحة"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "بيش"
+                        },
+                        new
+                        {
+                            Id = 87,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "العارضة"
+                        },
+                        new
+                        {
+                            Id = 88,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "ضمد"
+                        },
+                        new
+                        {
+                            Id = 89,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "الدرب"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "العيدابي"
+                        },
+                        new
+                        {
+                            Id = 91,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "الدائر"
+                        },
+                        new
+                        {
+                            Id = 92,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "الريث"
+                        },
+                        new
+                        {
+                            Id = 93,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "الحرث"
+                        },
+                        new
+                        {
+                            Id = 94,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "فرسان"
+                        },
+                        new
+                        {
+                            Id = 95,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "الطوال"
+                        },
+                        new
+                        {
+                            Id = 96,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "هروب"
+                        },
+                        new
+                        {
+                            Id = 97,
+                            CountryId = 1,
+                            GovernorateId = 6,
+                            Name = "فيفاء"
+                        },
+                        new
+                        {
+                            Id = 98,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "حائل"
+                        },
+                        new
+                        {
+                            Id = 99,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "بقعاء"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "قفار"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "الغزالة"
+                        },
+                        new
+                        {
+                            Id = 102,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "الشنان"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "موقق"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "الحائط"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "السليمي"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "الشملي"
+                        },
+                        new
+                        {
+                            Id = 107,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "سميراء"
+                        },
+                        new
+                        {
+                            Id = 108,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "الحليفة"
+                        },
+                        new
+                        {
+                            Id = 109,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "تربه"
+                        },
+                        new
+                        {
+                            Id = 110,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "جبة"
+                        },
+                        new
+                        {
+                            Id = 111,
+                            CountryId = 1,
+                            GovernorateId = 5,
+                            Name = "وسيطاء الحفن"
+                        },
+                        new
+                        {
+                            Id = 112,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "أبها"
+                        },
+                        new
+                        {
+                            Id = 113,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "خميس مشيط"
+                        },
+                        new
+                        {
+                            Id = 114,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "بيشة"
+                        },
+                        new
+                        {
+                            Id = 115,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "النماص"
+                        },
+                        new
+                        {
+                            Id = 116,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "أحد رفيدة"
+                        },
+                        new
+                        {
+                            Id = 117,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "بارق"
+                        },
+                        new
+                        {
+                            Id = 118,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "البرك"
+                        },
+                        new
+                        {
+                            Id = 119,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "بلقرن"
+                        },
+                        new
+                        {
+                            Id = 120,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "تثليث"
+                        },
+                        new
+                        {
+                            Id = 121,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "تنومة"
+                        },
+                        new
+                        {
+                            Id = 122,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "رجال ألمع"
+                        },
+                        new
+                        {
+                            Id = 123,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "الحرجة"
+                        },
+                        new
+                        {
+                            Id = 124,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "سراة عبيدة"
+                        },
+                        new
+                        {
+                            Id = 125,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "طريب"
+                        },
+                        new
+                        {
+                            Id = 126,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "ظهران الجنوب"
+                        },
+                        new
+                        {
+                            Id = 127,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "محايل عسير"
+                        },
+                        new
+                        {
+                            Id = 128,
+                            CountryId = 1,
+                            GovernorateId = 4,
+                            Name = "المجاردة"
+                        },
+                        new
+                        {
+                            Id = 129,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "مكه"
+                        },
+                        new
+                        {
+                            Id = 130,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "جدة"
+                        },
+                        new
+                        {
+                            Id = 131,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "الطائف"
+                        },
+                        new
+                        {
+                            Id = 132,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "رابغ"
+                        },
+                        new
+                        {
+                            Id = 133,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "الكامل"
+                        },
+                        new
+                        {
+                            Id = 134,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "القنفذة"
+                        },
+                        new
+                        {
+                            Id = 135,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "تربة"
+                        },
+                        new
+                        {
+                            Id = 136,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "الليث"
+                        },
+                        new
+                        {
+                            Id = 137,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "الجموم"
+                        },
+                        new
+                        {
+                            Id = 138,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "خليص"
+                        },
+                        new
+                        {
+                            Id = 139,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "أضم"
+                        },
+                        new
+                        {
+                            Id = 140,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "الخرمة"
+                        },
+                        new
+                        {
+                            Id = 141,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "رنية"
+                        },
+                        new
+                        {
+                            Id = 142,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "العرضيات"
+                        },
+                        new
+                        {
+                            Id = 143,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "الموية"
+                        },
+                        new
+                        {
+                            Id = 144,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "ميسان"
+                        },
+                        new
+                        {
+                            Id = 145,
+                            CountryId = 1,
+                            GovernorateId = 3,
+                            Name = "بحرة"
+                        },
+                        new
+                        {
+                            Id = 146,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "نجران"
+                        },
+                        new
+                        {
+                            Id = 147,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "شرورة"
+                        },
+                        new
+                        {
+                            Id = 148,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "الحصينية"
+                        },
+                        new
+                        {
+                            Id = 149,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "ثار"
+                        },
+                        new
+                        {
+                            Id = 150,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "يدمه"
+                        },
+                        new
+                        {
+                            Id = 151,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "بدر الجنوب"
+                        },
+                        new
+                        {
+                            Id = 152,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "خباش"
+                        },
+                        new
+                        {
+                            Id = 153,
+                            CountryId = 1,
+                            GovernorateId = 2,
+                            Name = "الخرخير"
+                        });
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "المملكه العربية السعودية"
+                        });
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Governorate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Governorates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            Name = "المنطقه الشرقية"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            Name = "منطقة نجران"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryId = 1,
+                            Name = "منطقة مكة المكرمة"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CountryId = 1,
+                            Name = "منطقة عسير"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CountryId = 1,
+                            Name = "منطقة حائل"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CountryId = 1,
+                            Name = "منطقة جازان"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CountryId = 1,
+                            Name = "منطقة الرياض"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CountryId = 1,
+                            Name = "منطقة القصيم"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CountryId = 1,
+                            Name = "منطقة المدينة المنورة"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CountryId = 1,
+                            Name = "منطقة الحدود الشماليه"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CountryId = 1,
+                            Name = "منطقة الجوف"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CountryId = 1,
+                            Name = "منطقة الباحه"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CountryId = 1,
+                            Name = "منطقة تبوك"
                         });
                 });
 
@@ -123,6 +1370,13 @@ namespace EcoFive.Models.Migrations
                             ConcurrencyStamp = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6",
                             Name = "SuperAdmin",
                             NormalizedName = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6",
+                            ConcurrencyStamp = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6",
+                            Name = "User",
+                            NormalizedName = "User"
                         });
                 });
 
@@ -201,6 +1455,11 @@ namespace EcoFive.Models.Migrations
                         {
                             UserId = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             RoleId = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6"
+                        },
+                        new
+                        {
+                            UserId = "02974cw0–9412–4nfe - afbf - 59f701d72cf6",
+                            RoleId = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6"
                         });
                 });
 
@@ -217,6 +1476,45 @@ namespace EcoFive.Models.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("EcoFive.Models.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("EcoFive.Models.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("EcoFive.Models.Models.Governorate", "Governorate")
+                        .WithMany()
+                        .HasForeignKey("GovernorateId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.City", b =>
+                {
+                    b.HasOne("EcoFive.Models.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("EcoFive.Models.Models.Governorate", "Governorate")
+                        .WithMany()
+                        .HasForeignKey("GovernorateId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Governorate", b =>
+                {
+                    b.HasOne("EcoFive.Models.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

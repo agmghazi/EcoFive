@@ -1,0 +1,33 @@
+﻿@model CreateRoleViewModel
+@{
+    ViewBag.Title = "انشاء الدور";
+
+}
+
+
+<div class="container float-right">
+
+    <div class="card text-right">
+        <form method="post">
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+            <div class="card-header">
+                <h4>انشاء الدور</h4>
+            </div>
+            <div class="card-body ">
+                <div class="form-group">
+                    <label asp-for="RoleName"></label>
+                    <input asp-for="RoleName" class="form-control text-right" />
+                    <span asp-validation-for="RoleName"></span>
+                </div>
+            </div>
+            <div class="card-footer bg-whitesmoke">
+                <a asp-action="ListRoles" class="btn btn-danger" style="width:auto">الغاء</a>
+
+                <button type="submit" class="btn btn-primary m-2" style="width: auto">انشاء الدور</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,98 @@
+﻿@using FileViewModel = EcoFive.Models.Models.FileViewModel
+
+@{
+    ViewBag.Title = "ملفات الدخول";
+
+}
+
+@*<div class="container float-right text-right">
+    <div class="row float-right">
+                <div class=" m-3">
+                    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <p>رفع الملفات</p>
+                                <input class="form-control" name="files" multiple="multiple" type="file" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input class="btn btn-success" type="submit" value="رفع الملف" style="width: auto" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>*@
+
+<div class="input-group mb-3 w-50  p-5 float-right">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">✎</span>
+    </div>
+    <input type="text" id="searchInput" onkeyup="searchFunc()" placeholder="...يرجى البحث" title="Type in a name" class="form-control text-right" aria-describedby="basic-addon1">
+</div>
+
+
+<table class="table table-hover table-bordered text-right" id="searchTable">
+    <thead class="thead-light text-center">
+        <tr>
+            <th>العمليات</th>
+            <th>تاريخ التعديل</th>
+            <th>تاريخ الإنشاء </th>
+            <th>اسم الملف</th>
+        </tr>
+    </thead>
+
+    @foreach (FileViewModel file in Model)
+    {
+        <tr>
+            <td>
+                <form method="post" asp-controller="Logging" asp-action="DeleteFile" asp-route-fileName="@file.FileName" asp-route-confirmValue="true" style="width: auto">
+
+                    <button type="button" onclick="confirmDelete('@file.FileName')" class="btn btn-danger">
+                        حذف
+                    </button>
+
+                    <button type="submit" id="@file.FileName" class="btn btn-danger" style="display: none">
+                        حذف
+                    </button>
+                    |
+                    <a href="@Url.Action("DownloadFile", "Logging", new {fileName = file.FileName})"
+                       class="btn btn-primary" style="width: auto">تحميل</a>
+
+                </form>
+            </td>
+            <td>@file.lastModified</td>
+            <td>@file.FileCreateDate</td>
+            <td>@file.FileName</td>
+        </tr>
+    }
+</table>
+
+
+
+@section Scripts {
+    <script src="~/js/confirmDelete.js"></script>
+
+    <script>
+        function searchFunc() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("searchTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[3];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    </script>
+}

@@ -30,8 +30,6 @@ namespace EcoFive.UI.ViewModels
         [Compare("Password", ErrorMessage = "تاكيد كلمه المرور يجب ان يطابق كلمه المرور")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "المدينة")]
-        public string City { get; set; }
 
         [Required(ErrorMessage = "يرجى اسم المستخدم")]
         [Remote(action: "IsUserInUse", controller: "Account")]
@@ -46,5 +44,17 @@ namespace EcoFive.UI.ViewModels
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "يرجى ادخال رقم الهاتف بشكل صحيح 0531234564")]
         [Required(ErrorMessage = "يرجى ادخال رقم الهاتف ")]
         public string PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "يرجى ادخال المدينة")]
+        [Display(Name = "المدينة")]
+        public int CityId { get; set; }
+
+        [Required(ErrorMessage = "يرجى ادخال الدوله")]
+        public int CountryId { get; set; }
+
+        [Required(ErrorMessage = "يرجى ادخال المحافظة")]
+        public int GovernorateId { get; set; }
+
+        public bool Supplier { get; set; }
     }
 }

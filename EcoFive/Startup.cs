@@ -1,5 +1,7 @@
 ﻿using DNTCaptcha.Core;
+using EcoFive.DataAccessLayer;
 using EcoFive.Models.Models;
+using EcoFive.Models.Repository;
 using EcoFive.UI.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -47,12 +49,12 @@ namespace EcoFive.UI
 
             //config connection strings
             services.AddDbContextPool<AppDbContext>(options =>
-                options.UseSqlServer(_config.GetConnectionString("EcoFiveDBConnection")));
+                options.UseSqlServer(_config.GetConnectionString("EcoFiveDBConnection")).EnableSensitiveDataLogging());
 
             //config access denied page
             services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = new PathString("/Administraion/AccessDenied");
+                options.AccessDeniedPath = new PathString("/admin/Administraion/AccessDenied");
             });
 
             //config authorization
@@ -103,6 +105,8 @@ namespace EcoFive.UI
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
+
+            services.AddScoped<IAccountRepository, AccountAccessLayer>();
 
         }
 

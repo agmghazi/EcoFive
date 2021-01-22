@@ -1,95 +1,572 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> _userManager
 
+@{
+    var user = await _userManager.GetUserAsync(User);
+
+    var PhotoPath = "/Files/Users/ProfileImages/" + (user.PhotoPath == null || user.PhotoPath == "" ? "noImage.png" : user.PhotoPath);
+
+}
 <!DOCTYPE html>
-<html>
+<html lang="ar">
+
+
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
-    <script src="~/lib/jquery/jquery.js"></script>
-    @*to active client side validation*@
-    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <link href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.css" rel="stylesheet" />
-    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.js"></script>
-    @*add trumbowyg WYSIWYG Editor*@
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div class="container">
-        <div class="navbar navbar-expand-sm bg-danger navbar-dark">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                <img src="~/images/person.png" width="30" height="30" />
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#colapseibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="colapseibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">Create</a>
-                    </li>
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" arial-expanded="false">
-                                Manage
-                            </a>
-                            <div class="dropdown-menu" arial-labelleby="navbarDropdownMenuLink">
-                                <a asp-controller="Administraion" asp-action="ListUsers" class="dropdown-item">
-                                    Users
-                                </a>
-                                <a asp-controller="Administraion" asp-action="ListRoles" class="dropdown-item">
-                                    Roles
-                                </a>
-                                <a class="dropdown-item" asp-controller="Account"
-                                   asp-action="ChangePassword">
-                                    Password
-                                </a>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/app.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/style.css">
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/components.css">
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/custom.css">
+    <link rel='shortcut icon' type='image/x-icon' href='~/Templetes/Admin/assets/img/favicon.ico' />
 
-                            </div>
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
+    @*site imports*@
+    <link href="~/css/site.css" asp-append-version="true" rel="stylesheet" />
+
+    @*to active client side validation*@
+    <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+
+    @*confirm library*@
+    @*https://craftpip.github.io/jquery-confirm/*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    @*add trumbowyg WYSIWYG Editor*@
+    @*<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>*@
+
+    @*export table*@
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/bundles/datatables/datatables.min.css">
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="loader"></div>
+    <div id="app ">
+        <div class="main-wrapper main-wrapper-1 ">
+            <div class="navbar-bg"></div>
+            <nav class="navbar navbar-expand-lg main-navbar sticky">
+                <div class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li>
+                            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a>
                         </li>
-                    }
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    @if (signInManager.IsSignedIn(User))
-                    {
-                        <li class="nav-item ">
-                            <form method="post" asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width: auto">
-                                    Logout @User.Identity.Name
-                                </button>
+                        <li>
+                            <a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                                <i data-feather="maximize"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <form class="form-inline mr-auto">
+                                <div class="search-element">
+                                    <input class="form-control text-right" type="search" placeholder="البحث" aria-label="Search" data-width="200">
+                                    <button class="btn" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </form>
                         </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item ">
-                            <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                    }
+                    </ul>
+                </div>
+                <ul class="navbar-nav navbar-right">
+                    <li class="dropdown dropdown-list-toggle">
+                        <a href="#" data-toggle="dropdown"
+                           class="nav-link nav-link-lg message-toggle">
+                            <i data-feather="mail"></i>
+                            <span class="badge headerBadge1">
+                                6
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                            <div class="dropdown-header">
+                                Messages
+                                <div class="float-right">
+                                    <a href="#">Mark All As Read</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-list-content dropdown-list-message">
+                                <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-avatar
+											text-white">
+                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-1.png" class="rounded-circle">
+                                    </span> <span class="dropdown-item-desc">
+                                        <span class="message-user">
+                                            John
+                                            Deo
+                                        </span>
+                                        <span class="time messege-text">Please check your mail !!</span>
+                                        <span class="time">2 Min Ago</span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-avatar text-white">
+                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-2.png" class="rounded-circle">
+                                    </span> <span class="dropdown-item-desc">
+                                        <span class="message-user">
+                                            Sarah
+                                            Smith
+                                        </span> <span class="time messege-text">
+                                            Request for leave
+                                            application
+                                        </span>
+                                        <span class="time">5 Min Ago</span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-avatar text-white">
+                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-5.png" class="rounded-circle">
+                                    </span> <span class="dropdown-item-desc">
+                                        <span class="message-user">
+                                            Jacob
+                                            Ryan
+                                        </span> <span class="time messege-text">
+                                            Your payment invoice is
+                                            generated.
+                                        </span> <span class="time">12 Min Ago</span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-avatar text-white">
+                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-4.png" class="rounded-circle">
+                                    </span> <span class="dropdown-item-desc">
+                                        <span class="message-user">
+                                            Lina
+                                            Smith
+                                        </span> <span class="time messege-text">
+                                            hii John, I have upload
+                                            doc
+                                            related to task.
+                                        </span> <span class="time">
+                                            30
+                                            Min Ago
+                                        </span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-avatar text-white">
+                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-3.png" class="rounded-circle">
+                                    </span> <span class="dropdown-item-desc">
+                                        <span class="message-user">
+                                            Jalpa
+                                            Joshi
+                                        </span> <span class="time messege-text">
+                                            Please do as specify.
+                                            Let me
+                                            know if you have any query.
+                                        </span> <span class="time">
+                                            1
+                                            Days Ago
+                                        </span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-avatar text-white">
+                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-2.png" class="rounded-circle">
+                                    </span> <span class="dropdown-item-desc">
+                                        <span class="message-user">
+                                            Sarah
+                                            Smith
+                                        </span> <span class="time messege-text">Client Requirements</span>
+                                        <span class="time">2 Days Ago</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-footer text-center">
+                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown dropdown-list-toggle">
+                        <a href="#" data-toggle="dropdown"
+                           class="nav-link notification-toggle nav-link-lg">
+                            <i data-feather="bell" class="bell"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                            <div class="dropdown-header">
+                                Notifications
+                                <div class="float-right">
+                                    <a href="#">Mark All As Read</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-list-content dropdown-list-icons">
+                                <a href="#" class="dropdown-item dropdown-item-unread">
+                                    <span class="dropdown-item-icon bg-primary text-white">
+                                        <i class="fas
+												fa-code"></i>
+                                    </span> <span class="dropdown-item-desc">
+                                        Template update is
+                                        available now! <span class="time">
+                                            2 Min
+                                            Ago
+                                        </span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-icon bg-info text-white">
+                                        <i class="far
+												fa-user"></i>
+                                    </span> <span class="dropdown-item-desc">
+                                        <b>You</b> and <b>
+                                            Dedik
+                                            Sugiharto
+                                        </b> are now friends <span class="time">
+                                            10 Hours
+                                            Ago
+                                        </span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-icon bg-success text-white">
+                                        <i class="fas
+												fa-check"></i>
+                                    </span> <span class="dropdown-item-desc">
+                                        <b>Kusnaedi</b> has
+                                        moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">
+                                            12
+                                            Hours
+                                            Ago
+                                        </span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-icon bg-danger text-white">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </span> <span class="dropdown-item-desc">
+                                        Low disk space. Let's
+                                        clean it! <span class="time">17 Hours Ago</span>
+                                    </span>
+                                </a> <a href="#" class="dropdown-item">
+                                    <span class="dropdown-item-icon bg-info text-white">
+                                        <i class="fas
+												fa-bell"></i>
+                                    </span> <span class="dropdown-item-desc">
+                                        Welcome to Otika
+                                        template! <span class="time">Yesterday</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown-footer text-center">
+                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown"
+                           class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="@PhotoPath" class="user-img-radious-style" asp-append-version="true"/> <span class="d-sm-none d-lg-inline-block"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right pullDown">
+                            <div class="dropdown-title">@User.Identity.Name مرحبا</div>
+                            <a asp-controller="Account" asp-action="ChangeCurrentProfile" class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> الملف الشخصى
+                            </a> <a href="timeline.html" class="dropdown-item has-icon">
+                                <i class="fas fa-bolt"></i>
+                                Activities
+                            </a> <a href="#" class="dropdown-item has-icon">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="dropdown-item has-icon text-danger">
+                                    <i class="fas fa-sign-out-alt"> <span class="invisible">s</span> تسجيل الخروج </i>
+                                </button>
+                            </form>
 
+                        </div>
+                    </li>
                 </ul>
+            </nav>
+            <div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                    <div class="sidebar-brand">
+                        <a href="index.html">
+                            <img alt="image" src="~/Templetes/Admin/assets/img/logo.png" class="header-logo" /> <span class="logo-name">Otika</span>
+                        </a>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li class="menu-header">Main</li>
+                        <li class="dropdown">
+                            <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link"><i data-feather="monitor"></i><span>لوحة التحكم</span></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown">
+                                <i data-feather="briefcase"></i><span>Widgets</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="widget-chart.html">Chart Widgets</a></li>
+                                <li><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Apps</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="chat.html">Chat</a></li>
+                                <li><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                                <li><a class="nav-link" href="blog.html">Blog</a></li>
+                                <li><a class="nav-link" href="calendar.html">Calendar</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Email</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="email-inbox.html">Inbox</a></li>
+                                <li><a class="nav-link" href="email-compose.html">Compose</a></li>
+                                <li><a class="nav-link" href="email-read.html">read</a></li>
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <li class="menu-header">التحكم</li>
+                            <li class="dropdown">
+                                <a href="#" class="menu-toggle nav-link has-dropdown">
+                                    <i data-feather="copy"></i><span>
+                                        التحكم بالمستخدمين
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link" asp-controller="Administraion" asp-action="ListUsers" asp-area="Admin">قائمة المستخدمين</a></li>
+                                    <li><a class="nav-link" asp-controller="Administraion" asp-action="ListRoles" asp-area="Admin">قائمة الادوار</a></li>
+                                    <li><a class="nav-link" asp-controller="Logging" asp-action="Index" asp-area="Admin">ملفات الدخول</a></li>
+
+                                </ul>
+                            </li>
+                        }
+
+                        <li class="menu-header">Otika</li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Forms</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="basic-form.html">Basic Form</a></li>
+                                <li><a class="nav-link" href="forms-advanced-form.html">Advanced Form</a></li>
+                                <li><a class="nav-link" href="forms-editor.html">Editor</a></li>
+                                <li><a class="nav-link" href="forms-validation.html">Validation</a></li>
+                                <li><a class="nav-link" href="form-wizard.html">Form Wizard</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="grid"></i><span>Tables</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="basic-table.html">Basic Tables</a></li>
+                                <li><a class="nav-link" href="advance-table.html">Advanced Table</a></li>
+                                <li><a class="nav-link" href="datatables.html">Datatable</a></li>
+                                <li><a class="nav-link" href="export-table.html">Export Table</a></li>
+                                <li><a class="nav-link" href="editable-table.html">Editable Table</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown">
+                                <i data-feather="pie-chart"></i><span>Charts</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="chart-amchart.html">amChart</a></li>
+                                <li><a class="nav-link" href="chart-apexchart.html">apexchart</a></li>
+                                <li><a class="nav-link" href="chart-echart.html">eChart</a></li>
+                                <li><a class="nav-link" href="chart-chartjs.html">Chartjs</a></li>
+                                <li><a class="nav-link" href="chart-sparkline.html">Sparkline</a></li>
+                                <li><a class="nav-link" href="chart-morris.html">Morris</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="feather"></i><span>Icons</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="icon-font-awesome.html">Font Awesome</a></li>
+                                <li><a class="nav-link" href="icon-material.html">Material Design</a></li>
+                                <li><a class="nav-link" href="icon-ionicons.html">Ion Icons</a></li>
+                                <li><a class="nav-link" href="icon-feather.html">Feather Icons</a></li>
+                                <li><a class="nav-link" href="icon-weather-icon.html">Weather Icon</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-header">Media</li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="image"></i><span>Gallery</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="light-gallery.html">Light Gallery</a></li>
+                                <li><a href="gallery1.html">Gallery 2</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="flag"></i><span>Sliders</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="carousel.html">Bootstrap Carousel.html</a></li>
+                                <li><a class="nav-link" href="owl-carousel.html">Owl Carousel</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="nav-link" href="timeline.html"><i data-feather="sliders"></i><span>Timeline</span></a></li>
+                        <li class="menu-header">Maps</li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown">
+                                <i data-feather="map"></i><span>
+                                    Google
+                                    Maps
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="gmaps-advanced-route.html">Advanced Route</a></li>
+                                <li><a href="gmaps-draggable-marker.html">Draggable Marker</a></li>
+                                <li><a href="gmaps-geocoding.html">Geocoding</a></li>
+                                <li><a href="gmaps-geolocation.html">Geolocation</a></li>
+                                <li><a href="gmaps-marker.html">Marker</a></li>
+                                <li><a href="gmaps-multiple-marker.html">Multiple Marker</a></li>
+                                <li><a href="gmaps-route.html">Route</a></li>
+                                <li><a href="gmaps-simple.html">Simple</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="vector-map.html">
+                                <i data-feather="map-pin"></i><span>
+                                    Vector
+                                    Map
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
             </div>
+            <!-- Main Content -->
+            <div class="main-content">
+                <section class="section">
+                    <div class="section-body">
+                        @RenderBody()
+                    </div>
+                </section>
+                <div class="settingSidebar">
+                    <a href="javascript:void(0)" class="settingPanelToggle">
+                        <i class="fa fa-spin fa-cog"></i>
+                    </a>
+                    <div class="settingSidebar-body ps-container ps-theme-default">
+                        <div class=" fade show active">
+                            <div class="setting-panel-header">
+                                Setting Panel
+                            </div>
+                            <div class="p-15 border-bottom">
+                                <h6 class="font-medium m-b-10">Select Layout</h6>
+                                <div class="selectgroup layout-color w-50">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                                        <span class="selectgroup-button">Light</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                                        <span class="selectgroup-button">Dark</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-15 border-bottom">
+                                <h6 class="font-medium m-b-10">Sidebar Color</h6>
+                                <div class="selectgroup selectgroup-pills sidebar-color">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
+                                        <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                                              data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
+                                        <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                                              data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-15 border-bottom">
+                                <h6 class="font-medium m-b-10">Color Theme</h6>
+                                <div class="theme-setting-options">
+                                    <ul class="choose-theme list-unstyled mb-0">
+                                        <li title="white" class="active">
+                                            <div class="white"></div>
+                                        </li>
+                                        <li title="cyan">
+                                            <div class="cyan"></div>
+                                        </li>
+                                        <li title="black">
+                                            <div class="black"></div>
+                                        </li>
+                                        <li title="purple">
+                                            <div class="purple"></div>
+                                        </li>
+                                        <li title="orange">
+                                            <div class="orange"></div>
+                                        </li>
+                                        <li title="green">
+                                            <div class="green"></div>
+                                        </li>
+                                        <li title="red">
+                                            <div class="red"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="p-15 border-bottom">
+                                <div class="theme-setting-options">
+                                    <label class="m-b-0">
+                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                               id="mini_sidebar_setting">
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="control-label p-l-10">Mini Sidebar</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-15 border-bottom">
+                                <div class="theme-setting-options">
+                                    <label class="m-b-0">
+                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                               id="sticky_header_setting">
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="control-label p-l-10">Sticky Header</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
+                                <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
+                                    <i class="fas fa-undo"></i> Restore Default
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="main-footer">
+                <div class="footer-left">
+                    agmghazi@gmail.com   للدعم
+
+                </div>
+                <div class="footer-right">
+                    0534740221   للدعم
+
+                </div>
+            </footer>
+
         </div>
-        @RenderBody()
     </div>
+    <!-- General JS Scripts -->
+    <script src="~/Templetes/Admin/assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <!-- Page Specific JS File -->
+    <!-- Template JS File -->
+    <script src="~/Templetes/Admin/assets/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="~/Templetes/Admin/assets/js/custom.js"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="~/Templetes/Admin/assets/bundles/datatables/datatables.min.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/jszip.min.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
+    <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+    <script src="~/Templetes/Admin/assets/js/page/datatables.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
     @if (IsSectionDefined("Scripts"))
     {
-        @RenderSection("Scripts", required: false)
+        @await RenderSectionAsync("Scripts", required: false)
     }
 </body>
+
 </html>
