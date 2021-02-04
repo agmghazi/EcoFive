@@ -1,0 +1,264 @@
+﻿@model ChangeCurrentProfileViewModel
+@inject UserManager<ApplicationUser> _userManager
+@{
+    ViewBag.Title = "تعديل الملف الشخصى";
+
+    var user = await _userManager.GetUserAsync(User);
+
+    var _PhotoPath = "/Files/Users/ProfileImages/" + (user.PhotoPath == null || user.PhotoPath == "" ? "noImage.png" : user.PhotoPath);
+
+}
+<!--Hero Section-->
+<div class="hero-section register-background">
+    <h1 class="page-title">تعديل الملف الشخصى</h1>
+</div>
+
+<!--Navigation section-->
+<div class="container text-right">
+    <nav class="biolife-nav">
+        <ul>
+            <li class="nav-item"><span class="current-page">تعديل الملف الشخصى</span></li>
+
+            <li class="nav-item"><a href="index-2.html" class="permal-link">الصفحة الرئيسية</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-contain login-page">
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 invisible">
+                    <div class="register-in-container text-right">
+                        <div class="intro ">
+                            <h4 class="box-title float-right">مورد جديد؟</h4>
+                            <p class="sub-title ">: أنشئ حسابًا معنا وستتمكن من </p>
+                            <ul class="lis text-right">
+                                <li>اضافة منتجاتك معنا</li>
+                                <li>حفظ عدة اصناف من المنتجات</li>
+                                <li>الوصول إلى سجل الطلبات الخاص بك</li>
+                                <li>تتبع الطلبات الجديدة</li>
+                                <li>تتبع التقيمات والاراء على منتجاتك</li>
+                            </ul>
+                            <a asp-controller="Account" asp-action="Register" asp-area="Admin" class="btn btn-bold">انشاء الحساب</a>
+                        </div>
+                    </div>
+                </div>
+                <!--Form Sign In-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  ">
+                    <div class="signin-container text-right">
+                        <form method="post"enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="alert alert-danger text-right"></div>
+
+                            <div class="form-group row mb-4">
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="small-12 medium-2 large-2 columns">
+                                        <div class="circle">
+                                            <!-- User Profile Image -->
+                                            <img class="profile-pic" src="@_PhotoPath" asp-append-version="true">
+
+                                        </div>
+
+                                        <div class="p-image">
+                                            <i class="fa fa-camera upload-button"></i>
+                                            <input class="file-upload" asp-for="PhotoPath" onchange="return fileValidation()" id="file" type="file" accept=".JPEG,.JPG,.PNG" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3 ">الصوره الشخصية</label>
+                            </div>
+
+                            <p class="form-row">
+                                <label asp-for="CurrentPassword"> </label>
+                                <input asp-for="CurrentPassword" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="CurrentPassword"></span>
+                            </p>
+                            
+                            <p class="form-row">
+                                <label asp-for="NewPassword"></label>
+                                <input asp-for="NewPassword" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="NewPassword"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="ConfirmPassword"> </label>
+                                <input asp-for="ConfirmPassword" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="ConfirmPassword"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="FullName"></label>
+                                <input asp-for="FullName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="FullName"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="UserName"></label>
+                                <input asp-for="UserName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="UserName"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="Email"></span>
+                            </p>
+
+                            <p class="form-row">
+                                <label asp-for="CountryId"></label>
+                                <select dir="rtl" id="ddCountries" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.Countries, "Id", "Name"))" class="form-control"><option>أختر</option></select>
+                                <span asp-validation-for="CountryId"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="GovernorateId"></label>
+                                <select dir="rtl" id="ddGovernorate" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.Governorate, "Id", "Name", new {Model.GovernorateId}))" class="form-control"></select>
+                                <span asp-validation-for="GovernorateId"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="CityId"></label>
+                                <select dir="rtl" id="ddCity" asp-for="CityId" asp-items="@(new SelectList(ViewBag.City, "Id", "Name", new {Model.CityId}))" class="form-control"></select>
+                                <span asp-validation-for="CityId"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="PhoneNumber"></label>
+                                <input asp-for="PhoneNumber" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="PhoneNumber"></span>
+                            </p>
+                            <br />
+                            <br />
+                            <dnt-captcha asp-captcha-generator-max="999999"
+                                         asp-captcha-generator-min="111111"
+                                         asp-captcha-generator-language="English"
+                                         asp-captcha-generator-display-mode="ShowDigits"
+                                         asp-use-relative-urls="true"
+                                         asp-placeholder="ادخل رمز التحقق"
+                                         asp-validation-error-message="الرجاء إدخال رمز التحقق الصحيح"
+                                         asp-font-name="Tahoma"
+                                         asp-font-size="20"
+                                         asp-fore-color="#333333"
+                                         asp-back-color="#ccc"
+                                         asp-text-box-class="text-box form-control w-25 text-right float-right"
+                                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
+                                         asp-validation-message-class="text-danger m-3"
+                                         asp-use-noise="false" />
+                            <br />
+                            <br />
+
+                            <p class="form-row wrap-btn">
+                                <button class="btn btn-submit btn-bold pr-3" type="submit">تعديل</button>
+
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#ddCountries").change(function () {
+
+                $.getJSON("/Admin/Account/FindGovernorates",
+                    { id: $("#ddCountries").val() },
+                    function (d) {
+                        var row = "";
+                        $("#ddGovernorate").empty();
+                        $("#ddCity").empty();
+                        row += "<option selected disabled >أختر</option>";
+                        $.each(d,
+                            function (i, v) {
+                                row += "<option value=" + v.id + ">" + v.name + "</option>";
+                            });
+                        $("#ddGovernorate").html(row);
+                    });
+            });
+            $("#ddGovernorate").change(function () {
+                $.getJSON("/Admin/Account/Findcities",
+                    { id: $("#ddGovernorate").val() },
+                    function (d) {
+                        var row = "";
+                        $("#ddCity").empty();
+                        row += "<option selected disabled >أختر</option>";
+                        $.each(d,
+                            function (i, v) {
+                                row += "<option value=" + v.id + ">" + v.name + "</option>";
+                            });
+                        $("#ddCity").html(row);
+                    });
+            });
+        });
+
+        $(document).ready(function () {
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function () {
+                $(".file-upload").click();
+            });
+        });
+
+        function fileValidation() {
+            var fileInput = document.getElementById('file');
+           
+            var filePath = fileInput.value;
+            // Allowing file type
+            var allowedExtensions =
+                /(\.JPEG|\.JPG|\.PNG)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                $.confirm({
+                    title: '!تنبية',
+                    content: 'jpg , jpeg , png يرجى اختيار الصوره بصيغ',
+                    buttons: {
+                        موافق: function () {
+
+                        }
+                    }
+                });
+
+
+                fileInput.value = '';
+                return false;
+            }
+        }
+
+        $("#chProfAlertmsg").fadeTo(3000, 600).slideUp(2000,
+            function () {
+                $("#chProfAlertmsg").hide();
+            });
+
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+<div class="alert alert-success alert-has-icon text-right" id="chProfAlertmsg">
+    <div class="alert-body">
+        <div style="font-size: 17px" class="alert-title">تنبية</div>
+        <div style="font-size: 20px" class="pt-5">
+            @ViewBag.Message
+        </div>  
+    </div>
+</div>
+
+}

@@ -4,7 +4,7 @@
     var userId = ViewBag.userId;
 }
 
-<div class="container float-right text-right">
+<div class="container">
     <form method="post">
         <div class="card">
             <div class="card-header">
@@ -26,8 +26,8 @@
             </div>
             <div class="card-footer">
                 <a asp-action="EditUser" asp-route-id="@userId"
-                   class="btn btn-danger m-3" style="width:auto">الغاء</a>
-                <input type="submit" value="تعديل" class="btn btn-primary"
+                   class="btn btn-danger m-3 btn-lg" style="width:auto">الغاء</a>
+                <input type="submit" value="تعديل" class="btn btn-primary btn-lg"
                        style="width:auto" />
 
             </div>

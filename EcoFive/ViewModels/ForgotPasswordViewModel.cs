@@ -8,5 +8,7 @@ namespace EcoFive.UI.ViewModels
         [EmailAddress(ErrorMessage = "يجب ان يكون بريد الالكترونى")]
         [Display(Name = "البريد الالكترونى")]
         public string Email { get; set; }
+
+        public bool IsSendDetails { get; set; }
     }
 }

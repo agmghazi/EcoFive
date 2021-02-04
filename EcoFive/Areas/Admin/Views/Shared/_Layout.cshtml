@@ -26,8 +26,8 @@
 
     <link rel="stylesheet" href="~/Templetes/Admin/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
-    @*site imports*@
-    <link href="~/css/site.css" asp-append-version="true" rel="stylesheet" />
+    @*site imports*@to
+    <link href="~/css/adminSite.css" asp-append-version="true" rel="stylesheet" />
 
     @*to active client side validation*@
     <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
@@ -57,244 +57,259 @@
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar sticky">
                 <div class="form-inline mr-auto">
-                    <ul class="navbar-nav mr-3">
-                        <li>
-                            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
-									collapse-btn"> <i data-feather="align-justify"></i></a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link nav-link-lg fullscreen-btn">
-                                <i data-feather="maximize"></i>
+                    <ul class="navbar-nav navbar-right ">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <img alt="image" src="@PhotoPath" class="user-img-radious-style" asp-append-version="true" /> <span class="d-sm-none d-lg-inline-block"></span>
                             </a>
-                        </li>
-                        <li>
-                            <form class="form-inline mr-auto">
-                                <div class="search-element">
-                                    <input class="form-control text-right" type="search" placeholder="البحث" aria-label="Search" data-width="200">
-                                    <button class="btn" type="submit">
-                                        <i class="fas fa-search"></i>
+                            <div class="dropdown-menu dropdown-menu-right pullDown text-right">
+                                <div class="dropdown-title">@User.Identity.Name  مرحبا</div>
+                                <a asp-controller="Account" asp-action="ChangeCurrentProfile" class="dropdown-item has-icon">
+                                    الملف الشخصى
+                                    <span class="invisible ">s</span>
+                                    <i class="far fa-user"></i>
+                                </a>
+                                <a href="timeline.html" class="dropdown-item has-icon">
+                                    <i class="fas fa-bolt"></i>
+                                    Activities
+                                    <span class="invisible ">s</span>
+                                </a> <a href="#" class="dropdown-item has-icon">
+                                    <i class="fas fa-cog"></i>
+                                    Settings
+                                    <span class="invisible ">s</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <form method="post" asp-controller="Account" asp-action="Logout" class="text-right" style="float: right">
+                                    <button type="submit" class="dropdown-item  text-danger text-right">
+                                        تسجيل الخروج
+                                        <span class="invisible ">s</span>
+                                        <i class="fas fa-sign-out-alt">  </i>
                                     </button>
+                                </form>
+
+                            </div>
+                        </li>
+                        <li class="dropdown dropdown-list-toggle">
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link notification-toggle nav-link-lg">
+                                <i data-feather="bell" class="bell"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                                <div class="dropdown-header">
+                                    Notifications
+                                    <div class="float-right">
+                                        <a href="#">Mark All As Read</a>
+                                    </div>
                                 </div>
-                            </form>
+                                <div class="dropdown-list-content dropdown-list-icons">
+                                    <a href="#" class="dropdown-item dropdown-item-unread">
+                                        <span class="dropdown-item-icon bg-primary text-white">
+                                            <i class="fas
+												fa-code"></i>
+                                        </span> <span class="dropdown-item-desc">
+                                            Template update is
+                                            available now! <span class="time">
+                                                2 Min
+                                                Ago
+                                            </span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-icon bg-info text-white">
+                                            <i class="far
+												fa-user"></i>
+                                        </span> <span class="dropdown-item-desc">
+                                            <b>You</b> and <b>
+                                                Dedik
+                                                Sugiharto
+                                            </b> are now friends <span class="time">
+                                                10 Hours
+                                                Ago
+                                            </span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-icon bg-success text-white">
+                                            <i class="fas
+												fa-check"></i>
+                                        </span> <span class="dropdown-item-desc">
+                                            <b>Kusnaedi</b> has
+                                            moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">
+                                                12
+                                                Hours
+                                                Ago
+                                            </span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-icon bg-danger text-white">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span> <span class="dropdown-item-desc">
+                                            Low disk space. Let's
+                                            clean it! <span class="time">17 Hours Ago</span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-icon bg-info text-white">
+                                            <i class="fas
+												fa-bell"></i>
+                                        </span> <span class="dropdown-item-desc">
+                                            Welcome to Otika
+                                            template! <span class="time">Yesterday</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="dropdown dropdown-list-toggle">
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link nav-link-lg message-toggle">
+                                <i data-feather="mail"></i>
+                                <span class="badge headerBadge1">
+                                    6
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                                <div class="dropdown-header">
+                                    Messages
+                                    <div class="float-right">
+                                        <a href="#">Mark All As Read</a>
+                                    </div>
+                                </div>
+                                <div class="dropdown-list-content dropdown-list-message">
+                                    <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-avatar
+											text-white">
+                                            <img alt="image" src="~/Templetes/Admin/assets/img/users/user-1.png" class="rounded-circle">
+                                        </span> <span class="dropdown-item-desc">
+                                            <span class="message-user">
+                                                John
+                                                Deo
+                                            </span>
+                                            <span class="time messege-text">Please check your mail !!</span>
+                                            <span class="time">2 Min Ago</span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-avatar text-white">
+                                            <img alt="image" src="~/Templetes/Admin/assets/img/users/user-2.png" class="rounded-circle">
+                                        </span> <span class="dropdown-item-desc">
+                                            <span class="message-user">
+                                                Sarah
+                                                Smith
+                                            </span> <span class="time messege-text">
+                                                Request for leave
+                                                application
+                                            </span>
+                                            <span class="time">5 Min Ago</span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-avatar text-white">
+                                            <img alt="image" src="~/Templetes/Admin/assets/img/users/user-5.png" class="rounded-circle">
+                                        </span> <span class="dropdown-item-desc">
+                                            <span class="message-user">
+                                                Jacob
+                                                Ryan
+                                            </span> <span class="time messege-text">
+                                                Your payment invoice is
+                                                generated.
+                                            </span> <span class="time">12 Min Ago</span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-avatar text-white">
+                                            <img alt="image" src="~/Templetes/Admin/assets/img/users/user-4.png" class="rounded-circle">
+                                        </span> <span class="dropdown-item-desc">
+                                            <span class="message-user">
+                                                Lina
+                                                Smith
+                                            </span> <span class="time messege-text">
+                                                hii John, I have upload
+                                                doc
+                                                related to task.
+                                            </span> <span class="time">
+                                                30
+                                                Min Ago
+                                            </span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-avatar text-white">
+                                            <img alt="image" src="~/Templetes/Admin/assets/img/users/user-3.png" class="rounded-circle">
+                                        </span> <span class="dropdown-item-desc">
+                                            <span class="message-user">
+                                                Jalpa
+                                                Joshi
+                                            </span> <span class="time messege-text">
+                                                Please do as specify.
+                                                Let me
+                                                know if you have any query.
+                                            </span> <span class="time">
+                                                1
+                                                Days Ago
+                                            </span>
+                                        </span>
+                                    </a> <a href="#" class="dropdown-item">
+                                        <span class="dropdown-item-avatar text-white">
+                                            <img alt="image" src="~/Templetes/Admin/assets/img/users/user-2.png" class="rounded-circle">
+                                        </span> <span class="dropdown-item-desc">
+                                            <span class="message-user">
+                                                Sarah
+                                                Smith
+                                            </span> <span class="time messege-text">Client Requirements</span>
+                                            <span class="time">2 Days Ago</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
-                </div>
-                <ul class="navbar-nav navbar-right">
-                    <li class="dropdown dropdown-list-toggle">
-                        <a href="#" data-toggle="dropdown"
-                           class="nav-link nav-link-lg message-toggle">
-                            <i data-feather="mail"></i>
-                            <span class="badge headerBadge1">
-                                6
-                            </span>
-                        </a>
-                        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-                            <div class="dropdown-header">
-                                Messages
-                                <div class="float-right">
-                                    <a href="#">Mark All As Read</a>
-                                </div>
-                            </div>
-                            <div class="dropdown-list-content dropdown-list-message">
-                                <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-avatar
-											text-white">
-                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-1.png" class="rounded-circle">
-                                    </span> <span class="dropdown-item-desc">
-                                        <span class="message-user">
-                                            John
-                                            Deo
-                                        </span>
-                                        <span class="time messege-text">Please check your mail !!</span>
-                                        <span class="time">2 Min Ago</span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-avatar text-white">
-                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-2.png" class="rounded-circle">
-                                    </span> <span class="dropdown-item-desc">
-                                        <span class="message-user">
-                                            Sarah
-                                            Smith
-                                        </span> <span class="time messege-text">
-                                            Request for leave
-                                            application
-                                        </span>
-                                        <span class="time">5 Min Ago</span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-avatar text-white">
-                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-5.png" class="rounded-circle">
-                                    </span> <span class="dropdown-item-desc">
-                                        <span class="message-user">
-                                            Jacob
-                                            Ryan
-                                        </span> <span class="time messege-text">
-                                            Your payment invoice is
-                                            generated.
-                                        </span> <span class="time">12 Min Ago</span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-avatar text-white">
-                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-4.png" class="rounded-circle">
-                                    </span> <span class="dropdown-item-desc">
-                                        <span class="message-user">
-                                            Lina
-                                            Smith
-                                        </span> <span class="time messege-text">
-                                            hii John, I have upload
-                                            doc
-                                            related to task.
-                                        </span> <span class="time">
-                                            30
-                                            Min Ago
-                                        </span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-avatar text-white">
-                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-3.png" class="rounded-circle">
-                                    </span> <span class="dropdown-item-desc">
-                                        <span class="message-user">
-                                            Jalpa
-                                            Joshi
-                                        </span> <span class="time messege-text">
-                                            Please do as specify.
-                                            Let me
-                                            know if you have any query.
-                                        </span> <span class="time">
-                                            1
-                                            Days Ago
-                                        </span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-avatar text-white">
-                                        <img alt="image" src="~/Templetes/Admin/assets/img/users/user-2.png" class="rounded-circle">
-                                    </span> <span class="dropdown-item-desc">
-                                        <span class="message-user">
-                                            Sarah
-                                            Smith
-                                        </span> <span class="time messege-text">Client Requirements</span>
-                                        <span class="time">2 Days Ago</span>
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="dropdown-footer text-center">
-                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="dropdown dropdown-list-toggle">
-                        <a href="#" data-toggle="dropdown"
-                           class="nav-link notification-toggle nav-link-lg">
-                            <i data-feather="bell" class="bell"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-                            <div class="dropdown-header">
-                                Notifications
-                                <div class="float-right">
-                                    <a href="#">Mark All As Read</a>
-                                </div>
-                            </div>
-                            <div class="dropdown-list-content dropdown-list-icons">
-                                <a href="#" class="dropdown-item dropdown-item-unread">
-                                    <span class="dropdown-item-icon bg-primary text-white">
-                                        <i class="fas
-												fa-code"></i>
-                                    </span> <span class="dropdown-item-desc">
-                                        Template update is
-                                        available now! <span class="time">
-                                            2 Min
-                                            Ago
-                                        </span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-icon bg-info text-white">
-                                        <i class="far
-												fa-user"></i>
-                                    </span> <span class="dropdown-item-desc">
-                                        <b>You</b> and <b>
-                                            Dedik
-                                            Sugiharto
-                                        </b> are now friends <span class="time">
-                                            10 Hours
-                                            Ago
-                                        </span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-icon bg-success text-white">
-                                        <i class="fas
-												fa-check"></i>
-                                    </span> <span class="dropdown-item-desc">
-                                        <b>Kusnaedi</b> has
-                                        moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">
-                                            12
-                                            Hours
-                                            Ago
-                                        </span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-icon bg-danger text-white">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </span> <span class="dropdown-item-desc">
-                                        Low disk space. Let's
-                                        clean it! <span class="time">17 Hours Ago</span>
-                                    </span>
-                                </a> <a href="#" class="dropdown-item">
-                                    <span class="dropdown-item-icon bg-info text-white">
-                                        <i class="fas
-												fa-bell"></i>
-                                    </span> <span class="dropdown-item-desc">
-                                        Welcome to Otika
-                                        template! <span class="time">Yesterday</span>
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="dropdown-footer text-center">
-                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" data-toggle="dropdown"
-                           class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="@PhotoPath" class="user-img-radious-style" asp-append-version="true"/> <span class="d-sm-none d-lg-inline-block"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right pullDown">
-                            <div class="dropdown-title">@User.Identity.Name مرحبا</div>
-                            <a asp-controller="Account" asp-action="ChangeCurrentProfile" class="dropdown-item has-icon">
-                                <i class="far fa-user"></i> الملف الشخصى
-                            </a> <a href="timeline.html" class="dropdown-item has-icon">
-                                <i class="fas fa-bolt"></i>
-                                Activities
-                            </a> <a href="#" class="dropdown-item has-icon">
-                                <i class="fas fa-cog"></i>
-                                Settings
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <form method="post" asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="dropdown-item has-icon text-danger">
-                                    <i class="fas fa-sign-out-alt"> <span class="invisible">s</span> تسجيل الخروج </i>
-                                </button>
-                            </form>
 
+                </div>
+
+
+                <ul class="navbar-nav mr-3">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                    <span class="invisible"> S</span>
+                    <form class="form-inline mr-auto">
+                        <div class="search-element">
+                            <input class="form-control text-right float-right" type="search" placeholder="البحث" aria-label="Search" data-width="200">
+                            <button class="btn" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
+                    </form>
+
+                    <li>
+                        <a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                            <i data-feather="maximize"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a>
+                    </li>
+
+                    <li>
                     </li>
                 </ul>
             </nav>
-            <div class="main-sidebar sidebar-style-2">
+            <div class="float-right main-sidebar sidebar-style-2 text-right">
                 <aside id="sidebar-wrapper">
-                    <div class="sidebar-brand">
+                    <div class="sidebar-brand ">
                         <a href="index.html">
-                            <img alt="image" src="~/Templetes/Admin/assets/img/logo.png" class="header-logo" /> <span class="logo-name">Otika</span>
+                            <img alt="image" src="~/Templetes/Admin/assets/img/logo.png" class="header-logo" /> <span class="logo-name">لوحه التحكم</span>
                         </a>
                     </div>
                     <ul class="sidebar-menu">
-                        <li class="menu-header">Main</li>
-                        <li class="dropdown">
-                            <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link"><i data-feather="monitor"></i><span>لوحة التحكم</span></a>
+                        <li class="menu-header">الرئيسية</li>
+                        <li class="dropdown active">
+                            <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link"><span>لوحة العلومات</span> <i data-feather="monitor"></i></a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown">
-                                <i data-feather="briefcase"></i><span>Widgets</span>
+                                <span>Widgets</span>  <i data-feather="briefcase"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="widget-chart.html">Chart Widgets</a></li>
@@ -318,14 +333,15 @@
                                 <li><a class="nav-link" href="email-read.html">read</a></li>
                             </ul>
                         </li>
-                        @if (User.IsInRole("SuperAdmin"))
+                        @if (await _userManager.IsInRoleAsync(user, "SuperAdmin"))
                         {
                             <li class="menu-header">التحكم</li>
                             <li class="dropdown">
                                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                                    <i data-feather="copy"></i><span>
+                                    <span>
                                         التحكم بالمستخدمين
                                     </span>
+                                    <i data-feather="copy"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="nav-link" asp-controller="Administraion" asp-action="ListUsers" asp-area="Admin">قائمة المستخدمين</a></li>
@@ -427,51 +443,51 @@
                 </aside>
             </div>
             <!-- Main Content -->
-            <div class="main-content">
+            <div class="main-content ">
                 <section class="section">
-                    <div class="section-body">
+                    <div class="section-body text-right">
                         @RenderBody()
                     </div>
                 </section>
-                <div class="settingSidebar">
+                <div class="settingSidebar text-right">
                     <a href="javascript:void(0)" class="settingPanelToggle">
                         <i class="fa fa-spin fa-cog"></i>
                     </a>
                     <div class="settingSidebar-body ps-container ps-theme-default">
-                        <div class=" fade show active">
+                        <div class=" fade show">
                             <div class="setting-panel-header">
-                                Setting Panel
+                                ضبط لوحه التحكم
                             </div>
                             <div class="p-15 border-bottom">
-                                <h6 class="font-medium m-b-10">Select Layout</h6>
+                                <h6 class="font-medium m-b-10">اختر الوضع العام</h6>
                                 <div class="selectgroup layout-color w-50">
                                     <label class="selectgroup-item">
                                         <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
-                                        <span class="selectgroup-button">Light</span>
+                                        <span class="selectgroup-button">المضئ</span>
                                     </label>
                                     <label class="selectgroup-item">
                                         <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
-                                        <span class="selectgroup-button">Dark</span>
+                                        <span class="selectgroup-button">المظلم</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="p-15 border-bottom">
-                                <h6 class="font-medium m-b-10">Sidebar Color</h6>
+                                <h6 class="font-medium m-b-10">لون القائمة الجانبية</h6>
                                 <div class="selectgroup selectgroup-pills sidebar-color">
                                     <label class="selectgroup-item">
                                         <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                                              data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
+                                              data-original-title="الوضع المضئ"><i class="fas fa-sun"></i></span>
                                     </label>
                                     <label class="selectgroup-item">
                                         <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
                                         <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                                              data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
+                                              data-original-title="الوضع المظلم"><i class="fas fa-moon"></i></span>
                                     </label>
                                 </div>
                             </div>
                             <div class="p-15 border-bottom">
-                                <h6 class="font-medium m-b-10">Color Theme</h6>
+                                <h6 class="font-medium m-b-10">اختر اللون العام</h6>
                                 <div class="theme-setting-options">
                                     <ul class="choose-theme list-unstyled mb-0">
                                         <li title="white" class="active">
@@ -504,7 +520,7 @@
                                         <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
                                                id="mini_sidebar_setting">
                                         <span class="custom-switch-indicator"></span>
-                                        <span class="control-label p-l-10">Mini Sidebar</span>
+                                        <span class="control-label p-l-10">تصغير القائمة الجانبية</span>
                                     </label>
                                 </div>
                             </div>
@@ -514,13 +530,13 @@
                                         <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
                                                id="sticky_header_setting">
                                         <span class="custom-switch-indicator"></span>
-                                        <span class="control-label p-l-10">Sticky Header</span>
+                                        <span class="control-label p-l-10">تصغير القائمة العلوي</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
                                 <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
-                                    <i class="fas fa-undo"></i> Restore Default
+                                    <i class="fas fa-undo"></i> الضبط الافتراضى
                                 </a>
                             </div>
                         </div>
@@ -529,11 +545,12 @@
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
-                    agmghazi@gmail.com   للدعم
+                    agmghazi@gmail.com - 0534740221  للدعم
 
                 </div>
+
                 <div class="footer-right">
-                    0534740221   للدعم
+
 
                 </div>
             </footer>
@@ -559,7 +576,8 @@
     <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
     <script src="~/Templetes/Admin/assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
     <script src="~/Templetes/Admin/assets/js/page/datatables.js"></script>
-
+    <script src="~/js/customDatatable.js" asp-append-version="true"></script>
+    <script src="~/js/togglePassword.js" asp-append-version="true"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 

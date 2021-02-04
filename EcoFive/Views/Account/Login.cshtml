@@ -1,73 +1,107 @@
-﻿@model LoginViewModel
+﻿
+@model LoginViewModel
 
 @{
     ViewBag.Title = "تسجيل الدخول";
 }
+<!--Hero Section-->
+<div class="hero-section login-background">
+    <h1 class="page-title">تسجيل الدخول</h1>
+</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h1>تسجيل الدخول</h1>
-        <hr />
-        <form method="post">
-            <div asp-validation-summary="All" class="alert alert-danger"></div>
+<!--Navigation section-->
+<div class="container text-right">
+    <nav class="biolife-nav">
+        <ul>
+            <li class="nav-item"><span class="current-page">تسجيل الدخول</span></li>
 
-            <div class="form-group">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label asp-for="RememberMe">
-                        <input asp-for="RememberMe" />
-                        @Html.DisplayNameFor(m => m.RememberMe)
-                    </label>
+            <li class="nav-item"><a href="index-2.html" class="permal-link">الصفحة الرئيسية</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-contain login-page">
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="row">
+
+                <!--Go to Register form-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <div class="register-in-container text-right">
+                        <div class="intro ">
+                            <h4 class="box-title float-right">عميل جديد؟</h4>
+                            <p class="sub-title ">: أنشئ حسابًا معنا وستتمكن من </p>
+                            <ul class="lis text-right">
+                                <li>تحقق أسرع</li>
+                                <li>حفظ عدة شحنات وصناديق</li>
+                                <li>الوصول إلى سجل الطلبات الخاص بك</li>
+                                <li>تتبع الطلبات الجديدة</li>
+                                <li>حفظ العناصر في قائمة الرغبات الخاصة بك</li>
+                            </ul>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-bold">انشاء الحساب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Form Sign In-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="signin-container text-right">
+                        <form method="post">
+                            <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                            <p class="form-row">
+                                <label asp-for="UserName" class="textInput"></label>
+                                <input asp-for="UserName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="Password" class="textInput"> </label>
+                                <input asp-for="Password" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </p>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label asp-for="RememberMe">
+                                        <input asp-for="RememberMe" />
+                                        @Html.DisplayNameFor(m => m.RememberMe)
+                                    </label>
+                                </div>
+                            </div>
+                            <dnt-captcha asp-captcha-generator-max="999999"
+                                         asp-captcha-generator-min="111111"
+                                         asp-captcha-generator-language="English"
+                                         asp-captcha-generator-display-mode="ShowDigits"
+                                         asp-use-relative-urls="true"
+                                         asp-placeholder="ادخل كلمه التحقق"
+                                         asp-validation-error-message="الرجاء إدخال كلمة التحقق الصحيحة"
+                                         asp-font-name="Cairo"
+                                         asp-font-size="20"
+                                         asp-fore-color="#333333"
+                                         asp-back-color="#ccc"
+                                         asp-text-box-class="text-box form-control w-25 text-right float-right"
+                                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
+                                         asp-validation-message-class="text-danger m-3"
+                                         asp-use-noise="false" />
+                            <br />
+                            <br />
+
+                            <p class="form-row wrap-btn">
+                                <a asp-action="ForgotPassword" asp-controller="Account" asp-area="Admin" class="link-to-help ">هل نسيت كلمه المرور؟</a>
+                                <button class="btn btn-submit btn-bold pr-3" type="submit">تسجيل الدخول</button>
+
+                            </p>
+
+
+                        </form>
+                    </div>
                 </div>
             </div>
-            <dnt-captcha asp-captcha-generator-max="999999"
-                         asp-captcha-generator-min="111111"
-                         asp-captcha-generator-language="English"
-                         asp-captcha-generator-display-mode="ShowDigits"
-                         asp-use-relative-urls="true"
-                         asp-placeholder="ادخل كلمه التحقق"
-                         asp-validation-error-message="الرجاء إدخال كلمة التحقق الصحيحة"
-                         asp-font-name="Tahoma"
-                         asp-font-size="20"
-                         asp-fore-color="#333333"
-                         asp-back-color="#ccc"
-                         asp-text-box-class="text-box form-control w-50 float-right text-right"
-                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
-                         asp-validation-message-class="text-danger"
-                         asp-use-noise="false"
-                         asp-dir="ltr" />
-            <br />
-            <br />
-            <button type="submit" class="btn btn-primary w-auto ">تسجيل الدخول</button>
-            <div>
-                <a asp-action="ForgotPassword">نسيت كلمه المرور؟</a>
-            </div>
-        </form>
-    </div>
-    @*<div class="col-md-6">
-            <h1>تسجيل الدحول بوسائل التواصل الإجتماعى</h1>
-            <hr />
 
-                    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
-                        <div>
-                            @foreach (var provider in Model.ExternalLogins)
-                            {
-                                <button type="submit" class="btn btn-primary" style="width: auto"
-                                        name="provider" value="@provider.Name"
-                                        title="Log in using your @provider.DisplayName account">
-                                    @provider.DisplayName
-                                </button>
-                            }
-                        </div>
-                    </form>
-        </div>*@
+        </div>
+
+    </div>
+
 </div>

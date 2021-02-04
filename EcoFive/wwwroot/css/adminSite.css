@@ -1,0 +1,264 @@
+﻿* {
+    font-family: 'Cairo', sans-serif;
+}
+
+/*#searchInput {
+    background-image: url('/css/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+*/
+.field-validation-error {
+    color: #b94a48;
+    display: inline-block;
+    *display: inline;
+    padding-left: 5px;
+    vertical-align: middle;
+    *zoom: 1;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    color: #b94a48;
+    border-color: #b94a48;
+}
+
+.input-validation-error:focus {
+    border-color: #953b39;
+    -webkit-box-shadow: 0 0 6px #d59392;
+    -moz-box-shadow: 0 0 6px #d59392;
+    box-shadow: 0 0 6px #d59392;
+}
+
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+
+.form-control {
+    font-size: 17px !important
+}
+
+.btn.btn-lg {
+    font-size: 14px !important
+}
+.form-group .control-label, .form-group > label {
+    font-size: 15px !important
+}
+.text-small {
+    font-size: 14px !important
+}
+label {
+    font-size: 19px !important
+}
+.invalid-feedback {
+    font-size: 16px !important
+}
+.alert {
+    font-size: 18px !important
+}
+
+.card .card-header h4 {
+    font-size: 20px !important
+}
+
+.card .card-header {
+    display: block !important
+}
+
+.input-group-text, select.form-control:not([size]):not([multiple]), .form-control:not(.form-control-sm):not(.form-control-lg) {
+    padding: 0px
+}
+
+/*image profile*/
+
+.profile-pic {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+}
+
+.file-upload {
+    display: none;
+}
+
+.circle {
+    border-radius: 33px !important;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    border: 1px dashed silver;
+    float: right;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.p-image {
+    top: 167px;
+    right: 30px;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+.p-image:hover {
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+.upload-button {
+    font-size: 1.2em;
+}
+
+.upload-button:hover {
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    color: #999;
+}
+
+/*admin panel */
+.main-sidebar {
+    right: 0px;
+    left: unset !important;
+}
+body.sidebar-gone .main-sidebar {
+    right: -250px
+}
+
+/*//small size*/
+@media (max-width: 1024px) {
+    .navbar {
+        right: 0px !important;
+        left: 5px !important;
+    }
+}
+
+.sidebar-mini .main-sidebar:after {
+    right: 0 !important;
+    left: unset !important
+}
+
+/*big size*/
+@media (min-width: 992px) {
+    .navbar {
+        right: 250px !important;
+        left: 0px !important;
+    }
+}
+.main-sidebar .sidebar-menu li a {
+    display: flow-root !important
+}
+.main-sidebar .sidebar-menu li a span {
+    margin-right: 14px !important
+}
+.main-sidebar .sidebar-menu li .menu-toggle:before {
+    right: unset !important;
+    left: 17px !important
+}
+.main-sidebar .sidebar-menu li .menu-toggle:after {
+    right: unset !important;
+    left: 17px !important
+}
+.main-sidebar .sidebar-menu li ul.dropdown-menu li a:before {
+    right: 30px !important;
+    left: unset !important
+}
+.main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+    padding-right: 53px  !important;
+    text-align: right
+}
+.dropdown-menu-right {
+    left: -1px !important
+}
+
+.settingSidebar {
+    left: -279px !important;
+    right: unset !important
+}
+
+ .settingSidebar .settingPanelToggle {
+        right: -40px !important;
+        left: unset !important;
+        border-radius: 0px 10px 10px 0px !important
+ }
+
+.settingSidebar.showSettingPanel {
+    right: unset !important;
+    left: 0px !important
+}
+/*big size*/
+@media (min-width: 992px) {
+    .main-content {
+        padding-right: 280px !important;
+        padding-left: 30px !important
+    }
+}
+
+.sidebar-mini .main-content, .sidebar-mini .main-footer {
+    padding-right: 90px !important
+}
+.sidebar-mini .navbar {
+    right: 65px !important
+}
+.main-footer {
+    padding: 20px 298px 20px 20px !important
+}
+.btn.btn-icon-split i, .dropdown-item.has-icon i {
+    float: right
+}
+.dt-buttons {
+    float: left
+}
+.dataTables_info {
+    float: left
+}
+.pagination {
+    float: left
+}
+.dataTables_paginate paging_simple_numbers {
+    float: left
+}
+.btn-sm, .btn-group-sm > .btn {
+    display: none !important
+}
+
+.input-group-text, select.form-control:not([size]):not([multiple]), .form-control:not(.form-control-sm):not(.form-control-lg) {
+    padding: 5px !important
+}
+
+.dropdown-menu .dropdown-title {
+    text-transform :unset !important
+}
+
+#chProfAlertmsg {
+    position: absolute;
+    top: 38px;
+    left: 3%
+}
+
+.toPassword i {
+    cursor: pointer;
+    position: absolute;
+    left: 38px 
+}
+
+.inputPassword {
+padding: 0px !important
+    }
+
+.textInput {
+    position: relative;
+    right: 21px;
+    top: 18px;
+    background-color: white;
+}

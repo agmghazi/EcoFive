@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoFive.UI", "EcoFive\EcoFive.UI.csproj", "{8D06ACD0-A228-4D01-98C2-FC5DCBE1A39B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoFive.UI", "EcoFive\EcoFive.UI.csproj", "{8D06ACD0-A228-4D01-98C2-FC5DCBE1A39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoFive.Models", "EcoFive.Models\EcoFive.Models.csproj", "{8B89C95B-3F5A-41D1-AC9C-BEFF92410C01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoFive.Models", "EcoFive.Models\EcoFive.Models.csproj", "{8B89C95B-3F5A-41D1-AC9C-BEFF92410C01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoFive.DataAccessLayer", "DataAccessLayer\EcoFive.DataAccessLayer.csproj", "{06930B48-A5B2-4379-BFA3-5E98A3B501B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoFive.DataAccessLayer", "DataAccessLayer\EcoFive.DataAccessLayer.csproj", "{06930B48-A5B2-4379-BFA3-5E98A3B501B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

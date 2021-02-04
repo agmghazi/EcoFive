@@ -1,55 +1,194 @@
-﻿@model RegisterViewModel
+﻿
+@model RegisterViewModel
 
 @{
     ViewBag.Title = "تسجيل مستخدم جديد";
 }
-
-<h1>تسجيل مستخدم جديد</h1>
-
-
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class="alert alert-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control text-right" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control text-right" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control text-right" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @*<label asp-for="City"></label>
-                <input asp-for="City" class="form-control text-right " />*@
-            </div>
-            <dnt-captcha asp-captcha-generator-max="999999"
-                         asp-captcha-generator-min="111111"
-                         asp-captcha-generator-language="English"
-                         asp-captcha-generator-display-mode="ShowDigits"
-                         asp-use-relative-urls="true"
-                         asp-placeholder="ادخل كلمه التحقق"
-                         asp-validation-error-message="الرجاء إدخال كلمة التحقق الصحيحة"
-                         asp-font-name="Tahoma"
-                         asp-font-size="20"
-                         asp-fore-color="#333333"
-                         asp-back-color="#ccc"
-                         asp-text-box-class="text-box form-control w-25 text-right float-right"
-                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
-                         asp-validation-message-class="text-danger m-3"
-                         asp-use-noise="false" />
-            <br />
-            <br />
-            <button type="submit" class="btn btn-primary w-auto">التسجيل</button>
-        </form>
-    </div>
+<!--Hero Section-->
+<div class="hero-section register-background">
+    <h1 class="page-title">تسجيل مستخدم جديد</h1>
 </div>
 
+<!--Navigation section-->
+<div class="container text-right">
+    <nav class="biolife-nav">
+        <ul>
+            <li class="nav-item"><span class="current-page">تسجيل مستخدم جديد</span></li>
+
+            <li class="nav-item"><a href="index-2.html" class="permal-link">الصفحة الرئيسية</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-contain login-page">
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="row">
+
+                <!--Go to Register form-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <div class="register-in-container text-right">
+                        <div class="intro ">
+                            <h4 class="box-title float-right">مورد جديد؟</h4>
+                            <p class="sub-title ">: أنشئ حسابًا معنا وستتمكن من </p>
+                            <ul class="lis text-right">
+                                <li>اضافة منتجاتك معنا</li>
+                                <li>حفظ عدة اصناف من المنتجات</li>
+                                <li>الوصول إلى سجل الطلبات الخاص بك</li>
+                                <li>تتبع الطلبات الجديدة</li>
+                                <li>تتبع التقيمات والاراء على منتجاتك</li>
+                            </ul>
+                            <a asp-controller="Account" asp-action="Register" asp-area="Admin" asp-route-IsSupplier="true" class="btn btn-bold">انشاء الحساب</a>
+                        </div>
+                    </div>
+
+                    <div class="register-in-container text-right">
+                        <div class="intro ">
+                            <h4 class="box-title float-right"> كابتن (توصيل) جديد؟</h4>
+                            <p class="sub-title ">: أنشئ حسابًا معنا وستتمكن من </p>
+                            <ul class="lis text-right">
+                                <li>راتب مجزئ</li>
+                                <li>حفظ عدة اصناف من المنتجات</li>
+                                <li>الوصول إلى سجل الطلبات الخاص بك</li>
+                                <li>تتبع الطلبات الجديدة</li>
+                                <li>تتبع التقيمات والاراء على منتجاتك</li>
+                            </ul>
+                            <a asp-controller="Account" asp-action="Register" asp-area="Admin" asp-route-IsCaptain="true" class="btn btn-bold">انشاء الحساب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Form Sign In-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="signin-container text-right">
+                        <form method="post">
+                            <div asp-validation-summary="All" class="alert alert-danger text-right"></div>
+
+                            <p class="form-row">
+                                <label asp-for="FirstName" class="textInput"></label>
+                                <input asp-for="FirstName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="FirstName"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="LastName" class="textInput"></label>
+                                <input asp-for="LastName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="LastName"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="UserName" class="textInput"></label>
+                                <input asp-for="UserName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="UserName"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="Email" class="textInput"></label>
+                                <input asp-for="Email" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="Email"></span>
+                            </p>
+
+                            <p class="form-row">
+                                <label asp-for="Password" class="textInput"> </label>
+                                <input asp-for="Password" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="Password"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="ConfirmPassword" class="textInput"> </label>
+                                <input asp-for="ConfirmPassword" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="ConfirmPassword"></span>
+                            </p>
+
+
+                            <p class="form-row">
+                                <label asp-for="CountryId" class="textInput"></label>
+                                <select dir="rtl" id="ddCountries" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.Countries, "Id", "Name"))" style="display: block !important" class="form-control"><option>أختر</option></select>
+                                <span asp-validation-for="CountryId"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="GovernorateId" class="textInput"></label>
+                                <select dir="rtl" id="ddGovernorate" asp-for="GovernorateId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))" class="form-control"></select>
+                                <span asp-validation-for="GovernorateId"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="CityId" class="textInput"></label>
+                                <select dir="rtl" id="ddCity" asp-for="CityId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))" class="form-control"></select>
+                                <span asp-validation-for="CityId"></span>
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="PhoneNumber" class="textInput"></label>
+                                <input asp-for="PhoneNumber" class=" form-control w-25 text-right float-right">
+                                <span asp-validation-for="PhoneNumber"></span>
+                            </p>
+                            <br />
+                            <br />
+                            <dnt-captcha asp-captcha-generator-max="999999"
+                                         asp-captcha-generator-min="111111"
+                                         asp-captcha-generator-language="English"
+                                         asp-captcha-generator-display-mode="ShowDigits"
+                                         asp-use-relative-urls="true"
+                                         asp-placeholder="ادخل رمز التحقق"
+                                         asp-validation-error-message="الرجاء إدخال رمز التحقق الصحيح"
+                                         asp-font-name="Tahoma"
+                                         asp-font-size="20"
+                                         asp-fore-color="#333333"
+                                         asp-back-color="#ccc"
+                                         asp-text-box-class="text-box form-control w-25 text-right float-right"
+                                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text '></span></span>{0}"
+                                         asp-validation-message-class="text-danger m-3"
+                                         asp-use-noise="false" />
+                            <br />
+                            <br />
+
+                            <p class="form-row wrap-btn">
+                                <button class="btn btn-submit btn-bold pr-3" type="submit">التسجيل</button>
+
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#ddCountries").change(function () {
+
+                $.getJSON("/Admin/Account/FindGovernorates",
+                    { id: $("#ddCountries").val() },
+                    function (d) {
+                        var row = "";
+                        console.log(d);
+                        $("#ddGovernorate").empty();
+                        $("#ddCity").empty();
+                        row += "<option selected disabled >أختر</option>";
+                        $.each(d,
+                            function (i, v) {
+                                row += "<option value=" + v.id + ">" + v.name + "</option>";
+                            });
+                        $("#ddGovernorate").html(row);
+                    });
+            });
+            $("#ddGovernorate").change(function () {
+                $.getJSON("/Admin/Account/Findcities",
+                    { id: $("#ddGovernorate").val() },
+                    function (d) {
+                        var row = "";
+                        $("#ddCity").empty();
+                        row += "<option selected disabled >أختر</option>";
+                        $.each(d,
+                            function (i, v) {
+                                row += "<option value=" + v.id + ">" + v.name + "</option>";
+                            });
+                        $("#ddCity").html(row);
+                    });
+            });
+        });
+    </script>
+}

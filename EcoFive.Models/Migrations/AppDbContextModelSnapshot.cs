@@ -44,6 +44,10 @@ namespace EcoFive.Models.Migrations
 
                     b.Property<int>("GovernorateId");
 
+                    b.Property<bool>("IsCaptain");
+
+                    b.Property<bool>("IsSupplier");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -64,12 +68,18 @@ namespace EcoFive.Models.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<bool>("Supplier");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<DateTime>("VisaDate");
+
+                    b.Property<string>("VisaName");
+
+                    b.Property<int>("VisaNumber");
+
+                    b.Property<int>("VisaPassword");
 
                     b.HasKey("Id");
 
@@ -96,21 +106,25 @@ namespace EcoFive.Models.Migrations
                             AccessFailedCount = 0,
                             CityId = 1,
                             CloseAccount = false,
-                            ConcurrencyStamp = "b0c32a46-a138-465f-8b78-05ba6684412c",
+                            ConcurrencyStamp = "ac09a983-0944-43fd-b3b9-83190b47cfcc",
                             CountryId = 1,
                             Email = "agmghazi@hotmail.com",
                             EmailConfirmed = true,
                             GovernorateId = 1,
+                            IsCaptain = false,
+                            IsSupplier = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "AGMGHAZI@HOTMAIL.COM",
                             NormalizedUserName = "AGMGHAZI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHNhf9hbBM0o8CE2FnYSB+papvvFraAuw7xy0T0UdVPecaAHjBc4jBAEAqVzXIkWLQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGYrewCLI8zI2MBW715iuQbycLh343vmcoy3gAG0vbHMBHeHBfsz1xpoPxXbNe2xmA==",
                             PhoneNumber = "0534740221",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
-                            Supplier = false,
                             TwoFactorEnabled = false,
-                            UserName = "agmghazi"
+                            UserName = "agmghazi",
+                            VisaDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VisaNumber = 0,
+                            VisaPassword = 0
                         },
                         new
                         {
@@ -118,21 +132,25 @@ namespace EcoFive.Models.Migrations
                             AccessFailedCount = 0,
                             CityId = 1,
                             CloseAccount = false,
-                            ConcurrencyStamp = "5f24f8b3-f70a-43ec-850b-269472853d79",
+                            ConcurrencyStamp = "4cc49a05-bb5f-44bd-b7d4-32206fc3f84d",
                             CountryId = 1,
                             Email = "user1@hotmail.com",
                             EmailConfirmed = true,
                             GovernorateId = 1,
+                            IsCaptain = false,
+                            IsSupplier = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@HOTMAIL.COM",
                             NormalizedUserName = "USER1",
-                            PasswordHash = "AQAAAAEAACcQAAAAENLoX7wEqO/BMyIDD9HowoQ2HW6wIUeYucqDNwP+0gpgDCjlTiDPY8LLGgfGOhItrQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJNeY04L2qBMfYrgCXjIGfY1trD69mZK07r8RwUKnBE1jjkmVv26DBliecLCD3mzCg==",
                             PhoneNumber = "051265136845",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
-                            Supplier = false,
                             TwoFactorEnabled = false,
-                            UserName = "user1"
+                            UserName = "user1",
+                            VisaDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VisaNumber = 0,
+                            VisaPassword = 0
                         });
                 });
 

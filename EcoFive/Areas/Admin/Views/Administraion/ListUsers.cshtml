@@ -10,7 +10,6 @@
 
 @if (Model.Any())
 {
-
     <div class="card">
         <div class="text-right mt-4 ">
 
@@ -27,9 +26,11 @@
                     <thead>
                         <tr>
                             <th>العمليات</th>
-                            <th>طلب انضمام</th>
+                            <th>طلب كابتن </th>
+                            <th>طلب مورد </th>
                             <th>الدور</th>
                             <th>تفعيل الحساب</th>
+                            <th> اغلاق مفاجئ</th>
                             <th> تسجيل دخول خطئ</th>
                             <th>تفعيل الاميل</th>
                             <th>المدينة</th>
@@ -52,16 +53,18 @@
                                 {
                                     <form asp-controller="Administraion" asp-action="DeleteUser" asp-route-id="@user.Id">
 
-                                        @if (role == "SuperAdmin" || role == "Admin")
+                                        @if (role == "SuperAdmin")
                                         {
-                                            <tr class="bg-info text-black font-weight-bold">
+                                            <tr class="bg-info text-white font-weight-bold">
                                                 <td>
 
-                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
+                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1 ">تعديل</a>
                                                 </td>
-                                                <td>@user.Supplier</td>
+                                                <td>@user.IsCaptain</td>
+                                                <td>@user.IsSupplier</td>
                                                 <td>@role</td>
-                                                <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+                                                <td> نشط دائما</td>
+                                                <td>@user.LockoutEnabled</td>
                                                 <td>@user.AccessFailedCount</td>
                                                 <td>@user.EmailConfirmed</td>
                                                 <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
@@ -73,21 +76,43 @@
                                                 <td>@user.UserName</td>
                                             </tr>
 
+                                        }else if (role == "Admin")
+                                        {
+                                            <tr class="bg-info text-white font-weight-bold">
+                                                <td>
+
+                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1 ">تعديل</a>
+                                                </td>
+                                                <td>@user.IsCaptain</td>
+                                                <td>@user.IsSupplier</td>
+                                                <td>@role</td>
+                                                <td> <a href="#" class="btn btn-primary btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+                                                <td>@user.LockoutEnabled</td>
+                                                <td>@user.AccessFailedCount</td>
+                                                <td>@user.EmailConfirmed</td>
+                                                <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
+                                                <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
+                                                <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
+                                                <td>@user.PhoneNumber</td>
+                                                <td>@user.FullName</td>
+                                                <td>@user.Email</td>
+                                                <td>@user.UserName</td>
+                                            </tr>
                                         }
                                         else if (role == "User")
                                         {
-                                            if (user.Supplier == true)
+                                            if (user.IsSupplier == true)
                                             {
                                                 <tr class="bg-brown text-black font-weight-bold">
                                                     <td>
 
                                                         <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
                                                     </td>
-
-                                                    <td>@user.Supplier</td>
+                                                    <td>@user.IsCaptain</td>
+                                                    <td>@user.IsSupplier</td>
                                                     <td>@role</td>
                                                     <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
-
+                                                    <td>@user.LockoutEnabled</td>
                                                     <td>@user.AccessFailedCount</td>
                                                     <td>@user.EmailConfirmed</td>
                                                     <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
@@ -107,10 +132,11 @@
 
                                                         <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
                                                     </td>
-                                                    <td>@user.Supplier</td>
+                                                    <td>@user.IsCaptain</td>
+                                                    <td>@user.IsSupplier</td>
                                                     <td>@role</td>
                                                     <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
-
+                                                    <td>@user.LockoutEnabled</td>
                                                     <td>@user.AccessFailedCount</td>
                                                     <td>@user.EmailConfirmed</td>
                                                     <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
@@ -142,13 +168,16 @@
                                             حذف
                                         </button>
 
-                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-3">تعديل</a>
+                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-3 ">تعديل</a>
                                     </td>
 
-                                    <td>@user.Supplier</td>
+
+                                    <td>@user.IsCaptain</td>
+                                    <td>@user.IsSupplier</td>
                                     <td class="text-danger font-weight-bold">لا يوجد دور</td>
                                     <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
 
+                                    <td>@user.LockoutEnabled</td>
                                     <td>@user.AccessFailedCount</td>
                                     <td>@user.EmailConfirmed</td>
                                     <td>@_accountRepository.GetCurrentCity(user.CityId)</td>

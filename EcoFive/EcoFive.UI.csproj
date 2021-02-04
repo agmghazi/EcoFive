@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
@@ -28,6 +29,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.2" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -666,6 +668,25 @@
     <None Include="wwwroot\Templetes\Admin\assets\js\page\widget-chart.js" />
     <None Include="wwwroot\Templetes\Admin\assets\js\page\widget-data.js" />
     <None Include="wwwroot\Templetes\Admin\assets\js\scripts.js" />
+    <None Include="wwwroot\Templetes\Client\assets\fonts\biolifebbd0.svg" />
+    <None Include="wwwroot\Templetes\Client\assets\fonts\fontawesome-webfont3e6e.svg" />
+    <None Include="wwwroot\Templetes\Client\assets\fonts\fontawesome-webfont3e6e.woff2" />
+    <None Include="wwwroot\Templetes\Client\assets\js\biolife.framework.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\functions.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\jquery-3.4.1.min.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\jquery.countdown.min.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\jquery.nicescroll.min.js" />
+    <None Include="wwwroot\Templetes\Client\assets\js\slick.min.js" />
+    <None Include="wwwroot\Templetes\Client\landing\fonts\fontawesome-webfont5b62.svg" />
+    <None Include="wwwroot\Templetes\Client\landing\fonts\fontawesome-webfont5b62.woff2" />
+    <None Include="wwwroot\Templetes\Client\landing\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\Templetes\Client\landing\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\Templetes\Client\landing\js\functions.js" />
+    <None Include="wwwroot\Templetes\Client\landing\js\jquery-2.1.4.min.js" />
+    <None Include="wwwroot\Templetes\Client\landing\js\owl.carousel.js" />
+    <None Include="wwwroot\Templetes\Client\landing\js\wow.min.js" />
   </ItemGroup>
 
 </Project>

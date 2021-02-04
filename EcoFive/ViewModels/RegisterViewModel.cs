@@ -7,8 +7,8 @@ namespace EcoFive.UI.ViewModels
     {
         [Display(Name = "البريد الالكترونى")]
         [Required(ErrorMessage = "يرجى ادخال البريد الالكترونى")]
-        [EmailAddress]
-        [Remote(action: "IsEmailInUse", controller: "Account")]
+        [EmailAddress(ErrorMessage = "ahmed@gmail.com يرجى الادخال بدون مسافات كالتالى ")]
+        [Remote(action: "IsEmailInUse", controller: "Account", "Admin")]
         //[ValidEmailDomain(allowedDomain: "gis.com",
         //    ErrorMessage = "Email Domain must be gis.com")]
         public string Email { get; set; }
@@ -32,29 +32,36 @@ namespace EcoFive.UI.ViewModels
 
 
         [Required(ErrorMessage = "يرجى اسم المستخدم")]
-        [Remote(action: "IsUserInUse", controller: "Account")]
+        [Remote(action: "IsUserInUse", controller: "Account", "Admin")]
+        [Display(Name = "اسم الستخدم")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال الاسم الاول")]
+        [Display(Name = "الاسم الاول")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال الاسم الاخير")]
+        [Display(Name = "الاسم الاخير")]
         public string LastName { get; set; }
 
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "يرجى ادخال رقم الهاتف بشكل صحيح 0531234564")]
         [Required(ErrorMessage = "يرجى ادخال رقم الهاتف ")]
+        [Display(Name = "رقم الهاتف")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال المدينة")]
         [Display(Name = "المدينة")]
         public int CityId { get; set; }
 
-        [Required(ErrorMessage = "يرجى ادخال الدوله")]
+        [Required(ErrorMessage = "يرجى ادخال الدولة")]
+        [Display(Name = "الدولة")]
         public int CountryId { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال المحافظة")]
+        [Display(Name = "المحافظة")]
         public int GovernorateId { get; set; }
 
-        public bool Supplier { get; set; }
+        public bool IsSupplier { get; set; }
+        public bool IsCaptain { get; set; }
     }
 }

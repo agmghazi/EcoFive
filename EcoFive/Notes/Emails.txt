@@ -151,3 +151,33 @@
 </table>
 <p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
 <p><br></p>
+
+
+---after forget password
+
+<p><span style="font-size: 30px;"><strong><span style="color: rgb(65, 168, 95);">Eco Five</span></strong></span></p>
+<table style="width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);">
+    <tbody>
+        <tr>
+            <td style="width: 100%; border: 2px solid rgb(0, 0, 0);">
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;"><span style="font-size: 24px;">مرحبا احمد جمال&nbsp;</span></div>
+                <div style="text-align: right;"><br></div>
+                <div style="text-align: right;">&nbsp; &nbsp;</div>
+                <div style="text-align: right;"><span style="font-size: 24px;">&nbsp; &nbsp; &nbsp;تم ارسال هذه البيانات بناءا على طلبك. نرجوا الاحتفاظ بهذه المعلومات بسريه تامه&nbsp;</span></div>
+                <div style="text-align: right;"><span style="font-size: 20px;">&nbsp;</span></div>
+                <p style="text-align: right;"><span style="font-size: 20px;">agmghazi :<strong>&nbsp;اسم المستخدم&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">ahmed gamal &nbsp;: &nbsp; <strong>الاسم كامل</strong>&nbsp; &nbsp;&nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">0534740221 : &nbsp;<strong>&nbsp;رقم الهاتف&nbsp;</strong>&nbsp; &nbsp;</span></p>
+                <p style="text-align: right;"><span style="font-size: 20px;">&nbsp;gis.csharp@gmail.com &nbsp; : &nbsp;<strong>البريد الالكترونى &nbsp; &nbsp;</strong></span></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="font-size: 22px; line-height: 1;">&nbsp;تحياتنا&nbsp;</span></p>
+                <p style="text-align: right; line-height: 1;"><span style="line-height: 1;"><span style="font-size: 22px;">&nbsp; فريق العمل&nbsp;</span></span></p>
+                <p style="text-align: center; line-height: 1;"><span style="font-size: 19px; line-height: 1; color: rgb(163, 143, 132);">اذا لم تقم بعمليه تغير كلمه المرور &nbsp;يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>
+                <p style="text-align: center; line-height: 1;"><span style="color: rgb(163, 143, 132);"><span style="line-height: 1;"><span style="font-size: 19px;">نشكركم لتعاونكم معنا</span><br></span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"></a><a href="http://www.google.com" rel="noopener noreferrer" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"></a></p>
+<p><br></p>

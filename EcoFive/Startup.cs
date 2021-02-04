@@ -8,11 +8,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace EcoFive.UI
 {
@@ -39,6 +44,10 @@ namespace EcoFive.UI
             //        options.AppId = "XXXXX";
             //        options.AppSecret = "YYYYY";
             //    });
+
+            //to add change languages in application
+            services.AddLocalization(opts =>
+                opts.ResourcesPath = "Resources");
 
 
             // add security code
@@ -80,10 +89,11 @@ namespace EcoFive.UI
                     options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
 
                     //lockout account
-                    options.Lockout.MaxFailedAccessAttempts = 5;    //5 Times try
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                    options.Lockout.MaxFailedAccessAttempts = 5;    //5 Times try
 
                 }).AddEntityFrameworkStores<AppDbContext>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddTokenProvider<CustomEmailConfirmationTokenProvider
                     <ApplicationUser>>("CustomEmailConfirmation");
@@ -104,7 +114,24 @@ namespace EcoFive.UI
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            }).AddXmlSerializerFormatters();
+            }).AddXmlSerializerFormatters()
+                .AddViewLocalization(opts =>
+                {
+                    opts.ResourcesPath = "Resources";
+                }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+
+            services.Configure<RequestLocalizationOptions>(opts =>
+            {
+                var supportCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ar")
+                };
+                opts.DefaultRequestCulture = new RequestCulture("ar");
+                opts.SupportedCultures = supportCultures;
+                opts.SupportedUICultures = supportCultures;
+            });
 
             services.AddScoped<IAccountRepository, AccountAccessLayer>();
 
@@ -123,6 +150,12 @@ namespace EcoFive.UI
             }
             app.UseStaticFiles();
             app.UseAuthentication();
+
+            //config resources
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+            app.UseCookiePolicy();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");

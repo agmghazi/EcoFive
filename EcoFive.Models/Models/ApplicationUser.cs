@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EcoFive.Models.Models
@@ -23,8 +24,15 @@ namespace EcoFive.Models.Models
         public string FullName { get; set; }
 
         public bool CloseAccount { get; set; }
-        public bool Supplier { get; set; }
+        public bool IsSupplier { get; set; }
 
         public string PhotoPath { get; set; }
+
+        public bool IsCaptain { get; set; }
+
+        public int VisaNumber { get; set; }
+        public DateTime VisaDate { get; set; }
+        public int VisaPassword { get; set; }
+        public string VisaName { get; set; }
     }
 }

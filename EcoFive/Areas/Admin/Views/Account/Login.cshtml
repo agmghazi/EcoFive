@@ -20,7 +20,7 @@
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="~/Templetes/Admin/assets/css/custom.css">
     <link rel='shortcut icon' type='~/Templetes/Admin/image/x-icon' href='~/Templetes/Admin/assets/img/favicon.ico' />
-    <link href="~/css/site.css" asp-append-version="true" rel="stylesheet" />
+    <link href="~/css/adminSite.css" asp-append-version="true" rel="stylesheet" />
     @*to active client side validation*@
     <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js" asp-append-version="true"></script>
@@ -55,7 +55,7 @@
                             <div class="card-header text-right">
 
                                 <div class="pb-3 text-center">
-                                    <img src="~/images/137809c0-b15f-4ea5-b79f-e8526501c52b_ahmed.jpg" width="200px" height="200px" />
+                                    <img src="~/images/person.png" width="200px" height="200px" />
 
                                     <h4 class="text-center mt-3">تسجيل دخول</h4>
                                 </div>
@@ -65,22 +65,32 @@
                                     <div asp-validation-summary="All" class="alert alert-danger text-right"></div>
 
                                     <div class="form-group text-right">
-                                        <label asp-for="UserName">اسم المستخدم</label>
-                                        <input asp-for="UserName" class="form-control text-right" tabindex="1" required autofocus placeholder="ادخل اسم المستخدم">
+                                        <label asp-for="UserName" class="textInput"></label>
+                                        <input asp-for="UserName" class="form-control text-right" autofocus>
                                         <span asp-validation-for="UserName"></span>
 
                                     </div>
+
                                     <div class="form-group text-right">
                                         <div class="float-left">
                                             <a asp-controller="Account" asp-action="ForgotPassword" class="text-small">هل نسيت كلمه السر؟ اضغط هنا</a>
                                         </div>
                                         <div class="d-block">
-                                            <label asp-for="Password" class="control-label ">كلمة المرور</label>
+                                            <label asp-for="Password" class="control-label textInput"></label>
                                         </div>
-                                        <input asp-for="Password" class="form-control text-right" name="password" tabindex="2" required placeholder="ادخل كلمة المرور">
-                                        <span asp-validation-for="Password"></span>
+                                        <div class="toPassword">
+                                            <span class="input-group-text inputPassword" id="basic-addon1">
+                                                <input asp-for="Password" class="form-control text-right" id="password">
+                                                <i class="far fa-eye" id="togglePassword"></i>
+                                            </span>
 
+                                            <span asp-validation-for="Password"></span>
+                                        </div>
                                     </div>
+
+
+
+
                                     <div class="form-group float-right">
                                         <div class="checkbox">
                                             <label asp-for="RememberMe">
@@ -89,13 +99,14 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <br />
                                     <div class="float-right pt-4 pb-4 ">
                                         <dnt-captcha asp-captcha-generator-max="999999"
                                                      asp-captcha-generator-min="111111"
                                                      asp-captcha-generator-language="English"
                                                      asp-captcha-generator-display-mode="ShowDigits"
                                                      asp-use-relative-urls="false"
-                                                     asp-placeholder="ادخل كلمه التحقق"
+                                                     asp-placeholder="ادخل رمز التحقق"
                                                      asp-validation-error-message="الرجاء إدخال رمز التحقق الصحيح"
                                                      asp-font-name="Cairo"
                                                      asp-font-size="14"
@@ -109,7 +120,7 @@
 
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="font-size: 17px !important" tabindex="4">
                                             تسجيل دخول
                                         </button>
                                     </div>
@@ -129,6 +140,8 @@
     <script src="~/Templetes/Admin/assets/js/scripts.js"></script>
     <!-- Custom JS File -->
     <script src="~/Templetes/Admin/assets/js/custom.js"></script>
+    <script src="~/js/togglePassword.js" asp-append-version="true"></script>
+
 </body>
 
 </html>
