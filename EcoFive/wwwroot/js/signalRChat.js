@@ -11,22 +11,20 @@ function InvokeSignalR(userId) {
         console.log(userName)
 
         if (userName == "agmghazi") {
-            debugger
             //const msg = message.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">");
 
             const encodedMsg = message;
             const li = document.createElement("li");
             li.textContent = encodedMsg;
-            li.classList.add("other");
+            li.classList.add("self");
             document.querySelector(".messages").appendChild(li);
         } else {
             console.log("kkk")
             console.log(userId)
-            debugger
             //const encodedMsg = message;
             //const li = document.createElement("li");
             //li.textContent = encodedMsg;
-            //li.classList.add("self");
+            //li.classList.add("other");
             //document.querySelector(".messages").appendChild(li);
         }
     });

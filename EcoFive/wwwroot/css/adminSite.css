@@ -1,5 +1,11 @@
-﻿* {
-    font-family: 'Cairo', sans-serif;
+﻿
+@font-face {
+    font-family: "HelveticaNeueLT";
+    src: url("/Templetes/Fonts/HelveticaNeueLT_Font/HelveticaNeueLT.otf");
+}
+
+* {
+    font-family: "HelveticaNeueLT"
 }
 
 /*#searchInput {

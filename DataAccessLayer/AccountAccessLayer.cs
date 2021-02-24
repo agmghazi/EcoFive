@@ -35,17 +35,7 @@ namespace EcoFive.DataAccessLayer
         {
             return _context.Countries;
         }
-
-        public IEnumerable<City> GetAllCites()
-        {
-            return _context.Cities;
-        }
-
-        public IEnumerable<Governorate> GetAllGovernorate()
-        {
-            return _context.Governorates;
-        }
-
+      
         public string GetCurrentCity(int id)
         {
             return _context.Cities.Find(id).Name;

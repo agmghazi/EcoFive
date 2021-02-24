@@ -8,8 +8,6 @@ namespace EcoFive.Models.Repository
         List<City> GetCity(int id);
         List<Governorate> GetGovernorate(int id);
         IEnumerable<Country> GetAllCountries();
-        IEnumerable<City> GetAllCites();
-        IEnumerable<Governorate> GetAllGovernorate();
 
         string GetCurrentCity(int id);
         string GetCurrentGovernorate(int id);

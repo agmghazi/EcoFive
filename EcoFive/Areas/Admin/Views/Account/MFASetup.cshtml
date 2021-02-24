@@ -28,9 +28,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
     <script src="~/Templetes/qrcode.js" asp-append-version="true"></script>
     <style>
+       
+
         #chProfAlertmsg {
             left: 2% !important
         }
+
         img {
             max-width: 83% !important
         }
@@ -50,7 +53,7 @@
                         <p>
                             الرجاء إدخال الرمز أدناه في تطبيق المصادقة الخاص بك
                         </p>
-                        <p style="border: blueviolet 1px solid">
+                        <p class="border border-info p-3">
                             @Model.Token
                         </p>
                         <p>
@@ -61,14 +64,14 @@
                         </p>
                         <p>
                             <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">Google Authenticato‪r‬</a> <span class="invisible">S</span> | <span class="invisible">S</span>
-                            <a href="https://apps.apple.com/us/app/microsoft-authenticator/id983156458" target="_blank">Microsoft Authenticato‪r‬‬</a>
+                             <a href="https://apps.apple.com/us/app/twilio-authy/id494168017" target="_blank">‪Twilio Auth‪y‬ ‬‬</a>
                         </p>
                         <p>
                             يمكنك استخدام اى من البرامج التالية للاندرويد
                         </p>
                         <p>
                             <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">Google Authenticato‪r‬</a> <span class="invisible">S</span> | <span class="invisible">S</span>
-                            <a href="https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=en&gl=US" target="_blank">Microsoft Authenticato‪r‬‬</a>
+                              <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=en&gl=US" target="_blank">Twilio Auth‬‬</a>
                         </p>
                         <table style="width: 100%">
 
@@ -126,16 +129,12 @@
                             </tr>
                         </table>
 
-
-
                         <div class="page-search">
-
                             <div>
                                 <a asp-action="Index" asp-controller="Home" asp-area="">
                                     إضغط هنا للذهاب للصفحة الرئيسية
                                 </a>
                             </div>
-
                         </div>
 
 

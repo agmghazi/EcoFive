@@ -191,13 +191,12 @@ namespace EcoFive.UI.Controller
                     }
                     else if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "SuperAdmin"))
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home",new{area="Admin"});
                     }
                     else
                     {
-                        ModelState.AddModelError("", "عفوا غير مصرح لك بالدخول");
+                        return RedirectToAction("Index", "Home");
 
-                        return View(model);
                     }
                 }
                 else if (result.IsLockedOut)
@@ -339,12 +338,12 @@ namespace EcoFive.UI.Controller
         [HttpGet]
         public async Task<IActionResult> ChangeCurrentProfile()
         {
+            var user = await _userManager.GetUserAsync(User);
 
             ViewBag.Countries = _accountRepository.GetAllCountries();
 
-            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+            ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
-            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return RedirectToAction("Login");
@@ -384,14 +383,14 @@ namespace EcoFive.UI.Controller
 
             ViewBag.Countries = _accountRepository.GetAllCountries();
             ViewBag.City = _accountRepository.GetCity(user.GovernorateId);
-            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+            ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
 
             if (ModelState.IsValid)
             {
                 ViewBag.Countries = _accountRepository.GetAllCountries();
                 ViewBag.City = _accountRepository.GetCity(user.GovernorateId);
-                ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+                ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
                 user.CityId = model.CityId;
                 user.CountryId = model.CountryId;

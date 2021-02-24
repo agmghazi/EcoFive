@@ -37,25 +37,39 @@
                     <div class="page-inner">
                         <img src="/images/auth.png"   />
 
-                        <h2 class="mb-5 mt-5">التحقق الثنائى</h2>
-                        <div class="page-description">
+                        <h2 class="mb-5 mt-4">التحقق الثنائى</h2>
+                        <div class="page-description mb-5 mt-4">
                             <form asp-controller="Account" asp-action="MFACheck" asp-area="Admin" method="post" >
-                                <div class="form-group">
-                                    <div asp-validation-summary="All" style="color:red"></div>
-                                    <input asp-for="UserName" hidden name="@ViewBag.UserName" />
-                                    <input asp-for="isRemember" hidden name="@ViewBag.isRemember" />
-                                   
-                                    <label asp-for="Code"></label>
-                                    <input type="text" asp-for="Code" class="form-control text-right" />
-                                   
-                                    <span asp-validation-for="Code" style="color:red"></span>
+                                    
+                                    <table class="mb-5 mt-4">
+                                        <tr>
+                                            <td class="invisible">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
 
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-lg">تحقق</button>
+                                            <td colspan="2">
+                                                <div class="form-group">
+
+                                                <div asp-validation-summary="All" style="color: red"></div>
+                                                <input asp-for="UserName" hidden name="@ViewBag.UserName"/>
+                                                <input asp-for="isRemember" hidden name="@ViewBag.isRemember"/>
+
+                                                <label asp-for="Code"></label>
+                                                <input type="text" asp-for="Code" class="form-control text-right"/>
+
+                                                <span asp-validation-for="Code" style="color: red"></span>
+                                                <button type="submit" class="btn btn-primary btn-lg  mb-5 mt-4">تحقق</button>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                   
+
                             </form>
-                            <div class="page-search">
+                            <div class="page-search mb-5 mt-4">
                                
-                                <div class="mt-3">
+                                <div class="mb-5 mt-4">
                                     <a asp-action="Index" asp-controller="Home" asp-area="">
                                         إضغط هنا للذهاب للصفحة الرئيسية
                                     </a>

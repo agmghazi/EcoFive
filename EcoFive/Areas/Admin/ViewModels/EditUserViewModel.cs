@@ -32,13 +32,16 @@ namespace EcoFive.UI.Areas.Admin.ViewModels
         public int CityId { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال الدوله")]
+        [Display(Name = "الدولة")]
         public int CountryId { get; set; }
 
+        [Display(Name = "المحافظة")]
         [Required(ErrorMessage = "يرجى ادخال المحافظة")]
         public int GovernorateId { get; set; }
 
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "يرجى ادخال رقم الهاتف بشكل صحيح 0531234564")]
         [Required(ErrorMessage = "يرجى ادخال رقم الهاتف ")]
+        [Display(Name = "رقم الهاتف")]
         public string PhoneNumber { get; set; }
 
     }

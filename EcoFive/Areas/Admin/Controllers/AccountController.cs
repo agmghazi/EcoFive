@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 namespace EcoFive.UI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "SuperAdmin,Admin")]
     public class AccountController : Microsoft.AspNetCore.Mvc.Controller
     {
 
@@ -49,6 +48,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs("Get", "Post")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> IsEmailInUse(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -64,6 +64,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs("Get", "Post")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> IsUserInUse(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -79,6 +80,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs("Get", "Post")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> IsUserCangeCurrentInUse(string userName)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -105,6 +107,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs("Get")]
+
         public IActionResult FindGovernorates(int id)
         {
             var governorates = _accountRepository.GetGovernorate(id);
@@ -121,6 +124,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Register(bool? IsSupplier, bool? IsCaptain)
         {
             ViewBag.Countries = _accountRepository.GetAllCountries();
@@ -239,7 +243,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home", null);
+                        return RedirectToAction("Index", "Home", new {area=""});
                     }
                 }
                 else
@@ -600,14 +604,15 @@ namespace EcoFive.UI.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> ChangeCurrentProfile()
         {
+            var user = await _userManager.GetUserAsync(User);
 
             ViewBag.Countries = _accountRepository.GetAllCountries();
 
-            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+            ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
-            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return RedirectToAction("Login");
@@ -636,6 +641,7 @@ namespace EcoFive.UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> ChangeCurrentProfile(ChangeCurrentProfileViewModel model)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -647,15 +653,15 @@ namespace EcoFive.UI.Areas.Admin.Controllers
             ViewBag.Countries = _accountRepository.GetAllCountries();
 
             ViewBag.City = _accountRepository.GetCity(user.GovernorateId);
-            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+            ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
 
             if (ModelState.IsValid)
             {
                 ViewBag.Countries = _accountRepository.GetAllCountries();
 
-                ViewBag.City = _accountRepository.GetAllCites();
-                ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+                ViewBag.City = _accountRepository.GetCity(user.GovernorateId);
+                ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
 
 
@@ -738,12 +744,14 @@ namespace EcoFive.UI.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult ChangePassword(string id)
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -764,8 +772,6 @@ namespace EcoFive.UI.Areas.Admin.Controllers
 
             return View(model);
         }
-
-
 
 
         private string ProcessUploadedFile(ChangeCurrentProfileViewModel model)

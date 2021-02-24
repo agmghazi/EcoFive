@@ -240,8 +240,8 @@ namespace EcoFive.UI.Areas.Admin.Controllers
             var userClaims = await _userManager.GetClaimsAsync(user);
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            ViewBag.City = _accountRepository.GetAllCites();
-            ViewBag.Governorate = _accountRepository.GetAllGovernorate();
+            ViewBag.City = _accountRepository.GetCity(user.GovernorateId);
+            ViewBag.Governorate = _accountRepository.GetGovernorate(user.CountryId);
 
 
             var model = new EditUserViewModel
