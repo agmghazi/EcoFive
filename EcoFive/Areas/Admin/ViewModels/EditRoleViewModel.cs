@@ -12,7 +12,7 @@ namespace EcoFive.UI.Areas.Admin.ViewModels
         public string Id { get; set; }
 
         [Display(Name = "اسم الدور")]
-        [Required(ErrorMessage = "يجب ادخال اسم الدور")]
+        [Required(ErrorMessage = "يرجى ادخال اسم الدور")]
         public string RoleName { get; set; }
 
         public List<string> Users { get; set; }

@@ -1,0 +1,151 @@
+﻿
+@inject UserManager<ApplicationUser> _serManager
+
+@{
+    ViewBag.Title = "المحادثات";
+
+
+}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+        <div class="card">
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <div class="chat-about ">
+                        <div class="chat-with">احمد جمال</div>
+                        <div class="chat-num-messages">عدد 2 رساله جديده</div>
+                    </div>
+                    <img src="~/Templetes/Admin/assets/img/users/user-1.png" class="ml-2" alt="avatar">
+
+                </div>
+            </div>
+            <div class="chat-box" id="mychatbox">
+                <div class="card-body chat-content">
+
+                </div>
+                <div class="card-footer chat-form">
+                    <form id="chat-form" class="text-right" >
+                        <button class="btn btn-primary" id="sendMessage">
+                            <i class="far fa-paper-plane"></i>
+                        </button>
+                        <input type="text" id="userMessage" class="form-control text-right mr-4" placeholder="اكتب رسالة" style="padding-right: 76px  !important"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div class="card">
+            <div class="body">
+                <div id="plist" class="people-list">
+                    <div class="chat-search">
+                        <input type="text" class="form-control text-right" placeholder="... بحث" />
+                    </div>
+                    <div class="m-b-20">
+                        <div id="chat-scroll">
+                            <ul class="chat-list list-unstyled m-b-0 ">
+
+                                <li class="clearfix ">
+                                    <div class="about">
+                                        <div class="name">
+                                            agmghazi
+                                            <i class="material-icons offline invisible">fiber_manual_record</i>
+                                        </div>
+                                        <div class="status">
+                                            غير متصل منذ 8 دقائق
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                    </div>
+                                    <img src="~/Templetes/Admin/assets/img/users/user-4.png" class="ml-2" alt="avatar">
+                                </li>
+
+                                <li class="clearfix ">
+                                    <div class="about">
+                                        <div class="name">
+                                            agmghazi
+                                            <i class="material-icons offline invisible">fiber_manual_record</i>
+                                        </div>
+                                        <div class="status">
+                                            غير متصل منذ 8 دقائق
+                                            <i class="material-icons online">fiber_manual_record</i>
+                                        </div>
+                                    </div>
+                                    <img src="~/Templetes/Admin/assets/img/users/user-4.png" class="ml-2" alt="avatar">
+                                </li>
+
+                                <li class="clearfix active">
+                                    <div class="about">
+                                        <div class="name">
+                                            agmghazi
+                                            <i class="material-icons offline invisible">fiber_manual_record</i>
+                                        </div>
+                                        <div class="status">
+                                            غير متصل منذ 8 دقائق
+                                            <i class="material-icons online">fiber_manual_record</i>
+                                        </div>
+                                    </div>
+                                    <img src="~/Templetes/Admin/assets/img/users/user-4.png" class="ml-2" alt="avatar">
+                                </li>
+
+                                <li class="clearfix ">
+                                    <div class="about">
+                                        <div class="name">
+                                            agmghazi
+                                            <i class="material-icons offline invisible">fiber_manual_record</i>
+                                        </div>
+                                        <div class="status">
+                                            غير متصل منذ 8 دقائق
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                    </div>
+                                    <img src="~/Templetes/Admin/assets/img/users/user-4.png" class="ml-2" alt="avatar">
+                                </li>
+
+                                <li class="clearfix ">
+                                    <div class="about">
+                                        <div class="name">
+                                            agmghazi
+                                            <i class="material-icons offline invisible">fiber_manual_record</i>
+                                        </div>
+                                        <div class="status">
+                                            غير متصل منذ 8 دقائق
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                    </div>
+                                    <img src="~/Templetes/Admin/assets/img/users/user-4.png" class="ml-2" alt="avatar">
+                                </li>
+
+                                <li class="clearfix ">
+                                    <div class="about">
+                                        <div class="name">
+                                            agmghazi
+                                            <i class="material-icons offline invisible">fiber_manual_record</i>
+                                        </div>
+                                        <div class="status">
+                                            غير متصل منذ 8 دقائق
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                    </div>
+                                    <img src="~/Templetes/Admin/assets/img/users/user-4.png" class="ml-2" alt="avatar">
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+<script src="~/Templetes/Admin/assets/js/page/chat.js"></script>
+
+<script>
+    InvokeSignalR("02974cw0–9412–4nfe-afbf-59f701d72cf6")
+</script>
+}

@@ -18,16 +18,16 @@ namespace EcoFive.UI.ViewModels
         [DataType(DataType.Password)]
         [StringLength(
             maximumLength: 100,
-            ErrorMessage = " يجب ان لا تزيد عن100 احرف ولا تقل عن 100 حرف",
+            ErrorMessage = " يرجى ان لا تزيد عن 100 احرف ولا تقل عن 6 حرف",
             MinimumLength = 6)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W]).{8,}$", ErrorMessage = @"خطأ. يجب أن تحتوي كلمة المرور على حرف كبير وحرف خاص واحد وحرف رقمي واحد ، لا يمكن أن يبدأ بحرف خاص أو رقم")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W]).{8,}$", ErrorMessage = @"خطأ. يرجى أن تحتوي كلمة المرور على حرف كبير وحرف خاص واحد وحرف رقمي واحد ، لا يمكن أن يبدأ بحرف خاص أو رقم")]
 
         public string Password { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال تاكيد كلمه المرور")]
-        [Display(Name = "تأكد كلمه المرور")]
+        [Display(Name = "تأكيد كلمه المرور")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "تاكيد كلمه المرور يجب ان يطابق كلمه المرور")]
+        [Compare("Password", ErrorMessage = "تاكيد كلمه المرور يرجى ان يطابق كلمه المرور")]
         public string ConfirmPassword { get; set; }
 
 

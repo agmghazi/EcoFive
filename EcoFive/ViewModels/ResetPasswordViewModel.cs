@@ -4,8 +4,9 @@ namespace EcoFive.UI.ViewModels
 {
     public class ResetPasswordViewModel
     {
-        [Required(ErrorMessage = "يرجى ادخال البريد الالكترونى الخاص بكم")]
-        [EmailAddress(ErrorMessage = "يجب ان يكون المدخل بريد الالكترونى")]
+        [Required(ErrorMessage = "يرجى ادخال البريد الالكترونى ")]
+        [EmailAddress(ErrorMessage = "يرجى ان يكون المدخل بريد الالكترونى")]
+        [Display(Name = "البريد الالكترونى")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "يرجى ادخال كلمه المرور الجديدة ")]
@@ -16,7 +17,7 @@ namespace EcoFive.UI.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "تاكيد كلمه المرور الجديدة")]
         [Compare("Password", ErrorMessage =
-            "كلمه المرور يجب ان تطابق تاكيد كلمه المرور")]
+            "كلمه المرور يرجى ان تطابق تاكيد كلمه المرور")]
         public string ConfirmPassword { get; set; }
 
         public string Token { get; set; }

@@ -18,7 +18,7 @@ namespace EcoFive.UI.Areas.Admin.ViewModels
 
 
         [Required(ErrorMessage = "يرجى ادخال الاميل الخاص بكم")]
-        [EmailAddress(ErrorMessage = "يجب ان يكون المدخل اميل")]
+        [EmailAddress(ErrorMessage = "يرجى ان يكون المدخل اميل")]
         [Display(Name = "البريد الالكترونى")]
         public string Email { get; set; }
 

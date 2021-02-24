@@ -1,0 +1,386 @@
+﻿@model IEnumerable<ApplicationUser>
+@inject UserManager<ApplicationUser> _userManager
+@inject IAccountRepository _accountRepository
+
+@{
+    ViewBag.Title = "خريطة المستخدمين";
+
+}
+
+
+
+<div class="card">
+    <div id="viewDiv">
+    </div>
+    <div id="legendGraphics" style="background-color: azure;"
+         className="esri-widget">
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <svg height="30" width="30">
+                            <path d="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z" fill="#F44336" />
+                        </svg>
+
+                    </td>
+                    <td>مدير النظام</td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <svg height="30" width="30">
+                            <path d="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z" fill="#00BFFF" />
+                        </svg>
+
+                    </td>
+                    <td>المورد</td>
+                </tr>
+                <tr>
+                    <td>
+                        <svg height="30" width="30">
+                            <path d="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z" fill="#BBA53E" />
+                        </svg>
+
+                    </td>
+                    <td>الكابتن</td>
+                </tr>
+                <tr>
+                    <td>
+                        <svg height="30" width="30">
+                            <path d="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z" fill="#00CC00" />
+                        </svg>
+
+                    </td>
+                    <td>المستخدم</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://localhost:44355/arcgis_js_api/library/4.18/esri/themes/light/main.css" rel="stylesheet" />
+
+    <style>
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 800px;
+            width: 1600px;
+        }
+
+        .viewDiv {
+            width: 1800px !important
+        }
+    </style>
+}
+
+
+@section Scripts {
+    <script src="https://localhost:44355/arcgis_js_api/library/4.18/init.js"></script>
+
+    <script type="text/javascript">
+        require([
+                "esri/config", "esri/Map",
+                "esri/views/MapView", "esri/Graphic",
+                "esri/widgets/Locate", "esri/widgets/Search",
+                "esri/widgets/BasemapToggle",
+                "esri/widgets/ScaleBar",
+                "esri/layers/GraphicsLayer"
+            ],
+            function(esriConfig,
+                Map,
+                MapView,
+                Graphic,
+                Locate,
+                Search,
+                BasemapToggle,
+                ScaleBar,
+                GraphicsLayer) {
+
+                //esriConfig.apiKey = "YOUR-API-KEY";
+
+
+                const map = new Map({
+                    basemap: "topo"
+                });
+
+                const view = new MapView({
+                    map: map,
+                    center: [34.21257812505803, 27.227098562434826], // Longitude, latitude
+                    zoom: 4,
+                    container: "viewDiv"
+                });
+
+                var locateBtn = new Locate({
+                    view: view
+                });
+
+                // Add the locate widget to the top left corner of the view
+                view.ui.add(locateBtn,
+                    {
+                        position: "top-left"
+                    });
+
+
+                // Now add markers
+                @foreach (var user in Model)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles.Count > 0)
+                    {
+                        foreach (var role in roles)
+                        {
+                            @if (role == "SuperAdmin")
+                            {
+                                <text>
+                                    var userId = '@(user.Id)';
+                                    var UserName = '@(user.UserName)';
+                                    var LocationLatitude = '@(user.LocationLatitude)';
+                                    var LocationLongitude = '@(user.LocationLongitude)';
+                                    var country = '@(_accountRepository.GetCurrentCountry(user.CountryId))';
+                                    var government = '@(_accountRepository.GetCurrentGovernorate(user.GovernorateId))';
+                                    var city = '@(_accountRepository.GetCurrentCity(user.CityId))';
+                                    var tel = '@(user.PhoneNumber)';
+                                    //console.log(UserName);
+                                    //console.log(LocationLatitude);
+                                    //console.log(LocationLongitude);
+                                    if (LocationLongitude == "" || LocationLatitude == "" || LocationLongitude == "Null" || LocationLatitude == "Null") {
+
+                                    } else {
+                                        drawPoint(LocationLongitude, LocationLatitude, [244, 67, 54], userId, UserName, "مدير النظام", country, government, city, tel);
+
+                                    }
+                                </text>
+                            }
+                            else if (role == "Admin")
+                            {
+                                <text>
+                                    var userId = '@(user.Id)';
+                                    var UserName = '@(user.UserName)';
+                                    var LocationLatitude = '@(user.LocationLatitude)';
+                                    var LocationLongitude = '@(user.LocationLongitude)';
+                                    var country = '@(_accountRepository.GetCurrentCountry(user.CountryId))';
+                                    var government = '@(_accountRepository.GetCurrentGovernorate(user.GovernorateId))';
+                                    var city = '@(_accountRepository.GetCurrentCity(user.CityId))';
+                                    var tel = '@(user.PhoneNumber)';
+                                    //console.log(UserName);
+                                    //console.log(LocationLatitude);
+                                    //console.log(LocationLongitude);
+                                    if (LocationLongitude == "" || LocationLatitude == "" || LocationLongitude == "Null" || LocationLatitude == "Null") {
+
+                                    } else {
+                                        drawPoint(LocationLongitude, LocationLatitude, [0, 191, 255], userId, UserName, "مورد", country, government, city, tel);
+
+                                    }
+
+                                </text>
+                            }
+                            else if (role == "Captain")
+                            {
+                                <text>
+                                    var userId = '@(user.Id)';
+                                    var UserName = '@(user.UserName)';
+                                    var LocationLatitude = '@(user.LocationLatitude)';
+                                    var LocationLongitude = '@(user.LocationLongitude)';
+                                    var country = '@(_accountRepository.GetCurrentCountry(user.CountryId))';
+                                    var government = '@(_accountRepository.GetCurrentGovernorate(user.GovernorateId))';
+                                    var city = '@(_accountRepository.GetCurrentCity(user.CityId))';
+                                    var tel = '@(user.PhoneNumber)';
+                                    //console.log(UserName);
+                                    //console.log(LocationLatitude);
+                                    //console.log(LocationLongitude);
+                                    if (LocationLongitude == "" || LocationLatitude == "" || LocationLongitude == "Null" || LocationLatitude == "Null") {
+
+                                    } else {
+                                        drawPoint(LocationLongitude, LocationLatitude, [187, 165, 62], userId, UserName, "كابتن", country, government, city, tel);
+
+                                    }
+                                </text>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <text>
+                            var userId = '@(user.Id)';
+                            var UserName = '@(user.UserName)';
+                            var LocationLatitude = '@(user.LocationLatitude)';
+                            var LocationLongitude = '@(user.LocationLongitude)';
+                            var country = '@(_accountRepository.GetCurrentCountry(user.CountryId))';
+                            var government = '@(_accountRepository.GetCurrentGovernorate(user.GovernorateId))';
+                            var city = '@(_accountRepository.GetCurrentCity(user.CityId))';
+                            var tel = '@(user.PhoneNumber)';
+                            //console.log('user');
+                            //console.log(UserName);
+                            //console.log(LocationLatitude);
+                            //console.log(LocationLongitude);
+                            if (LocationLongitude == "" || LocationLatitude == "" || LocationLongitude == "Null" || LocationLatitude == "Null") {
+
+                            } else {
+                                drawPoint(LocationLongitude, LocationLatitude, [0, 204, 0], userId, UserName, "مستخدم", country, government, city, tel);
+
+                            }
+                        </text>
+                    }
+
+                     <text>
+                        var UserIdZoom = '@(ViewBag.UserIdZoom)';
+
+                         console.log(UserIdZoom);
+
+                         if (UserIdZoom === null || UserIdZoom === "") {
+
+                         } else {
+                             if (UserIdZoom === '@(user.Id)') {
+
+                                 console.log('database','@(user.Id)');
+
+                                 var LocationLatitudeZoom = '@(user.LocationLatitude)';
+                                 var LocationLongitudeZoom = '@(user.LocationLongitude)';
+
+                                 console.log(LocationLatitudeZoom);
+                                 console.log(LocationLongitudeZoom);
+
+                                 setTimeout(function() {
+                                     zoomToPoint(LocationLongitudeZoom, LocationLatitudeZoom);
+                                 }, 1000);
+
+
+                             }
+                         }
+
+                     </text>
+
+                }
+
+                function zoomToPoint(longitude, latitude)
+                {
+                    var point = {
+                        type: "point",
+                        longitude: longitude,
+                        latitude: latitude
+                    };
+                    let pointGraphicZoom = new Graphic({
+                        geometry: point,
+                        symbol: {
+                            type: "simple-marker",
+                            path:
+                                "M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z",
+                            size: 32,
+                            yoffset: 16,
+                            outline: {
+                                width: 0,
+                            },
+                        },
+
+                    });
+                    view.goTo(pointGraphicZoom);
+                    view.zoom = 15;
+
+                }
+
+                function drawPoint(longitude, latitude, colorId, userId, userName, userType, country, government, city, tel) {
+                    var point = {
+                        type: "point",
+                        longitude: longitude,
+                        latitude: latitude
+                    };
+
+                    let pointGraphic = new Graphic({
+                        geometry: point,
+                        symbol: {
+                            type: "simple-marker",
+                            color: colorId,
+                            path:
+                                "M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z",
+                            size: 32,
+                            yoffset: 16,
+                            outline: {
+                                width: 0,
+                            },
+                        },
+                        popupTemplate: {
+                            title: `<h4 class="SubBuildTitle"  dir = "rtl" > اسم المستخدم:  ${userName}</h4>`,
+                            content: `<table class="popupTableInfo">
+                             <tr>
+                                  <td>تصنيف المستخدم</td>
+                                  <td>${userType}</td>
+                              </tr>
+                              <tr>
+                                  <td>الدوله</td>
+                                  <td>${country}</td>
+                              </tr>
+                              <tr>
+                                  <td>المنطقة</td>
+                                  <td>${government}</td>
+                              </tr>
+                              <tr>
+                                  <td>المدينة</td>
+                                  <td>${city}</td>
+                            </tr>
+                              <tr>
+                                <td>Latitude</td>
+                                <td>${latitude}</td>
+                              </tr>
+                              <tr>
+                                <td>Longitude</td>
+                                <td>${longitude}</td>
+                              </tr>
+                                <tr>
+                                <td>رقم الهاتف</td>
+                                <td>${tel}</td>
+                              </tr>
+                            <tr>
+                                <td>التفاصيل</td>
+                                <td><a href='https://${location.hostname}/Admin/Administraion/EditUser/${userId}' target="_blank">اضغط هنا</a> </td>
+                              </tr>
+                            </table>`
+                        },
+                    });
+
+                    var graphicLayer = new GraphicsLayer({
+                        graphics: [pointGraphic]
+                    });
+
+                    map.add(graphicLayer);
+                    view.goTo(pointGraphic);
+
+                }
+
+                var searchWidget = new Search({
+                    view: view
+                });
+
+                view.ui.add(searchWidget, "top-right");
+
+                var basemapToggle = new BasemapToggle({
+                    view: view,
+                    nextBasemap: "satellite"
+                });
+
+                view.ui.add(basemapToggle, "bottom-right");
+
+                var scaleBar = new ScaleBar({
+                    view: view,
+                    style: "ruler"
+                });
+                view.ui.add(scaleBar, "bottom-left");
+
+
+                view.ui.add([
+                    {
+                        component: "legendGraphics",
+                        position: "bottom-left",
+                        index: 0,
+                    },
+                ]);
+
+
+            });
+        $(".collapse-btn").click(function() {
+            $("#viewDiv").toggleClass("viewDiv");
+        });
+    </script>
+}
+

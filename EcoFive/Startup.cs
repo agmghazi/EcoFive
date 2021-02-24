@@ -1,7 +1,9 @@
 ﻿using DNTCaptcha.Core;
 using EcoFive.DataAccessLayer;
+using EcoFive.DataAccessLayer.Admin;
 using EcoFive.Models.Models;
 using EcoFive.Models.Repository;
+using EcoFive.UI.Hubs;
 using EcoFive.UI.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -133,7 +135,12 @@ namespace EcoFive.UI
                 opts.SupportedUICultures = supportCultures;
             });
 
+            services.AddSignalR();
+
             services.AddScoped<IAccountRepository, AccountAccessLayer>();
+            services.AddScoped<IMasterPageDetailsRepository, MasterPageDetailsAccessLayer>();
+            services.AddScoped<IContactRepository, ContactAccessLayer>();
+            services.AddScoped<IChatRepository, ChatRepository>();
 
         }
 
@@ -155,6 +162,11 @@ namespace EcoFive.UI
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
             app.UseCookiePolicy();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
 
             app.UseMvc(routes =>
             {

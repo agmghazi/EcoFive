@@ -1,0 +1,182 @@
+﻿@model MFAViewModel
+
+
+@{
+    Layout = null;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="ar">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>اعدادات التحقق الثنائى</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/app.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/style.css">
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/components.css">
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="~/Templetes/Admin/assets/css/custom.css">
+    <link rel='shortcut icon' type='image/x-icon' href='~/Templetes/Admin/assets/img/favicon.ico' />
+    <link href="~/css/adminSite.css" asp-append-version="true" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <script src="~/Templetes/qrcode.js" asp-append-version="true"></script>
+    <style>
+        #chProfAlertmsg {
+            left: 2% !important
+        }
+        img {
+            max-width: 83% !important
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader"></div>
+    <div id="app">
+        <section class="section">
+            <div class="container">
+                <div class="page-error" style="padding-top: 0px !important">
+                    <img src="/images/auth.png" />
+
+                    <h2>اعدادات التحقق الثنائى</h2>
+                    <div class="page-description">
+                        <p>
+                            الرجاء إدخال الرمز أدناه في تطبيق المصادقة الخاص بك
+                        </p>
+                        <p style="border: blueviolet 1px solid">
+                            @Model.Token
+                        </p>
+                        <p>
+                            أدناه بهاتفك المحمول  QRCode بدلاً من ذلك ، قم بمسح رمز
+                        </p>
+                        <p>
+                            يمكنك استخدام اى من البرامج التالية للايفون
+                        </p>
+                        <p>
+                            <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">Google Authenticato‪r‬</a> <span class="invisible">S</span> | <span class="invisible">S</span>
+                            <a href="https://apps.apple.com/us/app/microsoft-authenticator/id983156458" target="_blank">Microsoft Authenticato‪r‬‬</a>
+                        </p>
+                        <p>
+                            يمكنك استخدام اى من البرامج التالية للاندرويد
+                        </p>
+                        <p>
+                            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">Google Authenticato‪r‬</a> <span class="invisible">S</span> | <span class="invisible">S</span>
+                            <a href="https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=en&gl=US" target="_blank">Microsoft Authenticato‪r‬‬</a>
+                        </p>
+                        <table style="width: 100%">
+
+                            <tr>
+                                <td>
+                                    <div id="qrCode">  </div>
+                                    <script type="text/javascript">
+                                        new QRCode(document.getElementById("qrCode"), "@Model.QRCodeUrl");
+                                    </script>
+                                </td>
+                                <td>
+                                    @if (ViewBag.MFAValue)
+                                    {
+                                        <form asp-controller="Account" asp-action="MFASetup" asp-area="Admin" method="post">
+                                            
+                                            <input type="hidden" asp-for="Token" />
+                                            <input type="hidden" asp-for="QRCodeUrl" />
+                                            <input type="hidden" asp-for="Code" value="xxxxxx" />
+                                            <input type="hidden" asp-for="CheckMFA" value="true" />
+                                            
+                                            <div class="form-group">
+                                                <input class="form-check-input" asp-for="SwitchMFA" type="checkbox" checked="@ViewBag.MFAValue" >
+                                                <span class="invisible">S</span>
+                                                <label class="form-check-label">
+                                                    تفعيل خاصية التحقق الثنائى
+                                                </label>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary  btn-lg">موافق</button>
+
+                                        </form>
+
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Account" asp-action="MFASetup" asp-area="Admin" method="post">
+                                            <div asp-validation-summary="All" style="color: red"></div>
+
+                                            <input type="hidden" asp-for="Token" />
+                                            <input type="hidden" asp-for="QRCodeUrl" />
+
+                                            <div class="form-group">
+                                                <label asp-for="Code"></label>
+                                                <input type="text" asp-for="Code" class="form-control text-right" />
+                                                <span asp-validation-for="Code" style="color: red"></span>
+
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary  btn-lg">تحقق</button>
+                                        </form>
+                                    }
+
+
+                                </td>
+                            </tr>
+                        </table>
+
+
+
+                        <div class="page-search">
+
+                            <div>
+                                <a asp-action="Index" asp-controller="Home" asp-area="">
+                                    إضغط هنا للذهاب للصفحة الرئيسية
+                                </a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" asp-append-version="true"></script>
+
+    <!-- General JS Scripts -->
+    <script src="~/Templetes/Admin/assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <!-- Page Specific JS File -->
+    <!-- Template JS File -->
+    <script src="~/Templetes/Admin/assets/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="~/Templetes/Admin/assets/js/custom.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#chProfAlertmsg").fadeTo(3000, 600).slideUp(2000, function () {
+                $("#chProfAlertmsg").slideUp(2000);
+            });
+        });
+    </script>
+</body>
+
+
+</html>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-has-icon text-right w-25 " id="chProfAlertmsg">
+        <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+        <div class="alert-body">
+            <div class="alert-title">تنبية</div>
+            @ViewBag.Message
+        </div>
+    </div>
+
+}

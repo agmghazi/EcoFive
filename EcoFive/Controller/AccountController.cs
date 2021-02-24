@@ -2,6 +2,7 @@
 using DNTCaptcha.Core.Providers;
 using EcoFive.Models.Models;
 using EcoFive.Models.Repository;
+using EcoFive.UI.Utilities;
 using EcoFive.UI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +18,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using EcoFive.UI.Utilities;
 
 namespace EcoFive.UI.Controller
 {
@@ -73,7 +73,8 @@ namespace EcoFive.UI.Controller
                     CountryId = model.CountryId,
                     GovernorateId = model.GovernorateId,
                     CityId = model.CityId,
-                    FullName = model.FirstName + " " + model.LastName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
                     IsSupplier = false,
                     IsCaptain = false,
@@ -86,12 +87,12 @@ namespace EcoFive.UI.Controller
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
                     var confirmationLink = Url.Action("ConfirmEmail", "Account",
-                        new {area="Admin", userId = user.Id, token = token }, Request.Scheme);
+                        new { area = "Admin", userId = user.Id, token = token }, Request.Scheme);
 
 
                     //config and send mail to client
                     var messageBody =
-                                  $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">{user.FullName} اهلا بك&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp;.نشكرك على انضمامك معنا &nbsp;{user.Email} &nbsp;يرجى تفعيل الاميل&nbsp;</span></p>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div data-empty=\"true\" style=\"text-align: center;\"><span style=\"color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\">&nbsp;</span><a href=\"{confirmationLink}\" rel=\"noopener noreferrer\" target=\"_blank\"><span style='color: rgb(97, 189, 109); font-family: \"Arial Black\", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتفعيل اضغط هنا</span><span style=\"font-family: 'Arial Black', Gadget, sans-serif;\"><span style=\"color: rgb(97, 189, 109);\">&nbsp;<br></span></span></a></div>\r\n                <p style=\"text-align: center;\"><span style=\"font-size: 22px;\">اذا واجهك اى مشكله بالتفعيل من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>\r\n                <p style=\"text-align: center;\"><a href=\"//{confirmationLink}\">{confirmationLink}</a></p>\r\n                <p style=\"text-align: center;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp; تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه التسجيل يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>";
+                                  $"<p><span style=\"font-size: 30px;\"><strong><span style=\"color: rgb(65, 168, 95);\">Eco Five</span></strong></span></p>\r\n<table style=\"width: 100%; border-collapse: collapse; border: 2px solid rgb(0, 0, 0);\">\r\n    <tbody>\r\n        <tr>\r\n            <td style=\"width: 100%; border: 2px solid rgb(0, 0, 0);\">\r\n                <div style=\"text-align: right;\"><br></div>\r\n                <div style=\"text-align: right;\"><span style=\"font-size: 24px;\">{user.FirstName} اهلا بك&nbsp;</span></div>\r\n                <p style=\"text-align: right;\"><span style=\"font-size: 24px;\">&nbsp;.نشكرك على انضمامك معنا &nbsp;{user.Email} &nbsp;يرجى تفعيل الاميل&nbsp;</span></p>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div style=\"text-align: center;\"><br></div>\r\n                <div data-empty=\"true\" style=\"text-align: center;\"><span style=\"color: rgb(97, 189, 109); font-family: Arial; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\">&nbsp;</span><a href=\"{confirmationLink}\" rel=\"noopener noreferrer\" target=\"_blank\"><span style='color: rgb(97, 189, 109); font-family: \"Arial Black\", Gadget, sans-serif; font-size: 30px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>&lt;&lt; للتفعيل اضغط هنا</span><span style=\"font-family: 'Arial Black', Gadget, sans-serif;\"><span style=\"color: rgb(97, 189, 109);\">&nbsp;<br></span></span></a></div>\r\n                <p style=\"text-align: center;\"><span style=\"font-size: 22px;\">اذا واجهك اى مشكله بالتفعيل من خلال الضغط على الزر اعلاه يرجى نسخ الرابط بالاسفل ولصق داخل المتصفح</span></p>\r\n                <p style=\"text-align: center;\"><a href=\"//{confirmationLink}\">{confirmationLink}</a></p>\r\n                <p style=\"text-align: center;\"><br></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"font-size: 22px; line-height: 1;\">&nbsp; تحياتنا&nbsp;</span></p>\r\n                <p style=\"text-align: right; line-height: 1;\"><span style=\"line-height: 1;\"><span style=\"font-size: 22px;\">&nbsp; فريق العمل&nbsp;</span></span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 19px; line-height: 1; color: rgb(163, 143, 132);\">اذا لم تقم بعمليه التسجيل يرجى اهمال البريد الالكترونى وحذفه نهائيا</span></p>\r\n                <p style=\"text-align: center; line-height: 1;\"><span style=\"color: rgb(163, 143, 132);\"><span style=\"line-height: 1;\"><span style=\"font-size: 19px;\">نشكركم لتعاونكم معنا</span><br></span></span></p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n<p style=\"text-align: center;\"><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/facebook-new.png\"></a><a href=\"http://www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><img src=\"https://img.icons8.com/fluent/48/000000/twitter.png\"></a></p>";
 
                     SendMailModel.SendMail("gis.csharp@gmail.com", model.Email, " تفعيل حسابك بمنصة EcoFive", messageBody);
 
@@ -170,36 +171,38 @@ namespace EcoFive.UI.Controller
                     await _signInManager.PasswordSignInAsync(model.UserName, model.Password,
                         model.RememberMe, true);
 
-                if (result.Succeeded)
+                if (user.CloseAccount == true)
                 {
+                    ModelState.AddModelError("", "حسابك موقوف. يرجى الاتصال بالدعم ");
 
+                    return View(model);
+                }
+                else if (result.RequiresTwoFactor)
+                {
+                    return RedirectToAction("MFACheck","Account", new { area = "Admin" , userName = model.UserName, RememberMe = model.RememberMe });
+
+                }
+                else if (result.Succeeded)
+                {
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) //to close redirect attacks
                     {
                         return Redirect(returnUrl);
 
                     }
-                    else if (user.CloseAccount == true)
-                    {
-                        ModelState.AddModelError("", "حسابك موقوف. يرجى الاتصال بالدعم ");
-
-                        return View(model);
-
-                    }
                     else if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "SuperAdmin"))
                     {
-                        return Redirect("~/Admin/Home/Index");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        ModelState.AddModelError("", "عفوا غير مصرح لك بالدخول");
 
+                        return View(model);
                     }
                 }
-
-                if (result.IsLockedOut)
+                else if (result.IsLockedOut)
                 {
-                    return View("~/Areas/Admin/Views/Account/AccountLocked.cshtml");
-
+                    return View("AccountLocked");
                 }
                 else
                 {
@@ -332,7 +335,7 @@ namespace EcoFive.UI.Controller
             }
         }
 
-      
+
         [HttpGet]
         public async Task<IActionResult> ChangeCurrentProfile()
         {
@@ -354,9 +357,17 @@ namespace EcoFive.UI.Controller
                 CountryId = user.CountryId,
                 GovernorateId = user.GovernorateId,
                 Email = user.Email,
-                FullName = user.FullName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 UserName = user.UserName,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                VisaNumber = user.VisaNumber,
+                VisaName = user.VisaName,
+                VisaDate = user.VisaDate,
+                VisaPassword = user.VisaPassword,
+                LocationLatitude = user.LocationLatitude,
+                LocationLongitude = user.LocationLongitude
+
             };
 
             return View(model);
@@ -386,9 +397,16 @@ namespace EcoFive.UI.Controller
                 user.CountryId = model.CountryId;
                 user.GovernorateId = model.GovernorateId;
                 user.Email = model.Email;
-                user.FullName = model.FullName;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
                 user.UserName = model.UserName;
                 user.PhoneNumber = model.PhoneNumber;
+                user.VisaNumber = model.VisaNumber;
+                user.VisaName = model.VisaName;
+                user.VisaPassword = model.VisaPassword;
+                user.VisaDate = model.VisaDate;
+                user.LocationLatitude = model.LocationLatitude;
+                user.LocationLongitude = model.LocationLongitude;
 
                 if (model.PhotoPath != null)
                 {
@@ -415,38 +433,38 @@ namespace EcoFive.UI.Controller
                 }
                 var checkCurrentPassword = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
 
-                    if (!checkCurrentPassword)
+                if (!checkCurrentPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "كلمه المرور الحالية غير صحيحه");
+                    return View(model);
+                }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(model.NewPassword) && !string.IsNullOrWhiteSpace(model.ConfirmPassword))
                     {
-                        ModelState.AddModelError(string.Empty, "كلمه المرور الحالية غير صحيحه");
-                        return View(model);
+                        var passwordResult = await _userManager.ChangePasswordAsync(user,
+                            model.CurrentPassword, model.NewPassword);
+                        if (!passwordResult.Succeeded)
+                        {
+                            ModelState.AddModelError(string.Empty, "حدث خطئ");
+                        }
+                    }
+
+                    var userResult = await _userManager.UpdateAsync(user);
+
+                    if (userResult.Succeeded)
+                    {
+                        ViewBag.Message = "تم التحديث بنجاح";
                     }
                     else
                     {
-                        if (!string.IsNullOrWhiteSpace(model.NewPassword) && !string.IsNullOrWhiteSpace(model.ConfirmPassword))
+                        foreach (var error in userResult.Errors)
                         {
-                            var passwordResult = await _userManager.ChangePasswordAsync(user,
-                                model.CurrentPassword, model.NewPassword);
-                            if (!passwordResult.Succeeded)
-                            {
-                                ModelState.AddModelError(string.Empty, "حدث خطئ");
-                            }
+                            ModelState.AddModelError("", error.Description);
                         }
-
-                        var userResult = await _userManager.UpdateAsync(user);
-
-                        if (userResult.Succeeded)
-                        {
-                            ViewBag.Message = "تم التحديث بنجاح";
-                        }
-                        else
-                        {
-                            foreach (var error in userResult.Errors)
-                            {
-                                ModelState.AddModelError("", error.Description);
-                            }
-                        }
-                        await _signInManager.RefreshSignInAsync(user);
                     }
+                    await _signInManager.RefreshSignInAsync(user);
+                }
             };
             return View(model);
 

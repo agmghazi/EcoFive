@@ -248,13 +248,35 @@ img {
     left: 20%
 }
 
+.input-group-addon i {
+    cursor: pointer;
+}
+
+.inputPassword {
+    padding: 0px !important
+}
+
 .textInput {
     position: relative !important;
     right: 21px !important;
-    top: 11px !important;
-    background-color: white  !important;
+    top: 16px !important;
+    background-color: white !important;
+    font-size: 16px !important;
+    z-index: 4 !important
 }
 
 .signin-container .form-row label {
     display: initial !important
+}
+
+.btn-scroll-top {
+    right: unset !important;
+
+    left: 60px !important
+}
+
+#dntCaptchaImg {
+    margin-left: 84px;
+    height: 50px;
+    width: 100px
 }

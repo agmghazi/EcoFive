@@ -59,7 +59,7 @@
     font-size: 14px !important
 }
 label {
-    font-size: 19px !important
+    font-size: 18px !important
 }
 .invalid-feedback {
     font-size: 16px !important
@@ -204,7 +204,7 @@ body.sidebar-gone .main-sidebar {
     }
 }
 
-.sidebar-mini .main-content, .sidebar-mini .main-footer {
+.sidebar-mini .main-content, .sidebar-mini .main-footer #viewDiv {
     padding-right: 90px !important
 }
 .sidebar-mini .navbar {
@@ -261,4 +261,42 @@ padding: 0px !important
     right: 21px;
     top: 18px;
     background-color: white;
+}
+
+.esri-search__input {
+    text-align: right !important
+}
+
+.popupTableInfo {
+      border-collapse: collapse;
+      width: 100%;
+      direction: rtl;
+  }
+
+.popupTableInfo td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: right;
+}
+
+.popupTableInfo tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.popupTableInfo tr:hover {
+    background-color: #ddd;
+}
+
+.SubBuildTitle {
+    display: flex;
+    text-align: right;
+}
+
+.esri-popup__header-container--button {
+    display: block !important
+}
+
+
+.chat .chat-header {
+    display: -webkit-inline-box !important
 }

@@ -13,6 +13,8 @@ namespace EcoFive.DataAccessLayer
         {
             _context = context;
         }
+
+
         public List<City> GetCity(int id)
         {
             var cities = _context.Cities
@@ -69,6 +71,49 @@ namespace EcoFive.DataAccessLayer
             return user.CloseAccount;
         }
 
+        public Country AddCountry(Country country)
+        {
+            throw new System.NotImplementedException();
+        }
 
+        public Country UpdateCountry(Country countryChanges)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Country DeleteCountry(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Governorate AddGovernorate(Governorate governorate)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Governorate UpdateGovernorate(Governorate governorateChanges)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Governorate DeleteGovernorate(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public City AddCity(City city)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public City UpdateCity(City countryChanges)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public City DeleteCity(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

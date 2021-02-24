@@ -58,7 +58,14 @@
                                             <tr class="bg-info text-white font-weight-bold">
                                                 <td>
 
-                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1 ">تعديل</a>
+                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary mb-1 ml-1 ">تعديل</a>
+                                                    @if (user.LocationLatitude == null || user.LocationLatitude == "" || user.LocationLongitude == null || user.LocationLongitude == "")
+                                                    {
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-controller="Map" asp-action="Index" asp-route-id="@user.Id" target="_blank" class="btn btn-primary ml-1 ">الموقع</a>
+                                                    }
                                                 </td>
                                                 <td>@user.IsCaptain</td>
                                                 <td>@user.IsSupplier</td>
@@ -71,17 +78,25 @@
                                                 <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
                                                 <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
                                                 <td>@user.PhoneNumber</td>
-                                                <td>@user.FullName</td>
+                                                <td>@(user.FirstName+" " + user.LastName)</td>
                                                 <td>@user.Email</td>
                                                 <td>@user.UserName</td>
                                             </tr>
 
-                                        }else if (role == "Admin")
+                                        }
+                                        else if (role == "Admin")
                                         {
                                             <tr class="bg-info text-white font-weight-bold">
                                                 <td>
 
                                                     <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1 ">تعديل</a>
+                                                    @if (user.LocationLatitude == null || user.LocationLatitude == "" || user.LocationLongitude == null || user.LocationLongitude == "")
+                                                    {
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-controller="Map" asp-action="Index" asp-route-id="@user.Id" target="_blank" class="btn btn-primary ml-1 ">الموقع</a>
+                                                    }
                                                 </td>
                                                 <td>@user.IsCaptain</td>
                                                 <td>@user.IsSupplier</td>
@@ -94,60 +109,42 @@
                                                 <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
                                                 <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
                                                 <td>@user.PhoneNumber</td>
-                                                <td>@user.FullName</td>
+                                                <td>@(user.FirstName+" "+user.LastName)</td>
                                                 <td>@user.Email</td>
                                                 <td>@user.UserName</td>
                                             </tr>
                                         }
-                                        else if (role == "User")
+                                        else if (role == "Captain")
                                         {
-                                            if (user.IsSupplier == true)
-                                            {
-                                                <tr class="bg-brown text-black font-weight-bold">
-                                                    <td>
 
-                                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
-                                                    </td>
-                                                    <td>@user.IsCaptain</td>
-                                                    <td>@user.IsSupplier</td>
-                                                    <td>@role</td>
-                                                    <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
-                                                    <td>@user.LockoutEnabled</td>
-                                                    <td>@user.AccessFailedCount</td>
-                                                    <td>@user.EmailConfirmed</td>
-                                                    <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
-                                                    <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
-                                                    <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
-                                                    <td>@user.PhoneNumber</td>
-                                                    <td>@user.FullName</td>
-                                                    <td>@user.Email</td>
-                                                    <td>@user.UserName</td>
-                                                </tr>
-                                            }
-                                            else
-                                            {
+                                            <tr class="bg-brown text-black font-weight-bold">
+                                                <td>
 
-                                                <tr>
-                                                    <td>
+                                                    <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
+                                                    @if (user.LocationLatitude == null || user.LocationLatitude == "" || user.LocationLongitude == null || user.LocationLongitude == "")
+                                                    {
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-controller="Map" asp-action="Index" asp-route-id="@user.Id" target="_blank" class="btn btn-primary ml-1 ">الموقع</a>
+                                                    }
+                                                </td>
+                                                <td>@user.IsCaptain</td>
+                                                <td>@user.IsSupplier</td>
+                                                <td>@role</td>
+                                                <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
+                                                <td>@user.LockoutEnabled</td>
+                                                <td>@user.AccessFailedCount</td>
+                                                <td>@user.EmailConfirmed</td>
+                                                <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
+                                                <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
+                                                <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
+                                                <td>@user.PhoneNumber</td>
+                                                <td>@(user.FirstName+ " "+user.LastName)</td>
+                                                <td>@user.Email</td>
+                                                <td>@user.UserName</td>
+                                            </tr>
 
-                                                        <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-1">تعديل</a>
-                                                    </td>
-                                                    <td>@user.IsCaptain</td>
-                                                    <td>@user.IsSupplier</td>
-                                                    <td>@role</td>
-                                                    <td> <a href="#" class="btn btn-danger  btn-active" data-id="@user.Id"> @(user.CloseAccount ? "غير نشط" : " نشط")</a> </td>
-                                                    <td>@user.LockoutEnabled</td>
-                                                    <td>@user.AccessFailedCount</td>
-                                                    <td>@user.EmailConfirmed</td>
-                                                    <td>@_accountRepository.GetCurrentCity(user.CityId)</td>
-                                                    <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
-                                                    <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
-                                                    <td>@user.PhoneNumber</td>
-                                                    <td>@user.FullName</td>
-                                                    <td>@user.Email</td>
-                                                    <td>@user.UserName</td>
-                                                </tr>
-                                            }
                                         }
 
 
@@ -169,6 +166,13 @@
                                         </button>
 
                                         <a asp-controller="Administraion" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary ml-3 ">تعديل</a>
+                                        @if (user.LocationLatitude == null || user.LocationLatitude == "" || user.LocationLongitude == null || user.LocationLongitude == "")
+                                        {
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Map" asp-action="Index" asp-route-id="@user.Id" target="_blank" class="btn btn-primary ml-1 ">الموقع</a>
+                                        }
                                     </td>
 
 
@@ -184,7 +188,7 @@
                                     <td>@_accountRepository.GetCurrentGovernorate(user.GovernorateId)</td>
                                     <td>@_accountRepository.GetCurrentCountry(user.CountryId)</td>
                                     <td>@user.PhoneNumber</td>
-                                    <td>@user.FullName</td>
+                                    <td>@(user.FirstName+ " "+ user.LastName)</td>
                                     <td>@user.Email</td>
                                     <td>@user.UserName</td>
                                 </tr>
@@ -221,5 +225,6 @@ else
 @section Scripts {
     <script src="~/js/confirmDelete.js"></script>
     <script src="~/js/changeStatus.js"></script>
+    <script src="~/js/customDatatable.js" asp-append-version="true"></script>
 }
 

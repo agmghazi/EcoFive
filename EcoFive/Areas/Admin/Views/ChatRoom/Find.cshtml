@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{ ViewBag.Title = "الاعضاء";
+
+    Layout = "_ChatRoomLayout";
+
+}
+
+
+@foreach (var user in Model)
+{
+    <div class="container mt-3">
+        <a asp-controller="ChatRoom" asp-action="CreatePrivateRoom" asp-route-userId="@user.Id" class="btn btn-primary w-50">
+            @user.UserName
+        </a>
+    </div>
+}

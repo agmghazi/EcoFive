@@ -40,13 +40,19 @@ namespace EcoFive.Models.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FirstName");
 
                     b.Property<int>("GovernorateId");
 
                     b.Property<bool>("IsCaptain");
 
                     b.Property<bool>("IsSupplier");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("LocationLatitude");
+
+                    b.Property<string>("LocationLongitude");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -73,13 +79,13 @@ namespace EcoFive.Models.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<DateTime>("VisaDate");
+                    b.Property<string>("VisaDate");
 
                     b.Property<string>("VisaName");
 
-                    b.Property<int>("VisaNumber");
+                    b.Property<string>("VisaNumber");
 
-                    b.Property<int>("VisaPassword");
+                    b.Property<string>("VisaPassword");
 
                     b.HasKey("Id");
 
@@ -102,56 +108,125 @@ namespace EcoFive.Models.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
+                            Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
                             CityId = 1,
                             CloseAccount = false,
-                            ConcurrencyStamp = "ac09a983-0944-43fd-b3b9-83190b47cfcc",
+                            ConcurrencyStamp = "c4f48c3b-df7b-462e-afe0-81acb7954f2a",
                             CountryId = 1,
                             Email = "agmghazi@hotmail.com",
                             EmailConfirmed = true,
+                            FirstName = "Ahmed",
                             GovernorateId = 1,
                             IsCaptain = false,
                             IsSupplier = false,
+                            LastName = "Gamal",
+                            LocationLatitude = "24.728287478442276",
+                            LocationLongitude = "46.66198973512585",
                             LockoutEnabled = false,
                             NormalizedEmail = "AGMGHAZI@HOTMAIL.COM",
                             NormalizedUserName = "AGMGHAZI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGYrewCLI8zI2MBW715iuQbycLh343vmcoy3gAG0vbHMBHeHBfsz1xpoPxXbNe2xmA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEZMAfE8DzJVHIvxYGfJBVOr0aKV1yuFvDLISIEfjAl0T0usNSdI73gXK8hypZLFZA==",
                             PhoneNumber = "0534740221",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
                             TwoFactorEnabled = false,
                             UserName = "agmghazi",
-                            VisaDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VisaNumber = 0,
-                            VisaPassword = 0
+                            VisaDate = "06/30",
+                            VisaName = "ahmed ghazy",
+                            VisaNumber = "555555555555555",
+                            VisaPassword = "123"
                         },
                         new
                         {
-                            Id = "02974cw0–9412–4nfe - afbf - 59f701d72cf6",
+                            Id = "02974cw0–9412–4nfe-afbf-59f701d72cf6",
                             AccessFailedCount = 0,
                             CityId = 1,
                             CloseAccount = false,
-                            ConcurrencyStamp = "4cc49a05-bb5f-44bd-b7d4-32206fc3f84d",
+                            ConcurrencyStamp = "0373501b-335d-4c59-9d1b-2c91a734a7b7",
                             CountryId = 1,
                             Email = "user1@hotmail.com",
                             EmailConfirmed = true,
+                            FirstName = "User",
                             GovernorateId = 1,
                             IsCaptain = false,
                             IsSupplier = false,
+                            LastName = "User",
+                            LocationLatitude = "30.156351019625248",
+                            LocationLongitude = "37.156914062556666",
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@HOTMAIL.COM",
                             NormalizedUserName = "USER1",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJNeY04L2qBMfYrgCXjIGfY1trD69mZK07r8RwUKnBE1jjkmVv26DBliecLCD3mzCg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOjOemNoe80UkCazczR/DQNF/w5z4bkURKQ/Gn5nT4F0+ccFuhdZ/Mi100PSc7ftbQ==",
                             PhoneNumber = "051265136845",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
                             TwoFactorEnabled = false,
                             UserName = "user1",
-                            VisaDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VisaNumber = 0,
-                            VisaPassword = 0
+                            VisaDate = "06/21",
+                            VisaName = "user user",
+                            VisaNumber = "555551111111122",
+                            VisaPassword = "123"
                         });
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Chatting.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("FirstUserName");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("SecondUserName");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Chatting.ChatUser", b =>
+                {
+                    b.Property<int>("ChatId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("Role");
+
+                    b.HasKey("ChatId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatUsers");
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Chatting.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ChatId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Text");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("EcoFive.Models.Models.City", b =>
@@ -1241,6 +1316,27 @@ namespace EcoFive.Models.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EcoFive.Models.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Message");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
+                });
+
             modelBuilder.Entity("EcoFive.Models.Models.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -1258,6 +1354,11 @@ namespace EcoFive.Models.Migrations
                         {
                             Id = 1,
                             Name = "المملكه العربية السعودية"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "مصر"
                         });
                 });
 
@@ -1355,7 +1456,250 @@ namespace EcoFive.Models.Migrations
                             Id = 13,
                             CountryId = 1,
                             Name = "منطقة تبوك"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CountryId = 2,
+                            Name = "الإسكندرية"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CountryId = 2,
+                            Name = "الإسماعيلية"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CountryId = 2,
+                            Name = "أسوان"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CountryId = 2,
+                            Name = "أسيوط"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CountryId = 2,
+                            Name = "الأقصر"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CountryId = 2,
+                            Name = "البحر الأحمر"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CountryId = 2,
+                            Name = "البحيرة"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CountryId = 2,
+                            Name = "بني سويف"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CountryId = 2,
+                            Name = "بورسعيد"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CountryId = 2,
+                            Name = "جنوب سيناء"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CountryId = 2,
+                            Name = "الجيزة"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CountryId = 2,
+                            Name = "الدقهلية"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CountryId = 2,
+                            Name = "دمياط"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CountryId = 2,
+                            Name = "سوهاج"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CountryId = 2,
+                            Name = "السويس"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CountryId = 2,
+                            Name = "الشرقية"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CountryId = 2,
+                            Name = "شمال سيناء"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CountryId = 2,
+                            Name = "الغربية"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CountryId = 2,
+                            Name = "الفيوم"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CountryId = 2,
+                            Name = "القاهرة"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CountryId = 2,
+                            Name = "القليوبية"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CountryId = 2,
+                            Name = "قنا"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CountryId = 2,
+                            Name = "كفر الشيخ"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CountryId = 2,
+                            Name = "مطروح"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CountryId = 2,
+                            Name = "المنوفية"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CountryId = 2,
+                            Name = "المنيا"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CountryId = 2,
+                            Name = "الوادي الجديد"
                         });
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.MasterPageDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CompanyDetails");
+
+                    b.Property<string>("CompanyLinePhone");
+
+                    b.Property<string>("CompanyMail");
+
+                    b.Property<string>("CompanyPhone");
+
+                    b.Property<string>("CompanyWorkHours");
+
+                    b.Property<string>("FacebookAccount");
+
+                    b.Property<string>("InstagramAccount");
+
+                    b.Property<string>("Link1");
+
+                    b.Property<string>("Link10");
+
+                    b.Property<string>("Link10Title");
+
+                    b.Property<string>("Link11");
+
+                    b.Property<string>("Link11Title");
+
+                    b.Property<string>("Link12");
+
+                    b.Property<string>("Link12Title");
+
+                    b.Property<string>("Link1Title");
+
+                    b.Property<string>("Link2");
+
+                    b.Property<string>("Link2Title");
+
+                    b.Property<string>("Link3");
+
+                    b.Property<string>("Link3Title");
+
+                    b.Property<string>("Link4");
+
+                    b.Property<string>("Link4Title");
+
+                    b.Property<string>("Link5");
+
+                    b.Property<string>("Link5Title");
+
+                    b.Property<string>("Link6");
+
+                    b.Property<string>("Link6Title");
+
+                    b.Property<string>("Link7");
+
+                    b.Property<string>("Link7Title");
+
+                    b.Property<string>("Link8");
+
+                    b.Property<string>("Link8Title");
+
+                    b.Property<string>("Link9");
+
+                    b.Property<string>("Link9Title");
+
+                    b.Property<string>("PromoTitle");
+
+                    b.Property<string>("PromoTitleURL");
+
+                    b.Property<string>("TwitterAccount");
+
+                    b.Property<string>("YoutubeAccount");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MasterPageDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1384,17 +1728,10 @@ namespace EcoFive.Models.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6",
-                            ConcurrencyStamp = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6",
+                            Id = "341743f0-asd2–42de-afbf-59kmkkmk72cf6",
+                            ConcurrencyStamp = "341743f0-asd2–42de-afbf-59kmkkmk72cf6",
                             Name = "SuperAdmin",
                             NormalizedName = "SuperAdmin"
-                        },
-                        new
-                        {
-                            Id = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6",
-                            ConcurrencyStamp = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6",
-                            Name = "User",
-                            NormalizedName = "User"
                         });
                 });
 
@@ -1471,13 +1808,8 @@ namespace EcoFive.Models.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
-                            RoleId = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6"
-                        },
-                        new
-                        {
-                            UserId = "02974cw0–9412–4nfe - afbf - 59f701d72cf6",
-                            RoleId = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6"
+                            UserId = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
+                            RoleId = "341743f0-asd2–42de-afbf-59kmkkmk72cf6"
                         });
                 });
 
@@ -1511,6 +1843,27 @@ namespace EcoFive.Models.Migrations
                     b.HasOne("EcoFive.Models.Models.Governorate", "Governorate")
                         .WithMany()
                         .HasForeignKey("GovernorateId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Chatting.ChatUser", b =>
+                {
+                    b.HasOne("EcoFive.Models.Models.Chatting.Chat", "Chat")
+                        .WithMany("Users")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("EcoFive.Models.Models.ApplicationUser", "User")
+                        .WithMany("Chats")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("EcoFive.Models.Models.Chatting.Message", b =>
+                {
+                    b.HasOne("EcoFive.Models.Models.Chatting.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

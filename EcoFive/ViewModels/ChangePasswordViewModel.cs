@@ -14,7 +14,7 @@ namespace EcoFive.UI.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "تاكيد كلمه المرورالجديدة")]
         [Compare("NewPassword", ErrorMessage =
-            "كلمه المرور يجب ان تطابق تاكيد كلمه المرور")]
+            "كلمه المرور يرجى ان تطابق تاكيد كلمه المرور")]
         public string ConfirmPassword { get; set; }
 
     }

@@ -16,5 +16,18 @@ namespace EcoFive.Models.Repository
         string GetCurrentCountry(int id);
 
         bool ChangeStatus(string id);
+
+        Country AddCountry(Country country);
+        Country UpdateCountry(Country countryChanges);
+        Country DeleteCountry(int id);
+
+        Governorate AddGovernorate(Governorate governorate);
+        Governorate UpdateGovernorate(Governorate governorateChanges);
+        Governorate DeleteGovernorate(int id);
+
+
+        City AddCity(City city);
+        City UpdateCity(City countryChanges);
+        City DeleteCity(int id);
     }
 }

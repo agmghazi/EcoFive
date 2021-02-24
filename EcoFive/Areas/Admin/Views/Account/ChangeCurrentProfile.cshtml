@@ -20,7 +20,7 @@
 
             <div class="form-group row mb-4">
                 <div class="col-sm-12 col-md-7">
-                    <div class="small-12 medium-2 large-2 columns">
+                    <div>
                         <div class="circle">
                             <!-- User Profile Image -->
                             <img class="profile-pic" src="@PhotoPath" asp-append-version="true">
@@ -39,81 +39,180 @@
 
             <div class="form-group row">
                 <div class="col-sm-10">
-                    <input asp-for="CurrentPassword" class="form-control text-right">
-                    <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                    <label asp-for="CurrentPassword" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="  input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="CurrentPassword" class="form-control text-right pwstrength" id="passwordRegister3" data-indicator="pwindicator">
+                            <i class="far fa-eye" id="togglePasswordRegister3" onclick="togglePassword('#togglePasswordRegister3', '#passwordRegister3')"></i>
+                        </span>
+                        <span asp-validation-for="CurrentPassword"></span>
+                    </div>
                 </div>
-                <label asp-for="CurrentPassword" class="col-sm-2 col-form-label"></label>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <input asp-for="NewPassword" class="form-control text-right">
-                    <span asp-validation-for="NewPassword" class="text-danger"></span>
-                </div>
-                <label asp-for="NewPassword" class="col-sm-2 col-form-label"></label>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <input asp-for="ConfirmPassword" class="form-control text-right">
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-                <label asp-for="ConfirmPassword" class="col-sm-2 col-form-label"></label>
             </div>
 
 
             <div class="form-group row">
                 <div class="col-sm-10">
+                    <label asp-for="NewPassword" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="  input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="NewPassword" class="form-control text-right pwstrength" id="passwordRegister4" data-indicator="pwindicator">
+                            <i class="far fa-eye" id="togglePasswordRegister4" onclick="togglePassword('#togglePasswordRegister4', '#passwordRegister4')"></i>
+                        </span>
+                        <span asp-validation-for="NewPassword"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="ConfirmPassword" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="  input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="ConfirmPassword" class="form-control text-right pwstrength" id="passwordRegister5" data-indicator="pwindicator">
+                            <i class="far fa-eye" id="togglePasswordRegister5" onclick="togglePassword('#togglePasswordRegister5', '#passwordRegister5')"></i>
+                        </span>
+                        <span asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="Email" class="textInput"></label>
                     <input asp-for="Email" class="form-control text-right">
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span asp-validation-for="Email"></span>
                 </div>
-                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
             </div>
+
             <div class="form-group row">
                 <div class="col-sm-10">
+                    <label asp-for="UserName" class="textInput"></label>
                     <input asp-for="UserName" class="form-control text-right">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
+                    <span asp-validation-for="UserName"></span>
                 </div>
-                <label asp-for="UserName" class="col-sm-2 col-form-label"></label>
             </div>
 
             <div class="form-group row">
                 <div class="col-sm-10">
-                    <input asp-for="FullName" class="form-control text-right">
-                    <span asp-validation-for="FullName" class="text-danger"></span>
+                    <label asp-for="FirstName" class="textInput"></label>
+                    <input asp-for="FirstName" class="form-control text-right">
+                    <span asp-validation-for="FirstName"></span>
                 </div>
-                <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
             </div>
 
             <div class="form-group row">
                 <div class="col-sm-10">
+                    <label asp-for="LastName" class="textInput"></label>
+                    <input asp-for="LastName" class="form-control text-right">
+                    <span asp-validation-for="LastName"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="CountryId" class="textInput"></label>
                     <select dir="rtl" id="ddCountries" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.Countries, "Id", "Name", new {Model.CountryId}))" class="form-control"><option>أختر</option></select>
+                    <span asp-validation-for="CountryId"></span>
                 </div>
-                <label asp-for="CountryId" class="col-sm-2 col-form-label"></label>
             </div>
 
             <div class="form-group row">
                 <div class="col-sm-10">
+                    <label asp-for="GovernorateId" class="textInput"></label>
                     <select dir="rtl" id="ddGovernorate" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.Governorate, "Id", "Name", new {Model.GovernorateId}))" class="form-control"></select>
+                    <span asp-validation-for="GovernorateId"></span>
                 </div>
-                <label asp-for="GovernorateId" class="col-sm-2 col-form-label"></label>
             </div>
 
             <div class="form-group row">
                 <div class="col-sm-10">
+                    <label asp-for="CityId" class="textInput"></label>
                     <select dir="rtl" id="ddCity" asp-for="CityId" asp-items="@(new SelectList(ViewBag.City, "Id", "Name", new {Model.CityId}))" class="form-control"></select>
+                    <span asp-validation-for="CityId"></span>
                 </div>
-                <label asp-for="CityId" class="col-sm-2 col-form-label"></label>
             </div>
 
             <div class="form-group row">
                 <div class="col-sm-10">
+                    <label asp-for="PhoneNumber" class="textInput"></label>
                     <input asp-for="PhoneNumber" class="form-control text-right">
+                    <span asp-validation-for="PhoneNumber"></span>
                 </div>
-                <label asp-for="PhoneNumber" class="col-sm-2 col-form-label"></label>
             </div>
 
             <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="VisaNumber" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="VisaNumber" class="form-control text-right" placeholder="xxxx xxxx xxxx xxxx">
+                            <i class="fa fa-credit-card"></i>
+                        </span>
+                        <span asp-validation-for="VisaNumber"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="VisaDate" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="VisaDate" class="form-control text-right" placeholder="MM/YY">
+                            <i class="fa fa-clock"></i>
+                        </span>
+                        <span asp-validation-for="VisaDate"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="VisaPassword" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="VisaPassword" class="form-control text-right">
+                            <i class="fa fa-key"></i>
+                        </span>
+                        <span asp-validation-for="VisaPassword"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="VisaName" class="textInput"></label>
+                    <div class="toPassword">
+                        <span class="input-group-text inputPassword " id="basic-addon1">
+                            <input asp-for="VisaName" class="form-control text-right">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <span asp-validation-for="VisaName"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label class="textInput">تحديد الموقع</label>
+                    <span> <i class="fas fa-info-circle" style="font-size: 25px; font-size: 25px; position: absolute; right: 147px;cursor: pointer" data-toggle="tooltip" data-placement="top" title="ملاحظة: تحديد الموقع الجغرافي هو الأكثر دقة للأجهزة المزودة بنظام تحديد المواقع  ، مثل الهواتف الذكية."></i></span>
+                    <input asp-for="LocationLongitude" hidden />
+                    <input asp-for="LocationLatitude" hidden />
+
+                    <div id="viewDiv" class="mt-4">
+                        <div id="showCordinate"></div>
+                    </div>
+
+                </div>
+                <span asp-validation-for="LocationLongitude"></span>
+
+            </div>
+
+
+
+            <div class="form-group row mt-4">
                 <div class="col-sm-10 ">
                     <a asp-controller="Administraion" asp-action="ListUsers" class="btn btn-primary m-3 btn-lg">الغاء</a>
                     <button type="submit" class="btn btn-primary m-3 btn-lg ">تعديل</button>
@@ -122,7 +221,32 @@
         </form>
     </div>
 </div>
+
+@section Styles {
+    <link href="https://localhost:44355/arcgis_js_api/library/4.18/esri/themes/light/main.css" rel="stylesheet" />
+
+    <style>
+        #viewDiv {
+            height: 400px;
+            width: 838px;
+            padding-left: 84px;
+        }
+
+        #showCordinate {
+            background: white;
+            color: black;
+            font-size: 1.2em;
+            position: absolute;
+            left: 140px;
+            bottom: 1px
+        }
+    </style>
+}
+
+
+
 @section Scripts{
+    <script src="https://localhost:44355/arcgis_js_api/library/4.18/init.js"></script>
     <script>
         $(function () {
             $("#ddCountries").change(function () {
@@ -178,13 +302,15 @@
             }
 
 
-            $(".file-upload").on('change', function () {
-                readURL(this);
-            });
+            $(".file-upload").on('change',
+                function () {
+                    readURL(this);
+                });
 
-            $(".upload-button").on('click', function () {
-                $(".file-upload").click();
-            });
+            $(".upload-button").on('click',
+                function () {
+                    $(".file-upload").click();
+                });
         });
 
         function fileValidation() {
@@ -219,6 +345,138 @@
             });
 
     </script>
+    <script src="~/js/togglePassword.js" asp-append-version="true"></script>
+
+    <script>
+        require([
+            "esri/config", "esri/Map",
+            "esri/views/MapView", "esri/Graphic",
+            "esri/widgets/Locate", "esri/widgets/Search",
+            "esri/widgets/BasemapToggle"
+        ],
+            function (esriConfig,
+                Map,
+                MapView,
+                Graphic,
+                Locate,
+                Search,
+                BasemapToggle) {
+
+                ////esriConfig.apiKey = "YOUR-API-KEY";
+
+
+                const map = new Map({
+                    basemap: "streets"
+                });
+
+                const view = new MapView({
+                    map: map,
+                    center: [34.21257812505803, 27.227098562434826], // Longitude, latitude
+                    zoom: 4,
+                    container: "viewDiv"
+                });
+
+                let lon = document.getElementById("LocationLongitude").value;
+                let lat = document.getElementById("LocationLatitude").value;
+                //console.log(lon)
+                //console.log(lat)
+                if (lon == "" && lat == "") {
+                } else {
+                    drawPoint(lon, lat);
+                }
+
+
+                var searchWidget = new Search({
+                    view: view
+                });
+
+                view.ui.add(searchWidget, "top-right");
+
+                window._view = view;
+                window._map = map;
+
+                view.popup.autoOpenEnabled = false;
+                view.on("click",
+                    function (event) {
+                        console.log(event.mapPoint.latitude);
+                        console.log(event.mapPoint.longitude);
+
+                        // Get the coordinates of the click on the view
+                        var lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
+                        var lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
+                        drawPoint(lon, lat);
+
+                        document.getElementById("showCordinate").innerHTML = "Lon: " + lon + " / Lat: " + lat;
+                        document.getElementById("LocationLongitude").value = event.mapPoint.longitude;
+                        document.getElementById("LocationLatitude").value = event.mapPoint.latitude;
+
+                    });
+
+                var locateBtn = new Locate({
+                    view: view
+                });
+
+                // Add the locate widget to the top left corner of the view
+                view.ui.add(locateBtn,
+                    {
+                        position: "top-left"
+                    });
+
+                locateBtn.on('locate',
+                    function (pos) {
+                        console.info(pos.position.coords.latitude, pos.position.coords.longitude);
+
+                        var lat = Math.round(pos.position.coords.latitude * 1000) / 1000;
+                        var lon = Math.round(pos.position.coords.longitude * 1000) / 1000;
+                        drawPoint(lon, lat);
+
+                        document.getElementById("showCordinate").innerHTML = "Lon: " + lon + " / Lat: " + lat;
+                        document.getElementById("LocationLongitude").value = pos.position.coords.longitude;
+                        document.getElementById("LocationLatitude").value = pos.position.coords.latitude;
+
+                    });
+
+
+                function drawPoint(longitude, latitude) {
+                    var point = {
+                        type: "point",
+                        longitude: longitude,
+                        latitude: latitude
+                    };
+
+                    let pointGraphic = new Graphic({
+                        geometry: point,
+                        symbol: {
+                            type: "simple-marker",
+                            color: [244, 67, 54],
+                            path:
+                                "M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z",
+                            size: 32,
+                            yoffset: 16,
+                            outline: {
+                                width: 0,
+                            },
+                        },
+                    });
+                    view.graphics.removeAll();
+                    view.graphics.add(pointGraphic);
+                    view.goTo(pointGraphic);
+                    view.zoom = 18;
+
+                }
+
+                var basemapToggle = new BasemapToggle({
+                    view: view,
+                    nextBasemap: "satellite"
+                });
+
+                view.ui.add(basemapToggle, "bottom-right");
+
+
+            });
+    </script>
+
+
 
 }
 

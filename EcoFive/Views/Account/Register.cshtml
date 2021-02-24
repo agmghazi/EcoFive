@@ -15,7 +15,7 @@
         <ul>
             <li class="nav-item"><span class="current-page">تسجيل مستخدم جديد</span></li>
 
-            <li class="nav-item"><a href="index-2.html" class="permal-link">الصفحة الرئيسية</a></li>
+            <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="permal-link">الصفحة الرئيسية</a></li>
         </ul>
     </nav>
 </div>
@@ -88,16 +88,30 @@
                                 <span asp-validation-for="Email"></span>
                             </p>
 
-                            <p class="form-row">
-                                <label asp-for="Password" class="textInput"> </label>
-                                <input asp-for="Password" class=" form-control w-25 text-right float-right">
+                          
+                            <div class="form-group">
+                                <label class="textInput" asp-for="Password"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="far fa-eye" id="togglePasswordRegister5" onclick="togglePassword('#togglePasswordRegister5', '#passwordRegister5')"></i>
+                                    </div>
+                                    <input asp-for="Password" class="form-control text-right"  id="passwordRegister5" >
+
+                                </div>
                                 <span asp-validation-for="Password"></span>
-                            </p>
-                            <p class="form-row">
-                                <label asp-for="ConfirmPassword" class="textInput"> </label>
-                                <input asp-for="ConfirmPassword" class=" form-control w-25 text-right float-right">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="ConfirmPassword"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="far fa-eye" id="togglePasswordRegister6" onclick="togglePassword('#togglePasswordRegister6', '#passwordRegister6')"></i>
+                                    </div>
+                                    <input asp-for="ConfirmPassword" class="form-control text-right"  id="passwordRegister6" >
+
+                                </div>
                                 <span asp-validation-for="ConfirmPassword"></span>
-                            </p>
+                            </div>
 
 
                             <p class="form-row">
@@ -120,6 +134,7 @@
                                 <input asp-for="PhoneNumber" class=" form-control w-25 text-right float-right">
                                 <span asp-validation-for="PhoneNumber"></span>
                             </p>
+                            
                             <br />
                             <br />
                             <dnt-captcha asp-captcha-generator-max="999999"
@@ -191,4 +206,5 @@
             });
         });
     </script>
+    <script src="~/js/togglePassword.js" asp-append-version="true"></script>
 }

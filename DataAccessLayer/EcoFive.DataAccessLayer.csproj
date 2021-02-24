@@ -9,10 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EcoFive.Models\EcoFive.Models.csproj" />
   </ItemGroup>
 

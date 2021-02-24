@@ -1,0 +1,331 @@
+﻿@model MasterPageDetailsViewModel
+@{
+    ViewBag.Title = "تعديل الصفحة الرئسية";
+
+}
+<div class="card">
+    <div class="mt-4">
+        <div class="card-header">
+            <h1 class="mb-5">تعديل الصفحة الرئسية</h1>
+        </div>
+    </div>
+
+    <div class="card-body container">
+        <form method="post" class="mt-3" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="alert alert-danger mb-5"></div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="CompanyDetails" class="form-control text-right">
+                    <span asp-validation-for="CompanyDetails" class="text-danger"></span>
+                </div>
+                <label asp-for="CompanyDetails" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="CompanyPhone" class="form-control text-right">
+                    <span asp-validation-for="CompanyPhone" class="text-danger"></span>
+                </div>
+                <label asp-for="CompanyPhone" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="CompanyLinePhone" class="form-control text-right">
+                    <span asp-validation-for="CompanyLinePhone" class="text-danger"></span>
+                </div>
+                <label asp-for="CompanyLinePhone" class="col-sm-2 col-form-label"></label>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="CompanyMail" class="form-control text-right">
+                    <span asp-validation-for="CompanyMail" class="text-danger"></span>
+                </div>
+                <label asp-for="CompanyMail" class="col-sm-2 col-form-label"></label>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="CompanyWorkHours" class="form-control text-right">
+                    <span asp-validation-for="CompanyWorkHours" class="text-danger"></span>
+                </div>
+                <label asp-for="CompanyWorkHours" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="PromoTitle" class="form-control text-right">
+                    <span asp-validation-for="PromoTitle" class="text-danger"></span>
+                </div>
+                <label asp-for="PromoTitle" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="PromoTitleURL" class="form-control text-right">
+                    <span asp-validation-for="PromoTitleURL" class="text-danger"></span>
+                </div>
+                <label asp-for="PromoTitleURL" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="FacebookAccount" class="form-control text-right">
+                    <span asp-validation-for="FacebookAccount" class="text-danger"></span>
+                </div>
+                <label asp-for="FacebookAccount" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="TwitterAccount" class="form-control text-right">
+                    <span asp-validation-for="TwitterAccount" class="text-danger"></span>
+                </div>
+                <label asp-for="TwitterAccount" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="YoutubeAccount" class="form-control text-right">
+                    <span asp-validation-for="YoutubeAccount" class="text-danger"></span>
+                </div>
+                <label asp-for="YoutubeAccount" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="InstagramAccount" class="form-control text-right">
+                    <span asp-validation-for="InstagramAccount" class="text-danger"></span>
+                </div>
+                <label asp-for="InstagramAccount" class="col-sm-2 col-form-label"></label>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link1Title" class="form-control text-right">
+                    <span asp-validation-for="Link1Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link1Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link1" class="form-control text-right">
+                    <span asp-validation-for="Link1" class="text-danger"></span>
+                </div>
+                <label asp-for="Link1" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link2Title" class="form-control text-right">
+                    <span asp-validation-for="Link2Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link2Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link2" class="form-control text-right">
+                    <span asp-validation-for="Link2" class="text-danger"></span>
+                </div>
+                <label asp-for="Link2" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link3Title" class="form-control text-right">
+                    <span asp-validation-for="Link3Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link3Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link3" class="form-control text-right">
+                    <span asp-validation-for="Link3" class="text-danger"></span>
+                </div>
+                <label asp-for="Link3" class="col-sm-2 col-form-label"></label>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link4Title" class="form-control text-right">
+                    <span asp-validation-for="Link4Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link4Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link4" class="form-control text-right">
+                    <span asp-validation-for="Link4" class="text-danger"></span>
+                </div>
+                <label asp-for="Link4" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link5Title" class="form-control text-right">
+                    <span asp-validation-for="Link5Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link5Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link5" class="form-control text-right">
+                    <span asp-validation-for="Link5" class="text-danger"></span>
+                </div>
+                <label asp-for="Link5" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link6Title" class="form-control text-right">
+                    <span asp-validation-for="Link6Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link6Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link6" class="form-control text-right">
+                    <span asp-validation-for="Link6" class="text-danger"></span>
+                </div>
+                <label asp-for="Link6" class="col-sm-2 col-form-label"></label>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link7Title" class="form-control text-right">
+                    <span asp-validation-for="Link7Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link7Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link7" class="form-control text-right">
+                    <span asp-validation-for="Link7" class="text-danger"></span>
+                </div>
+                <label asp-for="Link7" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link8Title" class="form-control text-right">
+                    <span asp-validation-for="Link8Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link8Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link8" class="form-control text-right">
+                    <span asp-validation-for="Link8" class="text-danger"></span>
+                </div>
+                <label asp-for="Link8" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link9Title" class="form-control text-right">
+                    <span asp-validation-for="Link9Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link9Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link9" class="form-control text-right">
+                    <span asp-validation-for="Link9" class="text-danger"></span>
+                </div>
+                <label asp-for="Link9" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link10Title" class="form-control text-right">
+                    <span asp-validation-for="Link10Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link10Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link10" class="form-control text-right">
+                    <span asp-validation-for="Link10" class="text-danger"></span>
+                </div>
+                <label asp-for="Link10" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link11Title" class="form-control text-right">
+                    <span asp-validation-for="Link11Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link11Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link11" class="form-control text-right">
+                    <span asp-validation-for="Link11" class="text-danger"></span>
+                </div>
+                <label asp-for="Link11" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link12Title" class="form-control text-right">
+                    <span asp-validation-for="Link12Title" class="text-danger"></span>
+                </div>
+                <label asp-for="Link12Title" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input asp-for="Link12" class="form-control text-right">
+                    <span asp-validation-for="Link12" class="text-danger"></span>
+                </div>
+                <label asp-for="Link12" class="col-sm-2 col-form-label"></label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10 ">
+                    <a asp-controller="Administraion" asp-action="ListUsers" class="btn btn-primary m-3 btn-lg">الغاء</a>
+                    <button type="submit" class="btn btn-primary m-3 btn-lg ">تعديل</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        $("#chProfAlertmsg").fadeTo(3000, 600).slideUp(2000,
+            function () {
+                $("#chProfAlertmsg").hide();
+            });
+
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-has-icon w-25" id="chProfAlertmsg">
+        <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+        <div class="alert-body">
+            <div class="alert-title">تنبية</div>
+            @ViewBag.Message
+        </div>
+    </div>
+
+}

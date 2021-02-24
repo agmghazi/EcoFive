@@ -1,0 +1,45 @@
+﻿
+
+<div class="floating-chat" data-toggle="tooltip">
+    <i class="fa fa-comments" aria-hidden="true" data-placement="left" title="التحدث مع خدمة العملاء"></i>
+    <div class="chat">
+        <div class="header">
+            <button>
+                <i class="fa fa-times" aria-hidden="true" data-placement="left" title="اغلاق"></i>
+            </button>
+            <span class="title text-right">
+                التحدث مع خدمة العملاء
+            </span>
+
+        </div>
+        <ul class="messages">
+            @*<li class="other">مرحبا احمد جمال</li>
+            <li class="other">نرحب بك فى خدمة العملاء</li>
+            <li class="other">نرحب باستفسارك، يمكنك ترك رسالتك</li>
+            <li class="self">شكرا لك اخى</li>
+            <li class="other">are you sure???</li>
+            <li class="self">yes.... -___-</li>
+            <li class="other">if we're not dogs.... we might be monkeys 🐵</li>
+            <li class="self">i hate you</li>
+            <li class="other">don't be so negative! here's a banana 🍌</li>
+            <li class="self">شرح مشكلتى هى</li>
+            <li class="other">......... -___-</li>*@
+        </ul>
+        <div class="footer">
+            <div class="text-box text-right" contenteditable="true" id="userMessage"> </div>
+            @*<input type="text" class="text-box text-right" contenteditable="true" id="userMessage"  />*@
+            <span class="invisible">S</span>
+
+            <button id="sendMessage"><i class="fas fa-paper-plane" data-placement="left" title="ارسال"></i> </button>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+
+<script src="~/js/signalRChat.js" asp-append-version="true"></script>
+<script >
+
+    InvokeSignalR("02174cf0–9412–4cfe-afbf-59f706d72cf6");
+</script>

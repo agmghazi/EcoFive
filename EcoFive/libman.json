@@ -21,6 +21,15 @@
     {
       "library": "fontawesome-iconpicker@3.2.0",
       "destination": "wwwroot/lib/fontawesome-iconpicker/"
+    },
+    {
+      "library": "font-awesome@5.15.2",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@5.0.2",
+      "destination": "wwwroot/lib/microsoft/signalr/"
     }
   ]
 }

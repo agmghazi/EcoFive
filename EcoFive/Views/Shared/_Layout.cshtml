@@ -1,10 +1,11 @@
 ﻿@inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
+@inject IMasterPageDetailsRepository _detailsRepository
 
 @{
     var user = await _userManager.GetUserAsync(User);
 
-
+    var details = _detailsRepository.GetDetails(1);
 
 }
 
@@ -29,21 +30,30 @@
     <link rel="stylesheet" type="text/css" href="~/Templetes/Client/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="~/Templetes/Client/assets/css/main-color.css">
     <link href="~/css/clientSite.css" rel="stylesheet" asp-append-version="true" />
-    @*to active client side validation*@
-    <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validate/jquery.validate.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+    <link href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+
+  
 
     @*confirm library*@
     @*https://craftpip.github.io/jquery-confirm/*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
     @*add trumbowyg WYSIWYG Editor*@
-    @*<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>*@
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+
+
+    
+        <link href="~/css/Chat.css" rel="stylesheet" asp-append-version="true" />
+
+    @if (IsSectionDefined("Styles"))
+    {
+        @await RenderSectionAsync("Styles", required: false)
+    }
+
 
 </head>
 <body class="biolife-body">
@@ -67,26 +77,24 @@
                     <ul class="horizontal-menu">
                         @if (_userManager != null && _signInManager != null && user != null)
                         {
-
                             @if (_signInManager.IsSignedIn(User))
                             {
-
                                 <div class="btn-group text-right">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      @{var PhotoPath = "/Files/Users/ProfileImages/" + (user.PhotoPath == null || user.PhotoPath == "" ? "noImage.png" : user.PhotoPath);}
-                                      <span class=""> @User.Identity.Name </span> :اهلا بك <Span class="invisible">S</Span><img alt="image" src="@PhotoPath" class="user-img" asp-append-version="true"/>
+                                        @{var PhotoPath = "/Files/Users/ProfileImages/" + (user.PhotoPath == null || user.PhotoPath == "" ? "noImage.png" : user.PhotoPath);}
+                                        <span class=""> @User.Identity.Name </span> :اهلا بك <Span class="invisible">S</Span><img alt="image" src="@PhotoPath" class="user-img" asp-append-version="true" />
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class=" nav-link btn"asp-action="ChangeCurrentProfile" asp-controller="Account" style="color: #3782c3 !important">الملف الشخصى</a>
+                                        <a class=" nav-link btn" asp-action="ChangeCurrentProfile" asp-controller="Account" style="color: #3782c3 !important">الملف الشخصى</a>
                                         <a class=" nav-link btn" href="#" style="color: #3782c3 !important">الطلبات</a>
-                                        <br/>
+                                        <br />
                                         <a class=" nav-link btn" href="#" style="color: #3782c3 !important">الاعدادات</a>
                                         <div class="dropdown-divider" style="color: #3782c3 !important"></div>
-                                      
+
                                         <form method="post" asp-controller="Account" asp-action="Logout">
 
                                             <button type="submit" class="nav-link btn" style="color: #3782c3">
-                                                تسجيل خروج 
+                                                تسجيل خروج
                                             </button>
 
                                         </form>
@@ -96,7 +104,7 @@
 
                                 if (await _userManager.IsInRoleAsync(user, "SuperAdmin") || await _userManager.IsInRoleAsync(user, "Admin"))
                                 {
-                                <li><a asp-controller="Home" asp-action="Index" asp-area="Admin" target="_blank" class="login-link "> لوحه التحكم  <i class="biolife-icon icon-report"></i></a></li>
+                                    <li><a asp-controller="Home" asp-action="Index" asp-area="Admin" target="_blank" class="login-link "> لوحه التحكم  <i class="biolife-icon icon-report"></i></a></li>
 
                                 }
 
@@ -113,7 +121,10 @@
                             <li><a asp-controller="Account" asp-action="Login" class="login-link"> تسجيل الدخول <i class="biolife-icon icon-login"></i></a></li>
 
                         }
-                        <li><a href="#">شحن مجانى للطلبات اكثر من 250 ريال</a></li>
+                        @if (details != null)
+                        {
+                            <li><a href="@details.PromoTitleURL">@details.PromoTitle</a></li>
+                        }
 
                     </ul>
                 </div>
@@ -123,7 +134,7 @@
                         <li class="horz-menu-item lang">
                             <select name="language">
                                 <option value="sau" selected>السعودية</option>
-                                <option value="egy" >مصر</option>
+                                <option value="egy">مصر</option>
                             </select>
                         </li>
 
@@ -135,9 +146,11 @@
                         </li>
                     </ul>
                     <ul class="social-list">
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                        @if (details != null)
+                        {
+                            <li><a href="@details.TwitterAccount" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="@details.FacebookAccount" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -328,7 +341,7 @@
                     <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
                         <div class="primary-menu">
                             <ul class="menu biolife-menu clone-main-menu clone-primary-menu" id="primary-menu" data-menuname="main menu">
-                                <li class="menu-item"><a href="index-2.html">Home</a></li>
+                                <li class="menu-item"><a asp-controller="Home" asp-action="Contact">اتصل بنا</a></li>
                                 <li class="menu-item menu-item-has-children has-megamenu">
                                     <a href="#" class="menu-name" data-title="Shop">Shop</a>
                                     <div class="wrap-megamenu lg-width-900 md-width-750">
@@ -899,38 +912,53 @@
                                 <ul class="contact-lines text-right">
                                     <li>
                                         <p class="info-item">
-                                            <b class="desc">حى الملك فهد - الرياض- المملكه العربية السعودية </b>
-                                            <i class="biolife-icon icon-location"></i>
 
+                                            @if (details != null)
+                                            {
+                                                <b class="desc"> العنوان: @details.CompanyDetails </b>
+                                                <i class="biolife-icon icon-location"></i>
+                                            }
                                         </p>
                                     </li>
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-phone"></i>
-                                            <b class="desc">جوال : 02534740221</b>
+                                            @if (details != null)
+                                            {
+                                                <b class="desc">@details.CompanyPhone :الجوال</b>
+                                            }
                                         </p>
                                     </li>
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-letter"></i>
-                                            <b class="desc">Email:  contact@company.com</b>
+                                            @if (details != null)
+                                            {
+                                                <b class="desc">@details.CompanyMail :البريد الالكترونى</b>
+                                            }
                                         </p>
                                     </li>
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-clock"></i>
-                                            <b class="desc">Hours: 7 Days a week from 10:00 am</b>
+                                            @if (details != null)
+                                            {
+                                                <b class="desc"> @details.CompanyWorkHours :ساعات العمل</b>
+                                            }
                                         </p>
                                     </li>
                                 </ul>
                             </div>
                             <div class="biolife-social inline ">
                                 <ul class="socials">
-                                    <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    @if (details != null)
+                                    {
+                                        <li><a href="@details.TwitterAccount" target="_blank" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a href="@details.FacebookAccount" target="_blank" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a href="@details.YoutubeAccount" target="_blank" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                        <li><a href="@details.InstagramAccount" target="_blank" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    }
+
                                 </ul>
                             </div>
                         </section>
@@ -942,24 +970,30 @@
                                 <div class="col-lg-6 col-sm-6 col-xs-6">
                                     <div class="wrap-custom-menu vertical-menu-2">
                                         <ul class="menu">
-                                            <li><a href="#">About Us</a></li>
-                                            <li><a href="#">About Our Shop</a></li>
-                                            <li><a href="#">Secure Shopping</a></li>
-                                            <li><a href="#">Delivery infomation</a></li>
-                                            <li><a href="#">Privacy Policy</a></li>
-                                            <li><a href="#">Our Sitemap</a></li>
+                                            @if (details != null)
+                                            {
+                                                <li><a href="@details.Link1" target="_blank">@details.Link1Title</a></li>
+                                                <li><a href="@details.Link2" target="_blank">@details.Link2Title</a></li>
+                                                <li><a href="@details.Link3" target="_blank">@details.Link3Title</a></li>
+                                                <li><a href="@details.Link4" target="_blank">@details.Link4Title</a></li>
+                                                <li><a href="@details.Link5" target="_blank">@details.Link5Title</a></li>
+                                                <li><a href="@details.Link6" target="_blank">@details.Link6Title</a></li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-xs-6">
                                     <div class="wrap-custom-menu vertical-menu-2">
                                         <ul class="menu">
-                                            <li><a href="#">Who We Are</a></li>
-                                            <li><a href="#">Our Services</a></li>
-                                            <li><a href="#">Projects</a></li>
-                                            <li><a href="#">Contacts Us</a></li>
-                                            <li><a href="#">Innovation</a></li>
-                                            <li><a href="#">Testimonials</a></li>
+                                            @if (details != null)
+                                            {
+                                                <li><a href="@details.Link7" target="_blank">@details.Link7Title</a></li>
+                                                <li><a href="@details.Link8" target="_blank">@details.Link8Title</a></li>
+                                                <li><a href="@details.Link9" target="_blank">@details.Link9Title</a></li>
+                                                <li><a href="@details.Link10" target="_blank">@details.Link10Title</a></li>
+                                                <li><a href="@details.Link11" target="_blank">@details.Link11Title</a></li>
+                                                <li><a href="@details.Link12" target="_blank">@details.Link12Title</a></li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>
@@ -975,7 +1009,10 @@
                                 <p class="r-info text-right">
                                     <span>هل لديك اى سؤال ؟</span>
                                     <br />
-                                    <span>(700)  9001-1909  (900) 689 -66</span>
+                                    @if (details != null)
+                                    {
+                                        <span>@details.CompanyLinePhone</span>
+                                    }
                                 </p>
                             </div>
                             <div class="newsletter-block layout-01">
@@ -994,8 +1031,8 @@
                     <div class="col-xs-12">
                         <div class="separator sm-margin-top-70px xs-margin-top-40px"></div>
                     </div>
-                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                        <div class="copy-right-text"><p><a href="templateshub.net">Templates Hub</a></p></div>
+                    <div class="col-lg-6 col-sm-6 col-xs-12 invisible">
+                        <div class="copy-right-text"><p><a href="templateshub.net">Security Code</a></p></div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="payment-methods">
@@ -1019,7 +1056,7 @@
             <div class="mobile-block block-menu-main">
                 <a class="menu-bar menu-toggle btn-toggle" data-object="open-mobile-menu" href="javascript:void(0)">
                     <span class="fa fa-bars"></span>
-                    <span class="text">Menu</span>
+                    <span class="text">القائمة</span>
                 </a>
             </div>
             <div class="mobile-block block-sidebar">
@@ -1031,13 +1068,13 @@
             <div class="mobile-block block-minicart">
                 <a class="link-to-cart" href="#">
                     <span class="fa fa-shopping-bag" aria-hidden="true"></span>
-                    <span class="text">Cart</span>
+                    <span class="text">السلة</span>
                 </a>
             </div>
             <div class="mobile-block block-global">
                 <a class="menu-bar myaccount-toggle btn-toggle" data-object="global-panel-opened" href="javascript:void(0)">
                     <span class="fa fa-globe"></span>
-                    <span class="text">Global</span>
+                    <span class="text">عام</span>
                 </a>
             </div>
         </div>
@@ -1167,9 +1204,23 @@
             </div>
         </div>
     </div>
+    @if (_userManager != null && _signInManager != null && user != null)
+    {
+        @if (_signInManager.IsSignedIn(User))
+        {
+            @*@await Html.PartialAsync("~/Views/ControllerName/ViewName.cshtml", modeldata)*@
+            @await Html.PartialAsync("~/Views/Home/Chat.cshtml")
 
+        }
+    }
     <!-- Scroll Top Button -->
     <a class="btn-scroll-top"><i class="biolife-icon icon-left-arrow"></i></a>
+    @*to active client side validation*@
+    <script src="/lib/jquery/jquery.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+    <script src="~/js/Chat.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <script src="~/Templetes/Client/assets/js/jquery-3.4.1.min.js"></script>
     <script src="~/Templetes/Client/assets/js/bootstrap.min.js"></script>
@@ -1178,13 +1229,24 @@
     <script src="~/Templetes/Client/assets/js/jquery.nicescroll.min.js"></script>
     <script src="~/Templetes/Client/assets/js/slick.min.js"></script>
     <script src="~/Templetes/Client/assets/js/biolife.framework.js"></script>
-<script src="~/Templetes/Client/assets/js/functions.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="~/Templetes/Client/assets/js/functions.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    
+   
+    <script>
+        // Set the locale before the JSAPI loads
+        esriConfig = {
+            locale: "ar"
+        };
+    </script>
 
-@if (IsSectionDefined("Scripts"))
-{
-    @await RenderSectionAsync("Scripts", required: false)
-}
+
+
+
+    @if (IsSectionDefined("Scripts"))
+    {
+        @await RenderSectionAsync("Scripts", required: false)
+    }
 
 </body>
 

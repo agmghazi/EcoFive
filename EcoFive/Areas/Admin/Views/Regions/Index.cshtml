@@ -1,0 +1,257 @@
+﻿@model RegionsViewModels
+@inject IAccountRepository _accountRepository
+@{
+    ViewBag.Title = "تعديل مناطق العمل";
+    var governorate = _accountRepository.GetCity(1);
+
+}
+
+<div class="card">
+    <div class="mt-4">
+        <div class="card-header">
+            <h1 class="mb-5">تعديل مناطق العمل</h1>
+        </div>
+    </div>
+
+    <div class="card-body container">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="alert alert-danger mb-5"></div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label asp-for="CountryId" class="textInput"></label>
+                    <select dir="rtl" id="ddCountries" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.Countries, "Id", "Name"))" class="form-control"><option>أختر</option></select>
+                    <span asp-validation-for="CountryId"></span>
+                </div>
+            </div>
+
+
+
+            <div class="main-container">
+                <ul class="columns">
+                    <div class="container">
+                        <div class="row currentRow">
+                            @*<li class="column trash-column">
+                                    <div class="column-header">
+                                        <h4>السله</h4>
+                                    </div>
+                                    <ul class="task-list" id="trash">
+                                        <li class="task">
+                                            <p>Interviews</p>
+                                        </li>
+                                        <li class="task">
+                                            <p>Research</p>
+                                        </li>
+
+                                    </ul>
+                                    <div class="column-button">
+                                        <button class="button delete-button" onclick="emptyTrash()">حذف</button>
+                                    </div>
+                                </li>*@
+                        </div>
+                    </div>
+
+                    @*<li class="column to-do-column">
+                            <div class="column-header">
+                                <h4>To Do</h4>
+                            </div>
+                            <ul class="task-list" id="to-do">
+                                <li class="task">
+                                    <p>Analysis</p>
+                                </li>
+                                <li class="task">
+                                    <p>Coding</p>
+                                </li>
+                                <li class="task">
+                                    <p>Card Sorting</p>
+                                </li>
+                                <li class="task">
+                                    <p>Measure</p>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="column doing-column">
+                            <div class="column-header">
+                                <h4>Doing</h4>
+                            </div>
+                            <ul class="task-list" id="doing">
+                                <li class="task">
+                                    <p>Hypothesis</p>
+                                </li>
+                                <li class="task">
+                                    <p>User Testing</p>
+                                </li>
+                                <li class="task">
+                                    <p>Prototype</p>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="column done-column">
+                            <div class="column-header">
+                                <h4>Done</h4>
+                            </div>
+                            <ul class="task-list" id="done">
+                                <li class="task">
+                                    <p>Ideation</p>
+                                </li>
+                                <li class="task">
+                                    <p>Sketches</p>
+                                </li>
+                            </ul>
+                        </li>*@
+
+
+
+                </ul>
+            </div>
+
+
+            @*<div class="form-group row">
+                    <div class="col-sm-10">
+                        <label asp-for="FullName" class="textInput"></label>
+                        <input asp-for="FullName" class="form-control text-right">
+                        <span asp-validation-for="FullName"></span>
+                    </div>
+                </div>*@
+
+
+
+            @*
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <label asp-for="GovernorateId" class="textInput"></label>
+                        <select dir="rtl" id="ddGovernorate" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.Governorate, "Id", "Name", new {Model.GovernorateId}))" class="form-control"></select>
+                        <span asp-validation-for="GovernorateId"></span>
+                    </div>
+                </div>*@
+
+            @*<div class="form-group row">
+                    <div class="col-sm-10">
+                        <label asp-for="CityId" class="textInput"></label>
+                        <select dir="rtl" id="ddCity" asp-for="CityId" asp-items="@(new SelectList(ViewBag.City, "Id", "Name", new {Model.CityId}))" class="form-control"></select>
+                        <span asp-validation-for="CityId"></span>
+                    </div>
+                </div>*@
+
+
+
+            <br />
+            <div class="form-group row">
+                <div class="col-sm-10 ">
+                    <a asp-controller="Administraion" asp-action="ListUsers" class="btn btn-primary m-3 btn-lg">الغاء</a>
+                    <button type="submit" class="btn btn-primary m-3 btn-lg ">تعديل</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#ddCountries").change(function () {
+
+                $.getJSON("/Admin/Account/FindGovernorates",
+                    { id: $("#ddCountries").val() },
+                    function (d) {
+                        //console.log(d);
+                        var row = `
+                                                                                <div class="add-task-container mb-3">
+                                                                                    <button id="add" class="button add-button" onclick="addTask()">اضافة المحافظة</button> <span class="invisible">S</span>
+                                                                                    <input type="text" id="taskText" onkeydown="if (event.keyCode == 13) document.getElementById('add').click()">
+                                                                                </div>
+
+                                                                                <div class="add-task-container mb-3">
+                                                                                    <button id="add" class="button add-button" onclick="addTask()">اضافة المدينة</button> <span class="invisible">S</span>
+                                                                                    <input type="text" id="taskText" onkeydown="if (event.keyCode == 13) document.getElementById('add').click()">
+                                                                                </div> ` ;
+                        row += `  <div class="col mb-3">
+                                                                                                     <li class="column trash-column">
+                                                                                                                        <div class="column-header">
+                                                                                                                            <h4>السله</h4>
+                                                                                                                        </div>
+                                                                                                                        <ul class="task-list" id="trash">
+
+
+                                                                                                                        </ul>
+                                                                                                                        <div class="column-button">
+                                                                                                                            <button class="button delete-button" onclick="emptyTrash()">حذف</button>
+                                                                                                                        </div>
+                                                                                                                    </li> </div>`;
+                        $(".currentRow").empty();
+                        $.each(d,
+                            function (i, v) {
+
+                                row += ` <div class="col mb-3">
+                                                                                                                                    <li class="column to-do-column">
+                                                                                                                                    <div class="column-header">
+                                                                                                                                        <h4>${v.name}</h4>
+                                                                                                                                    </div>
+                                                                                                                                    <ul class="task-list ${v.id}" id="to-do" >
+
+                                                                                                                                    </ul>
+                                                                                                                                </li> </div> `;
+
+
+                                $.getJSON("/Admin/Account/Findcities/",
+                                    { id: v.id },
+                                    function (d) {
+                                        var cityRow = "";
+                                        //console.log(d);
+                                        $.each(d,
+                                            function (inn, vnn) {
+                                                cityRow += `  <li class="task">
+                                                                                                                                                   <p>${vnn.name}</p>
+                                                                                                                                                   </li>`;
+                                            });
+                                        $(`.${v.id}`).html(cityRow);
+                                    });
+                            });
+
+
+                        $(".currentRow").html(row);
+                    });
+            });
+
+
+
+        });
+
+
+        $("#chProfAlertmsg").fadeTo(3000, 600).slideUp(2000,
+            function () {
+                $("#chProfAlertmsg").hide();
+            });
+
+    </script>
+    <script src="~/js/dragAndDrop.js" asp-append-version="true"></script>
+    <script src="~/Templetes/Admin/assets/js/drapAndDrop/dragula.js"></script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-has-icon w-25" id="chProfAlertmsg">
+        <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+        <div class="alert-body">
+            <div class="alert-title">تنبية</div>
+            @ViewBag.Message
+        </div>
+    </div>
+
+}
+
+@section Styles {
+    <link href="~/css/dragAndDrop.css" rel="stylesheet" />
+}
+
+
+@*this for السله
+    <li class="task">
+        <p>Interviews</p>
+    </li>
+    <li class="task">
+        <p>Research</p>
+    </li>*@

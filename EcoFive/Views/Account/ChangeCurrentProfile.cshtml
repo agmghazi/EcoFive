@@ -50,12 +50,12 @@
                 <!--Form Sign In-->
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  ">
                     <div class="signin-container text-right">
-                        <form method="post"enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="All" class="alert alert-danger text-right"></div>
 
                             <div class="form-group row mb-4">
                                 <div class="col-sm-12 col-md-7">
-                                    <div class="small-12 medium-2 large-2 columns">
+                                    <div>
                                         <div class="circle">
                                             <!-- User Profile Image -->
                                             <img class="profile-pic" src="@_PhotoPath" asp-append-version="true">
@@ -71,58 +71,141 @@
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3 ">الصوره الشخصية</label>
                             </div>
 
-                            <p class="form-row">
-                                <label asp-for="CurrentPassword"> </label>
-                                <input asp-for="CurrentPassword" class=" form-control w-25 text-right float-right">
+                            <div class="form-group">
+                                <label class="textInput" asp-for="CurrentPassword"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="far fa-eye" id="togglePasswordRegister7" onclick="togglePassword('#togglePasswordRegister7', '#passwordRegister7')"></i>
+                                    </div>
+                                    <input asp-for="CurrentPassword" class="form-control text-right" id="passwordRegister7">
+                                </div>
                                 <span asp-validation-for="CurrentPassword"></span>
-                            </p>
-                            
-                            <p class="form-row">
-                                <label asp-for="NewPassword"></label>
-                                <input asp-for="NewPassword" class=" form-control w-25 text-right float-right">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="NewPassword"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="far fa-eye" id="togglePasswordRegister8" onclick="togglePassword('#togglePasswordRegister8', '#passwordRegister8')"></i>
+                                    </div>
+                                    <input asp-for="NewPassword" class="form-control text-right" id="passwordRegister8">
+
+                                </div>
                                 <span asp-validation-for="NewPassword"></span>
-                            </p>
-                            <p class="form-row">
-                                <label asp-for="ConfirmPassword"> </label>
-                                <input asp-for="ConfirmPassword" class=" form-control w-25 text-right float-right">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="ConfirmPassword"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="far fa-eye" id="togglePasswordRegister9" onclick="togglePassword('#togglePasswordRegister9', '#passwordRegister9')"></i>
+                                    </div>
+                                    <input asp-for="ConfirmPassword" class="form-control text-right" id="passwordRegister9">
+
+                                </div>
                                 <span asp-validation-for="ConfirmPassword"></span>
-                            </p>
+                            </div>
+
                             <p class="form-row">
-                                <label asp-for="FullName"></label>
-                                <input asp-for="FullName" class="form-control w-25 text-right float-right">
-                                <span asp-validation-for="FullName"></span>
+                                <label asp-for="FirstName" class="textInput"></label>
+                                <input asp-for="FirstName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="FirstName"></span>
                             </p>
+
                             <p class="form-row">
-                                <label asp-for="UserName"></label>
+                                <label asp-for="LastName" class="textInput"></label>
+                                <input asp-for="LastName" class="form-control w-25 text-right float-right">
+                                <span asp-validation-for="LastName"></span>
+                            </p>
+
+                            <p class="form-row">
+                                <label asp-for="UserName" class="textInput"></label>
                                 <input asp-for="UserName" class="form-control w-25 text-right float-right">
                                 <span asp-validation-for="UserName"></span>
                             </p>
                             <p class="form-row">
-                                <label asp-for="Email"></label>
+                                <label asp-for="Email" class="textInput"></label>
                                 <input asp-for="Email" class="form-control w-25 text-right float-right">
                                 <span asp-validation-for="Email"></span>
                             </p>
 
                             <p class="form-row">
-                                <label asp-for="CountryId"></label>
+                                <label asp-for="CountryId" class="textInput"></label>
                                 <select dir="rtl" id="ddCountries" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.Countries, "Id", "Name"))" class="form-control"><option>أختر</option></select>
                                 <span asp-validation-for="CountryId"></span>
                             </p>
                             <p class="form-row">
-                                <label asp-for="GovernorateId"></label>
+                                <label asp-for="GovernorateId" class="textInput"></label>
                                 <select dir="rtl" id="ddGovernorate" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.Governorate, "Id", "Name", new {Model.GovernorateId}))" class="form-control"></select>
                                 <span asp-validation-for="GovernorateId"></span>
                             </p>
                             <p class="form-row">
-                                <label asp-for="CityId"></label>
+                                <label asp-for="CityId" class="textInput"></label>
                                 <select dir="rtl" id="ddCity" asp-for="CityId" asp-items="@(new SelectList(ViewBag.City, "Id", "Name", new {Model.CityId}))" class="form-control"></select>
                                 <span asp-validation-for="CityId"></span>
                             </p>
                             <p class="form-row">
-                                <label asp-for="PhoneNumber"></label>
+                                <label asp-for="PhoneNumber" class="textInput"></label>
                                 <input asp-for="PhoneNumber" class=" form-control w-25 text-right float-right">
                                 <span asp-validation-for="PhoneNumber"></span>
                             </p>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="VisaNumber"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-credit-card"></i>
+                                    </div>
+                                    <input asp-for="VisaNumber" class="form-control text-right" placeholder="xxxx xxxx xxxx xxxx">
+                                </div>
+                                <span asp-validation-for="VisaNumber"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="VisaDate"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock"></i>
+                                    </div>
+                                    <input asp-for="VisaDate" class="form-control text-right" placeholder="MM/YY">
+                                </div>
+                                <span asp-validation-for="VisaDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="VisaPassword"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-key"></i>
+                                    </div>
+                                    <input asp-for="VisaPassword" class="form-control text-right">
+                                </div>
+                                <span asp-validation-for="VisaPassword"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="textInput" asp-for="VisaName"></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <input asp-for="VisaName" class="form-control text-right">
+                                </div>
+                                <span asp-validation-for="VisaName"></span>
+                            </div>
+
+                            <br />
+                            <div class="form-group ">
+                                <label class="textInput">تحديد الموقع</label>
+                                <span> <i class="fas fa-info-circle" style="font-size: 25px; font-size: 25px; position: absolute; right: 147px;cursor: pointer" data-toggle="tooltip" data-placement="top" title="ملاحظة: تحديد الموقع الجغرافي هو الأكثر دقة للأجهزة المزودة بنظام تحديد المواقع  ، مثل الهواتف الذكية."></i></span>
+                                <input asp-for="LocationLongitude" hidden />
+                                <input asp-for="LocationLatitude" hidden />
+                                <br /><br />
+                                <div id="viewDiv" class="mt-5 pt-5">
+                                </div>
+                                <span asp-validation-for="LocationLongitude"></span>
+                            </div>
+
                             <br />
                             <br />
                             <dnt-captcha asp-captcha-generator-max="999999"
@@ -144,7 +227,7 @@
                             <br />
 
                             <p class="form-row wrap-btn">
-                                <button class="btn btn-submit btn-bold pr-3" type="submit">تعديل</button>
+                                <button class="btn btn-submit btn-bold pr-3" type="submit">تعديـل</button>
 
                             </p>
                         </form>
@@ -157,8 +240,20 @@
     </div>
 
 </div>
+@section Styles {
+    <link href="https://localhost:44355/arcgis_js_api/library/4.18/esri/themes/light/main.css" rel="stylesheet" />
+
+    <style>
+        #viewDiv {
+            height: 400px;
+            width: 666px;
+            padding-right: 84px;
+        }
+    </style>
+}
 
 @section Scripts{
+    <script src="https://localhost:44355/arcgis_js_api/library/4.18/init.js"></script>
     <script>
         $(function () {
             $("#ddCountries").change(function () {
@@ -218,7 +313,7 @@
 
         function fileValidation() {
             var fileInput = document.getElementById('file');
-           
+
             var filePath = fileInput.value;
             // Allowing file type
             var allowedExtensions =
@@ -247,18 +342,147 @@
             });
 
     </script>
+    <script src="~/js/togglePassword.js" asp-append-version="true"></script>
+
+
+    <script>
+        require([
+            "esri/config", "esri/Map",
+            "esri/views/MapView", "esri/Graphic",
+            "esri/widgets/Locate", "esri/widgets/Search",
+            "esri/widgets/BasemapToggle"
+        ],
+            function (esriConfig,
+                Map,
+                MapView,
+                Graphic,
+                Locate,
+                Search,
+                BasemapToggle) {
+
+                ////esriConfig.apiKey = "YOUR-API-KEY";
+
+
+                const map = new Map({
+                    basemap: "streets"
+                });
+
+                const view = new MapView({
+                    map: map,
+                    center: [34.21257812505803, 27.227098562434826], // Longitude, latitude
+                    zoom: 4,
+                    container: "viewDiv"
+                });
+
+                let lon = document.getElementById("LocationLongitude").value;
+                let lat = document.getElementById("LocationLatitude").value;
+                //console.log(lon)
+                //console.log(lat)
+                if (lon == "" && lat == "") {
+                } else {
+                    drawPoint(lon, lat);
+                }
+
+
+                var searchWidget = new Search({
+                    view: view
+                });
+
+                view.ui.add(searchWidget, "top-right");
+
+                window._view = view;
+                window._map = map;
+
+                view.popup.autoOpenEnabled = false;
+                view.on("click",
+                    function (event) {
+                        console.log(event.mapPoint.latitude);
+                        console.log(event.mapPoint.longitude);
+
+                        // Get the coordinates of the click on the view
+                        var lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
+                        var lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
+                        drawPoint(lon, lat);
+
+                        document.getElementById("LocationLongitude").value = event.mapPoint.longitude;
+                        document.getElementById("LocationLatitude").value = event.mapPoint.latitude;
+
+                    });
+
+                var locateBtn = new Locate({
+                    view: view
+                });
+
+                // Add the locate widget to the top left corner of the view
+                view.ui.add(locateBtn,
+                    {
+                        position: "top-left"
+                    });
+
+                locateBtn.on('locate',
+                    function (pos) {
+                        console.info(pos.position.coords.latitude, pos.position.coords.longitude);
+
+                        var lat = Math.round(pos.position.coords.latitude * 1000) / 1000;
+                        var lon = Math.round(pos.position.coords.longitude * 1000) / 1000;
+                        drawPoint(lon, lat);
+
+                        document.getElementById("LocationLongitude").value = pos.position.coords.longitude;
+                        document.getElementById("LocationLatitude").value = pos.position.coords.latitude;
+
+                    });
+
+
+                function drawPoint(longitude, latitude) {
+                    var point = {
+                        type: "point",
+                        longitude: longitude,
+                        latitude: latitude
+                    };
+
+                    let pointGraphic = new Graphic({
+                        geometry: point,
+                        symbol: {
+                            type: "simple-marker",
+                            color: [244, 67, 54],
+                            path:
+                                "M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z",
+                            size: 32,
+                            yoffset: 16,
+                            outline: {
+                                width: 0,
+                            },
+                        },
+                    });
+                    view.graphics.removeAll();
+                    view.graphics.add(pointGraphic);
+                    view.goTo(pointGraphic);
+                    view.zoom = 18;
+
+                }
+
+                var basemapToggle = new BasemapToggle({
+                    view: view,
+                    nextBasemap: "satellite"
+                });
+
+                view.ui.add(basemapToggle, "bottom-right");
+
+
+            });
+    </script>
 
 }
 
 @if (ViewBag.Message != null)
 {
-<div class="alert alert-success alert-has-icon text-right" id="chProfAlertmsg">
-    <div class="alert-body">
-        <div style="font-size: 17px" class="alert-title">تنبية</div>
-        <div style="font-size: 20px" class="pt-5">
-            @ViewBag.Message
-        </div>  
+    <div class="alert alert-success alert-has-icon text-right" id="chProfAlertmsg">
+        <div class="alert-body">
+            <div style="font-size: 17px" class="alert-title">تنبية</div>
+            <div style="font-size: 20px" class="pt-5">
+                @ViewBag.Message
+            </div>
+        </div>
     </div>
-</div>
 
 }

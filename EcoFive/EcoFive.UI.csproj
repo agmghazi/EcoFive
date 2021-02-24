@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
     <Content Remove="wwwroot\EcoFiveLogs\nlog-all-2021-01-09 - Copy.log" />
   </ItemGroup>
 
@@ -44,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="compilerconfig.json" />
     <None Include="wwwroot\Templetes\Admin\assets\bundles\amcharts4\animated.js" />
     <None Include="wwwroot\Templetes\Admin\assets\bundles\amcharts4\charts.js" />
     <None Include="wwwroot\Templetes\Admin\assets\bundles\amcharts4\core.js" />
@@ -668,6 +670,16 @@
     <None Include="wwwroot\Templetes\Admin\assets\js\page\widget-chart.js" />
     <None Include="wwwroot\Templetes\Admin\assets\js\page\widget-data.js" />
     <None Include="wwwroot\Templetes\Admin\assets\js\scripts.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\fonts\remixicon8025.svg" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\images\logo.svg" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\js\app.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\js\pages\index.init.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\libs\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\libs\jquery\jquery.min.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\libs\magnific-popup\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\libs\node-waves\waves.min.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\libs\owl.carousel\owl.carousel.min.js" />
+    <None Include="wwwroot\Templetes\Chat_Room\assets\libs\simplebar\simplebar.min.js" />
     <None Include="wwwroot\Templetes\Client\assets\fonts\biolifebbd0.svg" />
     <None Include="wwwroot\Templetes\Client\assets\fonts\fontawesome-webfont3e6e.svg" />
     <None Include="wwwroot\Templetes\Client\assets\fonts\fontawesome-webfont3e6e.woff2" />

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EcoFive.Models.Models.Chatting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -11,8 +12,8 @@ namespace EcoFive.Models.Models
         {
             #region seed admin
             // Super Admin
-            string SuperAdmin_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
-            string SuperROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
+            string SuperAdmin_ID = "02174cf0–9412–4cfe-afbf-59f706d72cf6";
+            string SuperROLE_ID = "341743f0-asd2–42de-afbf-59kmkkmk72cf6";
 
             //seed SuperAdmin role
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
@@ -38,8 +39,15 @@ namespace EcoFive.Models.Models
                 SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
                 CityId = 1,
                 GovernorateId = 1,
-                CountryId = 1
-
+                CountryId = 1,
+                FirstName = "Ahmed",
+                LastName = "Gamal",
+                LocationLatitude = "24.728287478442276",
+                LocationLongitude = "46.66198973512585",
+                VisaDate = "06/30",
+                VisaName = "ahmed ghazy",
+                VisaNumber = "555555555555555",
+                VisaPassword = "123"
             };
 
             //set user password
@@ -59,18 +67,8 @@ namespace EcoFive.Models.Models
 
 
             #region seed User
-            // Super Admin
-            string User_ID = "02974cw0–9412–4nfe - afbf - 59f701d72cf6";
-            string UserROLE_ID = "341749f0 - asu2–42de - afbf - 600mkkmk72cf6";
-
-            //seed SuperAdmin role
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Name = "User",
-                NormalizedName = "User",
-                Id = UserROLE_ID,
-                ConcurrencyStamp = UserROLE_ID
-            });
+            // user
+            string User_ID = "02974cw0–9412–4nfe-afbf-59f701d72cf6";
 
             //create User
             var appUserC = new ApplicationUser
@@ -87,8 +85,15 @@ namespace EcoFive.Models.Models
                 SecurityStamp = "WN5B25J5JIF93FMHPKPOSUSVZ5BA3EFF",
                 CityId = 1,
                 GovernorateId = 1,
-                CountryId = 1
-
+                CountryId = 1,
+                FirstName = "User",
+                LastName = "User",
+                LocationLatitude = "30.156351019625248",
+                LocationLongitude = "37.156914062556666",
+                VisaDate = "06/21",
+                VisaName = "user user",
+                VisaNumber = "555551111111122",
+                VisaPassword = "123"
             };
 
             //set user password
@@ -98,20 +103,18 @@ namespace EcoFive.Models.Models
             //seed user
             modelBuilder.Entity<ApplicationUser>().HasData(appUserC);
 
-            //set user role to admin
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                RoleId = UserROLE_ID,
-                UserId = User_ID
-            });
             #endregion
 
-            modelBuilder.Entity<Country>().HasData(
-                new Country
-                {
-                    Id = 1,
-                    Name = "المملكه العربية السعودية",
 
+            modelBuilder.Entity<ChatUser>()
+                .HasKey(x => new { x.ChatId, x.UserId });
+
+
+            modelBuilder.Entity<Country>().HasData(
+                new List<Country>
+                {
+                    new Country(){Id = 1, Name = "المملكه العربية السعودية"},
+                    new Country(){Id = 2, Name = "مصر"}
                 });
 
 
@@ -132,6 +135,35 @@ namespace EcoFive.Models.Models
                         new Governorate(){Id = 11,Name = "منطقة الجوف",CountryId = 1},
                         new Governorate(){Id = 12,Name = "منطقة الباحه",CountryId = 1},
                         new Governorate(){Id = 13,Name = "منطقة تبوك",CountryId = 1},
+
+
+                        new Governorate(){Id = 14,Name = "الإسكندرية",CountryId = 2},
+                        new Governorate(){Id = 15,Name = "الإسماعيلية",CountryId = 2},
+                        new Governorate(){Id = 16,Name = "أسوان",CountryId = 2},
+                        new Governorate(){Id = 17,Name = "أسيوط",CountryId = 2},
+                        new Governorate(){Id = 18,Name = "الأقصر",CountryId = 2},
+                        new Governorate(){Id = 19,Name = "البحر الأحمر",CountryId = 2},
+                        new Governorate(){Id = 20,Name = "البحيرة",CountryId = 2},
+                        new Governorate(){Id = 21,Name = "بني سويف",CountryId = 2},
+                        new Governorate(){Id = 22,Name = "بورسعيد",CountryId = 2},
+                        new Governorate(){Id = 23,Name = "جنوب سيناء",CountryId = 2},
+                        new Governorate(){Id = 24,Name = "الجيزة",CountryId = 2},
+                        new Governorate(){Id = 25,Name = "الدقهلية",CountryId = 2},
+                        new Governorate(){Id = 26,Name = "دمياط",CountryId = 2},
+                        new Governorate(){Id = 27,Name = "سوهاج",CountryId = 2},
+                        new Governorate(){Id = 28,Name = "السويس",CountryId = 2},
+                        new Governorate(){Id = 29,Name = "الشرقية",CountryId = 2},
+                        new Governorate(){Id = 30,Name = "شمال سيناء",CountryId = 2},
+                        new Governorate(){Id = 31,Name = "الغربية",CountryId = 2},
+                        new Governorate(){Id = 32,Name = "الفيوم",CountryId = 2},
+                        new Governorate(){Id = 33,Name = "القاهرة",CountryId = 2},
+                        new Governorate(){Id = 34,Name = "القليوبية",CountryId = 2},
+                        new Governorate(){Id = 35,Name = "قنا",CountryId = 2},
+                        new Governorate(){Id = 36,Name = "كفر الشيخ",CountryId = 2},
+                        new Governorate(){Id = 37,Name = "مطروح",CountryId = 2},
+                        new Governorate(){Id = 38,Name = "المنوفية",CountryId = 2},
+                        new Governorate(){Id = 39,Name = "المنيا",CountryId = 2},
+                        new Governorate(){Id = 40,Name = "الوادي الجديد",CountryId = 2},
                 }
             );
 
